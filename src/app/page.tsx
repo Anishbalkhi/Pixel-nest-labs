@@ -1,6 +1,7 @@
 import { FAQ } from "@/components/sections/FAQ";
 import { Hero } from "@/components/sections/Hero";
-import { About, CTASection, LabProjects, ProductsPreview, WhyUs } from "@/components/sections/HomeSections";
+import { About, CTASection, ProductsPreview, WhyUs } from "@/components/sections/HomeSections";
+import { LabShowcase } from "@/components/sections/LabShowcase";
 import { ScrollTextBand } from "@/components/motion/ScrollTextBand";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { ServicesScroll } from "@/components/sections/ServicesScroll";
@@ -16,7 +17,7 @@ export default function HomePage() {
       <ProcessTimeline />
       <TechMarquee />
       <ProductsPreview />
-      <LabProjects />
+      <LabShowcase />
       <About />
       <FAQ />
       <CTASection />

@@ -267,7 +267,11 @@ export type LabProject = {
   title: string;
   label: "Demo" | "Concept";
   summary: string;
+  // Two short points shown on the card.
+  highlights: string[];
   tech: string[];
+  // Which animated preview to show: storefront, calendar, forecast or flow.
+  preview: "storefront" | "calendar" | "forecast" | "flow";
   // Optional links. Leave "" until the demo is live.
   liveUrl: string;
   githubUrl: string;
@@ -279,7 +283,9 @@ export const labProjects: LabProject[] = [
     title: "Café storefront on Shopify",
     label: "Demo",
     summary: "A Shopify theme for a small coffee brand with subscriptions and a fast product page.",
+    highlights: ["Subscribe-and-save checkout", "Product page tuned for speed"],
     tech: ["Shopify", "Liquid", "JavaScript"],
+    preview: "storefront",
     liveUrl: "",
     githubUrl: "",
   },
@@ -287,7 +293,9 @@ export const labProjects: LabProject[] = [
     title: "Clinic appointment dashboard",
     label: "Demo",
     summary: "A MERN dashboard for booking, rescheduling and reminding patients about appointments.",
+    highlights: ["Drag-to-reschedule calendar", "Automatic SMS and WhatsApp reminders"],
     tech: ["React", "Node.js", "MongoDB"],
+    preview: "calendar",
     liveUrl: "",
     githubUrl: "",
   },
@@ -295,7 +303,9 @@ export const labProjects: LabProject[] = [
     title: "Sales forecast assistant",
     label: "Concept",
     summary: "A data notebook and chat assistant that answers questions about monthly sales trends.",
+    highlights: ["Monthly trend and forecast charts", "Ask questions in plain English"],
     tech: ["Python", "Pandas", "LLM API"],
+    preview: "forecast",
     liveUrl: "",
     githubUrl: "",
   },
@@ -303,7 +313,9 @@ export const labProjects: LabProject[] = [
     title: "Lead-to-cash on Salesforce",
     label: "Concept",
     summary: "A Salesforce flow that turns web enquiries into opportunities, quotes and invoices.",
+    highlights: ["Web form to opportunity in one step", "Quote and invoice created automatically"],
     tech: ["Salesforce", "Flows", "Apex"],
+    preview: "flow",
     liveUrl: "",
     githubUrl: "",
   },

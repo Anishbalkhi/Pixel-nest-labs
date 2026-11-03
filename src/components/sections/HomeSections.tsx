@@ -4,7 +4,7 @@ import { PixelMark } from "@/components/brand/PixelMark";
 import { PixelDissolve } from "@/components/motion/PixelDissolve";
 import { Magnetic, Tilt } from "@/components/motion/effects";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { about, contact, labProjects, products, whyUs } from "@/content/site";
+import { about, contact, products, whyUs } from "@/content/site";
 import { productIcons } from "./icons";
 import { SectionHeading } from "./SectionHeading";
 
@@ -99,111 +99,6 @@ export function ProductsPreview() {
         })}
       </div>
     </ScrollReveal>
-  );
-}
-
-export function LabProjects() {
-  return (
-    <ScrollReveal as="section" id="lab" className="mt-6 px-2 py-14 sm:px-4">
-      <SectionHeading
-        eyebrow="From the lab"
-        title="Demo and concept projects."
-        text="We're a new studio, so instead of client logos here are things we've built to show how we work. Each one is labelled Demo or Concept."
-      />
-      <div className="mt-10 grid gap-4 md:grid-cols-2">
-        {labProjects.map((p, i) => (
-          <div key={p.title} data-reveal>
-            <Tilt className="h-full">
-              <article className="group border-line relative flex h-full flex-col overflow-hidden rounded-3xl border bg-white">
-                <div className="bg-navy relative h-40 overflow-hidden">
-                  <div className="pixel-grid-dark absolute inset-0" aria-hidden />
-                  <ProjectArt index={i} />
-                  <span
-                    className={`absolute top-4 left-4 rounded-full px-2.5 py-1 text-xs font-bold tracking-wide uppercase ${
-                      p.label === "Demo" ? "bg-teal text-navy" : "bg-sun text-navy"
-                    }`}
-                  >
-                    {p.label}
-                  </span>
-                </div>
-                <div className="relative flex flex-1 flex-col p-6">
-                  <PixelDissolve />
-                  <div className="relative flex flex-1 flex-col">
-                    <h3 className="font-display text-lg font-bold transition-colors delay-150 group-hover:text-white group-focus-visible:text-white">
-                      {p.title}
-                    </h3>
-                    <p className="text-muted mt-1.5 text-sm transition-colors delay-150 group-hover:text-white/75 group-focus-visible:text-white/75">
-                      {p.summary}
-                    </p>
-                    <ul className="mt-4 flex flex-wrap gap-1.5">
-                      {p.tech.map((t) => (
-                        <li
-                          key={t}
-                          className="bg-mist text-navy/80 rounded-md px-2 py-1 text-xs font-medium transition-colors delay-150 group-hover:bg-white/10 group-hover:text-white group-focus-visible:bg-white/10 group-focus-visible:text-white"
-                        >
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-auto flex gap-4 pt-5 text-sm font-semibold">
-                      {p.liveUrl ? (
-                        <a
-                          href={p.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-brand group-hover:text-teal group-focus-visible:text-teal"
-                        >
-                          Live demo ↗
-                        </a>
-                      ) : (
-                        <span className="text-muted transition-colors delay-150 group-hover:text-white/60 group-focus-visible:text-white/60">
-                          Live demo coming soon
-                        </span>
-                      )}
-                      {p.githubUrl ? (
-                        <a
-                          href={p.githubUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-brand group-hover:text-teal group-focus-visible:text-teal"
-                        >
-                          Code ↗
-                        </a>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </Tilt>
-          </div>
-        ))}
-      </div>
-    </ScrollReveal>
-  );
-}
-
-/** Simple generated artwork per project so the cards don't need screenshots yet. */
-function ProjectArt({ index }: { index: number }) {
-  const palette = ["#0b57c2", "#1fb89a", "#0e76a6", "#f7a21b"];
-  return (
-    <div className="absolute inset-0 flex items-center justify-center" aria-hidden>
-      <div className="grid grid-cols-6 gap-1.5 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3">
-        {Array.from({ length: 18 }, (_, i) => {
-          const on = (i * (index + 3) + index) % 4 !== 0;
-          return (
-            <span
-              key={i}
-              className="size-5 rounded-[4px] transition-all duration-500"
-              style={{
-                background: on ? palette[(i + index) % palette.length] : "transparent",
-                opacity: on ? 0.95 : 0,
-                transitionDelay: `${(i % 6) * 40}ms`,
-              }}
-            />
-          );
-        })}
-      </div>
-    </div>
   );
 }
 

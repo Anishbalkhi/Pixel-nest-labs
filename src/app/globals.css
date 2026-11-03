@@ -153,6 +153,205 @@ html.lenis body {
   transform: none;
 }
 
+/* ---------- Lab previews (src/components/sections/LabPreviews.tsx) ---------- */
+
+/* Loops pause while the Lab section is off screen. */
+[data-lab]:not([data-active]) .lab-anim {
+  animation-play-state: paused;
+}
+
+/* Cards rise in, two at a time, when scrolled into view (only once JS is running). */
+.js [data-lab-card] {
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms,
+    box-shadow 300ms;
+  transition-delay: calc(var(--i, 0) * 120ms), calc(var(--i, 0) * 120ms), 0ms, 0ms;
+}
+.js [data-lab-card]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(36px) scale(0.98);
+}
+
+/* Storefront: steam rises from the cup; on hover a pixel flies into the cart. */
+@keyframes lab-steam {
+  0% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-14px);
+    opacity: 0;
+  }
+}
+.lab-steam {
+  animation: lab-steam 2.4s ease-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes lab-fly {
+  /* From the "Add to cart" button (bottom right of the window) to the cart icon in the title bar. */
+  0% {
+    right: 26%;
+    top: calc(100% - 24px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    right: 14px;
+    top: 9px;
+    opacity: 0;
+  }
+}
+.group:hover .lab-fly {
+  animation: lab-fly 900ms cubic-bezier(0.5, 0, 0.6, 1) 150ms infinite;
+}
+@keyframes lab-pop {
+  0%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.5);
+  }
+}
+.group:hover .lab-badge {
+  animation: lab-pop 900ms ease-out 150ms infinite;
+}
+.group:hover .lab-cart {
+  box-shadow: 0 0 0 3px rgb(31 184 154 / 0.35);
+}
+
+/* Calendar: a soft wave runs across the slots; on hover a reminder pops up. */
+@keyframes lab-slot {
+  0%,
+  70%,
+  100% {
+    filter: brightness(1);
+    transform: none;
+  }
+  80% {
+    filter: brightness(1.8);
+    transform: scale(1.12);
+  }
+}
+.lab-slot {
+  animation: lab-slot 3.2s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+.lab-toast {
+  transform: translateY(8px);
+  transition:
+    opacity 300ms,
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .lab-toast {
+  opacity: 1;
+  transform: none;
+}
+
+/* Forecast: bars grow when the card appears, the forecast bars breathe, the bot "types". */
+.js .lab-bar {
+  transform-origin: bottom;
+  transform: scaleY(0.08);
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d, 0ms) + 250ms);
+}
+.js .is-in .lab-bar {
+  transform: none;
+}
+@keyframes lab-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+.is-in .lab-breathe {
+  animation: lab-breathe 2.2s ease-in-out 1.2s infinite;
+}
+.group:hover .lab-bar {
+  filter: brightness(1.2);
+}
+@keyframes lab-dot {
+  0%,
+  60%,
+  100% {
+    transform: none;
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+.lab-dot {
+  animation: lab-dot 1.2s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+.lab-typing,
+.lab-answer {
+  transition: opacity 250ms;
+}
+.group:hover .lab-typing {
+  opacity: 0;
+}
+.group:hover .lab-answer {
+  opacity: 1;
+}
+
+/* Lead-to-cash: a packet travels along the flow and each step lights up as it passes. */
+@keyframes lab-packet {
+  0% {
+    left: 1.5rem;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 2rem);
+    opacity: 0;
+  }
+}
+.lab-packet {
+  animation: lab-packet 3s linear infinite;
+}
+@keyframes lab-node {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: none;
+  }
+  8% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 45%, transparent);
+    transform: scale(1.12);
+  }
+  25% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: none;
+  }
+}
+.lab-node {
+  animation: lab-node 3s ease-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+.group:hover .lab-packet,
+.group:hover .lab-node {
+  animation-duration: 1.6s;
+}
+
 /* 404 page: pixels glitch now and then */
 @keyframes pixel-glitch {
   0%,
@@ -197,7 +396,10 @@ html.lenis body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js [data-words] .word {
+  .js [data-words] .word,
+  .js [data-lab-card]:not(.is-in),
+  .js .lab-bar {
+    opacity: 1;
     transform: none;
   }
   *,
