@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/* Brand tokens, taken from the Pixel Nest Labs logo. */
+@theme {
+  --color-navy: #0a1445;
+  --color-navy-800: #111c57;
+  --color-navy-700: #1a276b;
+  --color-brand: #0b57c2;
+  --color-brand-600: #0a4aa6;
+  --color-sky: #0e76a6;
+  --color-teal: #1fb89a;
+  --color-teal-600: #179a80;
+  /* Darker teal for small text on white (meets 4.5:1 contrast). */
+  --color-teal-700: #0f7a65;
+  --color-sun: #f7a21b;
+  --color-mist: #f4f7fb;
+  --color-line: #e2e8f2;
+  --color-muted: #55607f;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marquee 46s linear infinite reverse;
+  --animate-drift: drift 9s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(0, -14px, 0) rotate(8deg);
+    }
+  }
+}
+
+/* No CSS smooth scrolling: Lenis handles it, and the two fight each other. */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-mist);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+}
+
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+::selection {
+  background: var(--color-teal);
+  color: var(--color-navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* Lenis smooth scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Dotted pixel grid used behind headers and dark panels */
+.pixel-grid {
+  background-image: radial-gradient(rgb(11 87 194 / 0.16) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+.pixel-grid-dark {
+  background-image: radial-gradient(rgb(255 255 255 / 0.09) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+/* Pixel-dissolve hover: cells fade in one by one with staggered delays */
+.dissolve-cell {
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+  transition-delay: var(--d, 0ms);
+}
+.group:hover .dissolve-cell,
+.group:focus-visible .dissolve-cell {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* Hero headline: words rise into place */
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.word-rise {
+  animation: rise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Hero bits that fade up with CSS, so they show before JavaScript loads */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-up {
+  animation: fade-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/*
+ * Section headings: words slide up when scrolled into view (see WordReveal).
+ * Only hidden once the "js" class is on <html>, so the text is never stuck
+ * invisible if JavaScript is slow or off.
+ */
+.js [data-words] .word {
+  transform: translateY(110%);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+.js [data-words].is-in .word {
+  transform: none;
+}
+
+/* 404 page: pixels glitch now and then */
+@keyframes pixel-glitch {
+  0%,
+  88%,
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+  90% {
+    transform: translate(4px, -3px);
+    opacity: 0.4;
+  }
+  93% {
+    transform: translate(-3px, 2px);
+    opacity: 0.8;
+  }
+  96% {
+    transform: translate(2px, 0);
+    opacity: 0.2;
+  }
+}
+.pixel-glitch {
+  animation: pixel-glitch 4s steps(1, end) infinite;
+}
+
+/* Sticky "Let's talk" button: a small nudge every few seconds */
+@keyframes nudge {
+  0%,
+  86%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  90% {
+    transform: rotate(-14deg) scale(1.15);
+  }
+  95% {
+    transform: rotate(10deg) scale(1.1);
+  }
+}
+.nudge {
+  animation: nudge 6s ease-in-out 3s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-words] .word {
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
