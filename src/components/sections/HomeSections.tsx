@@ -2,7 +2,9 @@ import { ArrowRight, ArrowUpRight, Clock, Layers, ShieldCheck, Users } from "luc
 import Link from "next/link";
 import { PixelMark } from "@/components/brand/PixelMark";
 import { PixelDissolve } from "@/components/motion/PixelDissolve";
-import { Magnetic, Tilt } from "@/components/motion/effects";
+import { Magnetic, Tilt, WordReveal } from "@/components/motion/effects";
+import { DevStatus, PixelAvatar, PixelRain } from "@/components/motion/decor";
+import { InView } from "@/components/motion/InView";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { about, contact, products, whyUs } from "@/content/site";
 import { productIcons } from "./icons";
@@ -12,32 +14,52 @@ const whyIcons = [Users, ShieldCheck, Layers, Clock];
 
 export function WhyUs() {
   return (
-    <ScrollReveal as="section" className="mt-6 px-2 py-14 sm:px-4">
-      <SectionHeading eyebrow="Why Pixel Nest Labs" title="A small team that treats your project like its own." />
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section id="why-us" className="mt-6 px-2 py-14 sm:px-4">
+      <ScrollReveal>
+        <SectionHeading eyebrow="Why Pixel Nest Labs" title="A small team that treats your project like its own." />
+      </ScrollReveal>
+      {/* Cards deal in, tilted alternately, then straighten. */}
+      <InView className="deal mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {whyUs.map((w, i) => {
           const Icon = whyIcons[i % whyIcons.length];
           return (
             <div
               key={w.title}
-              data-reveal
-              className="group border-line relative overflow-hidden rounded-3xl border bg-white p-6"
+              style={{ ["--r" as string]: `${i % 2 ? 3 : -3}deg` }}
+              className="group glow-border border-line relative overflow-hidden rounded-3xl border bg-white p-6 transition-shadow duration-300 hover:shadow-[0_24px_50px_-28px_rgb(10_20_69/0.55)]"
             >
               <PixelDissolve />
+              <span
+                aria-hidden
+                data-num={`0${i + 1}`}
+                className="font-display text-navy/[0.06] absolute top-3 right-5 text-6xl font-extrabold transition-colors delay-150 group-hover:text-white/10 before:content-[attr(data-num)]"
+              />
               <div className="relative">
-                <Icon className="text-brand group-hover:text-teal group-focus-visible:text-teal group-focus-within:text-teal size-6 transition-colors delay-150" />
-                <h3 className="font-display mt-4 text-lg font-bold transition-colors delay-150 group-hover:text-white group-focus:text-white group-focus-visible:text-white">
+                <span className="relative grid size-12 place-items-center">
+                  {[0, 870, 1730].map((delay, k) => (
+                    <span
+                      key={delay}
+                      aria-hidden
+                      className="orbit-px absolute size-1.5 rounded-[2px]"
+                      style={{ ["--d" as string]: `-${delay}ms`, background: ["#1fb89a", "#f7a21b", "#0b57c2"][k] }}
+                    />
+                  ))}
+                  <span className="bg-mist text-brand group-hover:text-teal grid size-12 place-items-center rounded-2xl transition-[background-color,color,transform] delay-150 duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/10">
+                    <Icon className="size-6" />
+                  </span>
+                </span>
+                <h3 className="font-display mt-5 text-lg font-bold transition-colors delay-150 group-hover:text-white">
                   {w.title}
                 </h3>
-                <p className="text-muted mt-1.5 text-sm transition-colors delay-150 group-hover:text-white/75 group-focus:text-white/75 group-focus-visible:text-white/75">
+                <p className="text-muted mt-1.5 text-sm transition-colors delay-150 group-hover:text-white/75">
                   {w.text}
                 </p>
               </div>
             </div>
           );
         })}
-      </div>
-    </ScrollReveal>
+      </InView>
+    </section>
   );
 }
 
@@ -62,20 +84,20 @@ export function ProductsPreview() {
           See all products <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <InView className="deal mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {products.map((p) => {
           const Icon = productIcons[p.icon];
           return (
-            <div key={p.slug} data-reveal>
+            <div key={p.slug}>
               <Tilt className="h-full">
                 <Link
                   href={`/products#${p.slug}`}
-                  className="group border-line bg-mist relative block h-full overflow-hidden rounded-3xl border p-6"
+                  className="group border-line bg-mist relative flex h-full flex-col overflow-hidden rounded-3xl border p-6"
                 >
                   <PixelDissolve />
-                  <div className="relative">
+                  <div className="relative flex flex-1 flex-col">
                     <div className="flex items-start justify-between">
-                      <span className="text-brand grid size-11 place-items-center rounded-xl bg-white shadow-sm">
+                      <span className="text-brand grid size-11 place-items-center rounded-xl bg-white shadow-sm transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-8deg]">
                         <Icon className="size-5" />
                       </span>
                       <span className="bg-sun/15 group-hover:bg-sun group-focus-visible:bg-sun group-hover:text-navy group-focus-visible:text-navy rounded-full px-2.5 py-1 text-xs font-semibold text-[#9a5c00] transition-colors delay-150">
@@ -89,15 +111,19 @@ export function ProductsPreview() {
                       {p.summary}
                     </p>
                     <p className="text-brand group-hover:text-teal group-focus-visible:text-teal mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors delay-150">
-                      Join waitlist <ArrowUpRight className="size-4" />
+                      Join waitlist{" "}
+                      <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </p>
+                    <div className="mt-auto">
+                      <DevStatus />
+                    </div>
                   </div>
                 </Link>
               </Tilt>
             </div>
           );
         })}
-      </div>
+      </InView>
     </ScrollReveal>
   );
 }
@@ -116,23 +142,25 @@ export function About() {
             {about.story}
           </p>
           <div data-reveal className="mt-6 grid grid-cols-2 gap-3">
-            <div className="bg-mist rounded-2xl p-4">
+            <div className="glow-border bg-mist rounded-2xl p-4">
               <p className="text-brand text-xs font-semibold tracking-wider uppercase">Mission</p>
               <p className="mt-1 text-sm">[One line on what you do for your clients.]</p>
             </div>
-            <div className="bg-mist rounded-2xl p-4">
+            <div className="glow-border bg-mist rounded-2xl p-4">
               <p className="text-brand text-xs font-semibold tracking-wider uppercase">Vision</p>
               <p className="mt-1 text-sm">[One line on where you want the studio to go.]</p>
             </div>
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <InView className="deal grid gap-4 sm:grid-cols-2">
           {about.founders.map((f, i) => (
-            <div key={i} data-reveal className="border-line bg-mist rounded-3xl border p-5">
+            <div
+              key={i}
+              style={{ ["--r" as string]: `${i % 2 ? 2 : -2}deg` }}
+              className="group glow-border border-line bg-mist rounded-3xl border p-5 transition-transform duration-300 hover:-translate-y-1"
+            >
               <div className="flex items-center gap-3">
-                <span className="bg-navy grid size-14 place-items-center rounded-2xl" aria-hidden>
-                  <PixelMark className="h-7 w-auto" />
-                </span>
+                <PixelAvatar seed={i + 3} />
                 <div>
                   <p className="font-display font-bold">{f.name}</p>
                   <p className="text-muted text-xs">{f.role}</p>
@@ -158,19 +186,24 @@ export function About() {
               ) : null}
             </div>
           ))}
-        </div>
+        </InView>
       </div>
-      <ul
-        data-reveal
-        className="bg-navy mt-10 flex flex-wrap justify-center gap-x-3 gap-y-2 rounded-2xl px-5 py-4 text-sm font-semibold text-white"
-      >
-        {about.experienceStrip.map((item, i) => (
-          <li key={i} className="flex items-center gap-3">
-            {i > 0 ? <span className="bg-teal size-1.5 rounded-[2px]" aria-hidden /> : null}
-            {item}
-          </li>
-        ))}
-      </ul>
+      <div className="bg-navy relative mt-10 overflow-hidden rounded-2xl">
+        <div className="pixel-grid-dark absolute inset-0" aria-hidden />
+        <InView
+          as="ul"
+          className="pop relative flex flex-wrap justify-center gap-x-3 gap-y-2 px-5 py-4 text-sm font-semibold text-white"
+        >
+          {about.experienceStrip.map((item, i) => (
+            <li key={i} style={{ ["--i" as string]: i }} className="flex items-center gap-3">
+              {i > 0 ? (
+                <span className="bg-teal size-1.5 animate-[spin_4s_linear_infinite] rounded-[2px]" aria-hidden />
+              ) : null}
+              {item}
+            </li>
+          ))}
+        </InView>
+      </div>
     </ScrollReveal>
   );
 }
@@ -188,20 +221,26 @@ export function CTASection({
       className="bg-navy relative mt-6 overflow-hidden rounded-[2rem] px-6 py-14 text-white sm:px-10"
     >
       <div className="pixel-grid-dark absolute inset-0" aria-hidden />
+      <PixelRain seed={4} />
       <div className="bg-teal/30 absolute -right-24 -bottom-24 size-80 rounded-full blur-[100px]" aria-hidden />
       <PixelMark className="absolute -right-6 -bottom-8 h-48 w-auto animate-[spin_40s_linear_infinite] opacity-15 sm:h-60" />
       <div className="relative max-w-xl">
-        <h2 data-reveal className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
-          {title}
+        <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <WordReveal text={title} />
         </h2>
         <p data-reveal className="mt-3 text-white/70">
           {text}
         </p>
         <div data-reveal className="mt-7 flex flex-wrap gap-3">
-          <Magnetic>
+          <Magnetic className="relative inline-block">
+            {/* Soft ping ring to draw the eye to the main button */}
+            <span
+              aria-hidden
+              className="ping-soft border-teal pointer-events-none absolute inset-0 rounded-full border-2"
+            />
             <a
               href="#contact"
-              className="group bg-teal text-navy inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold hover:bg-white"
+              className="group bg-teal text-navy relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold hover:bg-white"
             >
               Send a message <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </a>

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { InView } from "@/components/motion/InView";
+import { BackToTop } from "./BackToTop";
 import { PixelMark, Wordmark } from "@/components/brand/PixelMark";
 import { contact, nav, services, site } from "@/content/site";
 
@@ -99,10 +101,27 @@ export function Footer() {
           </div>
         </div>
       </div>
+      {/* Big wordmark that rises letter by letter as the footer comes into view */}
+      <div className="relative mx-auto max-w-[1400px] overflow-hidden px-4 sm:px-6 lg:px-8" aria-hidden>
+        <InView
+          as="p"
+          margin="0px"
+          className="rise-letters font-display flex justify-center pb-2 text-[13.5vw] leading-[0.85] font-extrabold tracking-tighter whitespace-nowrap text-white/[0.07] select-none xl:text-[11.5rem]"
+        >
+          {"PIXEL NEST".split("").map((ch, i) => (
+            <span key={i} style={{ ["--i" as string]: i }}>
+              {ch === " " ? "\u00a0" : ch}
+            </span>
+          ))}
+        </InView>
+      </div>
       <div className="relative border-t border-white/10">
-        <p className="mx-auto max-w-[1400px] px-4 pt-5 pb-24 text-xs text-white/60 sm:px-6 md:pb-5 lg:px-8">
-          © {site.name}. Demo and concept projects shown on this site are our own work, not client projects.
-        </p>
+        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-4 px-4 pt-5 pb-24 sm:px-6 md:pb-5 lg:px-8">
+          <p className="text-xs text-white/60">
+            © {site.name}. Demo and concept projects shown on this site are our own work, not client projects.
+          </p>
+          <BackToTop />
+        </div>
       </div>
     </footer>
   );

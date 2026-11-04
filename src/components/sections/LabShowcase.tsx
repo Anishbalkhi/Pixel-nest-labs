@@ -1,8 +1,6 @@
-"use client";
-
 import { ArrowUpRight, Check, FlaskConical } from "lucide-react";
-import { useEffect, useRef, type PointerEvent } from "react";
 import { labProjects } from "@/content/site";
+import { LabEffects } from "./LabEffects";
 import { LabPreview } from "./LabPreviews";
 import { SectionHeading } from "./SectionHeading";
 
@@ -11,49 +9,13 @@ const WIDE = [true, false, false, true];
 
 /**
  * "From the lab": the studio's own demo and concept builds, each with a small
- * animated preview. Cards rise in as they scroll into view, a soft light follows
- * the cursor, and the previews only animate while the section is on screen.
+ * animated preview. Rendered on the server; LabEffects adds the scroll reveal,
+ * the cursor light, and pauses the previews while the section is off screen.
  */
 export function LabShowcase() {
-  const root = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section = root.current;
-    if (!section) return;
-
-    // Pause every looping preview animation while the section is off screen.
-    const visibility = new IntersectionObserver(([entry]) => {
-      section.toggleAttribute("data-active", entry.isIntersecting);
-    });
-    visibility.observe(section);
-
-    // Reveal each card (and grow its chart bars) the first time it scrolls into view.
-    const reveal = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.add("is-in");
-          reveal.unobserve(entry.target);
-        }
-      },
-      { rootMargin: "0px 0px -10% 0px" },
-    );
-    section.querySelectorAll("[data-lab-card]").forEach((card) => reveal.observe(card));
-
-    return () => {
-      visibility.disconnect();
-      reveal.disconnect();
-    };
-  }, []);
-
-  const spotlight = (e: PointerEvent<HTMLElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-  };
-
   return (
-    <section ref={root} id="lab" data-lab className="mt-6 px-2 py-14 sm:px-4">
+    <section id="lab" data-lab className="mt-6 px-2 py-14 sm:px-4">
+      <LabEffects sectionId="lab" />
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SectionHeading
           eyebrow="From the lab"
@@ -73,7 +35,6 @@ export function LabShowcase() {
             <article
               key={p.title}
               data-lab-card
-              onPointerMove={spotlight}
               style={{ ["--i" as string]: i % 2 }}
               className={`group border-line hover:border-brand/40 relative flex flex-col overflow-hidden rounded-3xl border bg-white transition-[border-color,box-shadow] duration-300 hover:shadow-[0_30px_60px_-30px_rgb(11_87_194/0.45)] ${
                 wide ? "lg:col-span-2 lg:flex-row" : ""

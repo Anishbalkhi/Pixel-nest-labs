@@ -153,6 +153,217 @@ html.lenis body {
   transform: none;
 }
 
+/* ---------- Section motion helpers (InView + decor.tsx) ---------- */
+
+/* Children "deal" in one after another when the parent InView appears. */
+.js .deal > * {
+  opacity: 0;
+  transform: translateY(40px) rotate(var(--r, 0deg)) scale(0.96);
+  transition:
+    opacity 600ms ease,
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    translate 300ms ease,
+    box-shadow 300ms ease;
+}
+.js .deal > :nth-child(2) {
+  transition-delay: 90ms;
+}
+.js .deal > :nth-child(3) {
+  transition-delay: 180ms;
+}
+.js .deal > :nth-child(4) {
+  transition-delay: 270ms;
+}
+.js .deal > :nth-child(5) {
+  transition-delay: 360ms;
+}
+.js .deal.is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Items pop in one by one (experience strip). */
+.js .pop > * {
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 400ms ease,
+    transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.js .pop.is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* A light runs around the card edge on hover. */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes angle-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), transparent 0 55%, #1fb89a 70%, #0b57c2 82%, transparent 94%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms;
+}
+.glow-border:hover::before,
+.glow-border:focus-within::before {
+  opacity: 1;
+  animation: angle-spin 3.5s linear infinite;
+}
+
+/* Moving stripes on "in development" bars. The stripes are a separate layer
+   moved with transform, so the browser doesn't repaint the bar every frame. */
+@keyframes stripe-slide {
+  to {
+    transform: translateX(-28px);
+  }
+}
+.progress-stripes {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--color-brand), var(--color-teal));
+}
+.progress-stripes::after {
+  content: "";
+  position: absolute;
+  inset: 0 -28px 0 0;
+  background: repeating-linear-gradient(-45deg, rgb(255 255 255 / 0.35) 0 7px, transparent 7px 14px);
+  animation: stripe-slide 900ms linear infinite;
+}
+
+/* Pixels falling through dark panels (CTA). */
+@keyframes pixel-rain {
+  0% {
+    transform: translateY(-24px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(var(--fall, 520px)) rotate(180deg);
+    opacity: 0;
+  }
+}
+.pixel-rain span {
+  animation: pixel-rain var(--dur, 9s) linear var(--delay, 0s) infinite;
+}
+
+/* Pixel avatars fly together when they come into view, and shuffle on hover. */
+.js .avatar-px {
+  opacity: 0;
+  transform: translate(var(--sx), var(--sy)) rotate(90deg) scale(0.4);
+  transition:
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms ease;
+  transition-delay: calc(var(--i, 0) * 22ms);
+}
+.js .is-in .avatar-px {
+  opacity: 1;
+  transform: none;
+}
+@keyframes avatar-jitter {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translate(1px, -2px) scale(0.85);
+  }
+}
+.group:hover .avatar-px {
+  animation: avatar-jitter 500ms ease-in-out var(--jd, 0ms) 1;
+}
+
+/* Small pixels orbit an icon tile on hover (Why us cards). */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(34px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(34px) rotate(-360deg);
+  }
+}
+.orbit-px {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.group:hover .orbit-px {
+  opacity: 1;
+  animation: orbit 2.6s linear infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Soft ring that pulses out from the main CTA button. */
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.18, 1.45);
+    opacity: 0;
+  }
+}
+.ping-soft {
+  animation: ping-soft 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Shiny sweep across text ("Coming soon") while its card is hovered. */
+@keyframes shimmer {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+.shimmer-text {
+  background: linear-gradient(90deg, currentColor 0 40%, #ffffff 50%, currentColor 60% 100%) 0 0 / 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.group:hover .shimmer-text {
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Footer: the big wordmark rises letter by letter. */
+.js .rise-letters > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+.js .rise-letters.is-in > span {
+  transform: none;
+}
+
 /* ---------- Lab previews (src/components/sections/LabPreviews.tsx) ---------- */
 
 /* Loops pause while the Lab section is off screen. */
@@ -398,7 +609,11 @@ html.lenis body {
 @media (prefers-reduced-motion: reduce) {
   .js [data-words] .word,
   .js [data-lab-card]:not(.is-in),
-  .js .lab-bar {
+  .js .lab-bar,
+  .js .deal > *,
+  .js .pop > *,
+  .js .avatar-px,
+  .js .rise-letters > span {
     opacity: 1;
     transform: none;
   }
