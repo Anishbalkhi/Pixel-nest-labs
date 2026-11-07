@@ -12,7 +12,7 @@ import { InView } from "@/components/motion/InView";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { about, contact, ctaGallery, whyUs } from "@/content/site";
 import { CurvedGallery } from "./CurvedGallery";
-import { ProductsCarousel } from "./ProductsCarousel";
+import { ProductShowcase } from "./ProductShowcase";
 import { SectionHeading } from "./SectionHeading";
 
 /** Pin colour, note tint and number colour for each "Why us" note. */
@@ -144,7 +144,7 @@ export function ProductsPreview() {
           See all products <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      <ProductsCarousel />
+      <ProductShowcase />
     </ScrollReveal>
   );
 }
