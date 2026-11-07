@@ -58,8 +58,8 @@ export const hero = {
   secondaryCta: { label: "Talk to us", href: "#contact" },
   // Brand reel, e.g. "/videos/brand-reel.mp4". When set, a "Watch the reel" button
   // appears in the hero and plays it in a player. `reelPoster` is its still image.
-  reel: "",
-  reelPoster: "",
+  reel: "/videos/brand-reel.mp4",
+  reelPoster: "/videos/brand-reel-poster.jpg",
 };
 
 export type Service = {
@@ -89,8 +89,8 @@ export const services: Service[] = [
       "Basic SEO and Google Business profile",
     ],
     tech: ["Figma", "Next.js", "Canva", "Google Business"],
-    image: "",
-    video: "",
+    image: "/images/services/digital-presence.jpg",
+    video: "/videos/services/digital-presence.mp4",
   },
   {
     slug: "web-commerce",
@@ -104,8 +104,8 @@ export const services: Service[] = [
       "Performance and accessibility checks",
     ],
     tech: ["MongoDB", "Express", "React", "Node.js", "Shopify", "Liquid"],
-    image: "",
-    video: "",
+    image: "/images/services/web-commerce.jpg",
+    video: "/videos/services/web-commerce.mp4",
   },
   {
     slug: "crm-salesforce",
@@ -119,8 +119,8 @@ export const services: Service[] = [
       "Custom CRM for smaller teams",
     ],
     tech: ["Salesforce", "Apex", "LWC", "Flows", "REST APIs"],
-    image: "",
-    video: "",
+    image: "/images/services/crm-salesforce.jpg",
+    video: "/videos/services/crm-salesforce.mp4",
   },
   {
     slug: "ai-data",
@@ -134,8 +134,8 @@ export const services: Service[] = [
       "AI chat assistants on your own documents",
     ],
     tech: ["Python", "Pandas", "scikit-learn", "LLM APIs", "Power BI"],
-    image: "",
-    video: "",
+    image: "/images/services/ai-data.jpg",
+    video: "/videos/services/ai-data.mp4",
   },
   {
     slug: "java-enterprise",
@@ -149,8 +149,8 @@ export const services: Service[] = [
       "Code reviews and modernisation",
     ],
     tech: ["Java", "Spring Boot", "MySQL", "PostgreSQL", "Docker"],
-    image: "",
-    video: "",
+    image: "/images/services/java-enterprise.jpg",
+    video: "/videos/services/java-enterprise.mp4",
   },
 ];
 
@@ -180,31 +180,31 @@ export const process = [
     title: "Discover",
     text: "A free call to understand your business, goals and budget.",
     gets: "A written scope and a fixed quote",
-    image: "",
+    image: "/images/process/discover.jpg",
   },
   {
     title: "Design",
     text: "Wireframes and visual designs you can review before any code.",
     gets: "Designs you can click through and comment on",
-    image: "",
+    image: "/images/process/design.jpg",
   },
   {
     title: "Build",
     text: "Short build cycles with a preview link you can try every week.",
     gets: "A preview link that updates every week",
-    image: "",
+    image: "/images/process/build.jpg",
   },
   {
     title: "Launch",
     text: "Testing, deployment and a walkthrough for your team.",
     gets: "Your project live, plus a walkthrough for your team",
-    image: "",
+    image: "/images/process/launch.jpg",
   },
   {
     title: "Support",
     text: "Fixes, improvements and monthly care plans if you need them.",
     gets: "Fixes and improvements, monthly if you like",
-    image: "",
+    image: "/images/process/support.jpg",
   },
 ];
 
@@ -257,7 +257,7 @@ export const products: Product[] = [
       "Report templates and PDF delivery",
       "Billing and daily summaries",
     ],
-    image: "",
+    image: "/images/products/path-lab.jpg",
     video: "",
   },
   {
@@ -272,7 +272,7 @@ export const products: Product[] = [
       "Customer notes and history",
       "WhatsApp and email templates",
     ],
-    image: "",
+    image: "/images/products/crm.jpg",
     video: "",
   },
   {
@@ -287,7 +287,7 @@ export const products: Product[] = [
       "Menu and pricing management",
       "Daily sales reports",
     ],
-    image: "",
+    image: "/images/products/restaurant.jpg",
     video: "",
   },
   {
@@ -297,7 +297,7 @@ export const products: Product[] = [
     summary: "Enquiries, applications, documents and fee tracking for schools and institutes.",
     audience: "Schools, colleges and coaching institutes",
     features: ["Enquiry and application forms", "Document collection", "Admission status tracking", "Fee receipts"],
-    image: "",
+    image: "/images/products/admission.jpg",
     video: "",
   },
 ];
@@ -418,14 +418,14 @@ export const about = {
  * until then it shows `label` on a brand-coloured tile.
  */
 export const ctaGallery = [
-  { label: "Websites", image: "", alt: "" },
-  { label: "Shopify stores", image: "", alt: "" },
-  { label: "CRMs", image: "", alt: "" },
-  { label: "AI tools", image: "", alt: "" },
-  { label: "Dashboards", image: "", alt: "" },
-  { label: "Catalogues", image: "", alt: "" },
-  { label: "Instagram grids", image: "", alt: "" },
-  { label: "Custom software", image: "", alt: "" },
+  { label: "Websites", image: "/images/gallery/websites.jpg", alt: "Desktop monitor displaying a clean landing-page layout" },
+  { label: "Shopify stores", image: "/images/gallery/shopify-stores.jpg", alt: "Shopping bag and parcel boxes with phone showing product catalog" },
+  { label: "CRMs", image: "/images/gallery/crms.jpg", alt: "Card file box with organized index cards" },
+  { label: "AI tools", image: "/images/gallery/ai-tools.jpg", alt: "Speech bubble block floating above laptop" },
+  { label: "Dashboards", image: "/images/gallery/dashboards.jpg", alt: "Tablet displaying business bar and line charts" },
+  { label: "Catalogues", image: "/images/gallery/catalogues.jpg", alt: "Open printed product catalogue with color block layouts" },
+  { label: "Instagram grids", image: "/images/gallery/instagram-grids.jpg", alt: "Smartphone with 3x3 photo grid and floating prints" },
+  { label: "Custom software", image: "/images/gallery/custom-software.jpg", alt: "Layered app interface windows on dark navy background" },
 ];
 
 export const faqs = [
