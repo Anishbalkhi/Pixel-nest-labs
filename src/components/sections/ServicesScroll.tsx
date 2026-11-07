@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Check } from "lucide-react";
-import { useRef, type CSSProperties, type FocusEvent } from "react";
+import { useRef, useState, type CSSProperties, type FocusEvent } from "react";
 import { ImageSlot } from "@/components/media/ImageSlot";
 import { getLenis } from "@/components/motion/SmoothScroll";
 import { services } from "@/content/site";
@@ -25,7 +25,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
  * condensed headline overlapping a picture, and the details on the right.
  * On desktop the section pins and the panels scroll sideways (numbers and
  * pictures move at their own speed); ticks on the right show which panel
- * you're on. On small screens and with reduced motion it's a swipeable row.
+ * you're on. On phones, tablets and with reduced motion it's a swipeable row.
  */
 export function ServicesScroll() {
   const section = useRef<HTMLElement>(null);
@@ -34,11 +34,34 @@ export function ServicesScroll() {
   const ticks = useRef<HTMLOListElement>(null);
   const counter = useRef<HTMLSpanElement>(null);
   const trigger = useRef<ScrollTrigger | null>(null);
+  const [shown, setShown] = useState(0);
+
+  // Phones: work out which card is centred in the swipe row, and scroll to one on request.
+  const onSwipe = () => {
+    const t = track.current;
+    if (!t || t.dataset.pinned !== undefined) return;
+    const cards = [...t.querySelectorAll<HTMLElement>("[data-panel]")];
+    const mid = t.scrollLeft + t.clientWidth / 2;
+    let best = 0;
+    cards.forEach((c, i) => {
+      if (
+        Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid) <
+        Math.abs(cards[best].offsetLeft + cards[best].offsetWidth / 2 - mid)
+      )
+        best = i;
+    });
+    setShown(best);
+  };
+  const showCard = (i: number) => {
+    const t = track.current;
+    const card = t?.querySelectorAll<HTMLElement>("[data-panel]")[i];
+    if (t && card) t.scrollTo({ left: card.offsetLeft - (t.clientWidth - card.offsetWidth) / 2, behavior: "smooth" });
+  };
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (min-height: 600px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 1024px) and (min-height: 600px) and (prefers-reduced-motion: no-preference)", () => {
         // The panels only overflow visibly while pinned; otherwise the row stays a normal swipeable scroller.
         track.current!.dataset.pinned = "";
         const distance = () => {
@@ -118,7 +141,7 @@ export function ServicesScroll() {
     <section
       id="services"
       ref={section}
-      className="border-line relative mt-6 flex flex-col justify-center overflow-hidden rounded-[2rem] border bg-white py-10 md:min-h-[min(calc(100dvh-6rem),860px)] md:py-10"
+      className="border-line relative mt-6 flex flex-col justify-center overflow-hidden rounded-[2rem] border bg-white py-10 lg:min-h-[min(calc(100dvh-6rem),860px)] lg:py-10"
     >
       <div className="grain absolute inset-0" aria-hidden />
       <div className="relative flex flex-wrap items-end justify-between gap-4 px-6 sm:px-10">
@@ -128,7 +151,7 @@ export function ServicesScroll() {
           text="Pick one service or combine them. Every project starts with a free call."
         />
         {/* Progress: "01 / 05", a tick per service and a bar that fills as the panels pass. */}
-        <div className="hidden w-48 md:block" aria-hidden>
+        <div className="hidden w-48 lg:block" aria-hidden>
           <div className="mb-2 flex items-center justify-between">
             <span className="text-muted text-xs font-medium">Scroll to explore</span>
             <span className="font-condensed text-navy text-sm tracking-wide">
@@ -150,13 +173,11 @@ export function ServicesScroll() {
         </div>
       </div>
 
-      <p className="text-muted relative mt-6 px-6 text-xs font-medium sm:px-10 md:hidden" aria-hidden>
-        Swipe to see all {services.length} services →
-      </p>
       <div
         ref={track}
         onFocus={onFocus}
-        className="relative mt-4 flex snap-x snap-mandatory [scrollbar-width:thin] gap-5 overflow-x-auto px-6 pb-4 data-[pinned]:overflow-visible sm:px-10 md:mt-6 md:gap-20 md:pr-24"
+        onScroll={onSwipe}
+        className="relative mt-6 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto px-6 pb-4 data-[pinned]:overflow-visible sm:px-10 lg:mt-6 lg:[scrollbar-width:thin] lg:gap-20 lg:pr-24"
       >
         {services.map((s, i) => {
           const Icon = serviceIcons[s.icon];
@@ -165,7 +186,7 @@ export function ServicesScroll() {
               key={s.slug}
               data-panel
               id={s.slug}
-              className="group bg-mist relative flex w-[86vw] max-w-[440px] shrink-0 snap-start flex-col overflow-hidden rounded-3xl p-6 md:block md:h-[clamp(420px,calc(100dvh-19rem),560px)] md:w-[min(1040px,80vw)] md:max-w-none md:overflow-visible md:rounded-none md:bg-transparent md:p-0"
+              className="group bg-mist relative flex w-[84vw] max-w-[420px] shrink-0 snap-center flex-col overflow-hidden rounded-3xl p-5 sm:p-6 lg:block lg:h-[clamp(420px,calc(100dvh-19rem),560px)] lg:w-[min(1040px,80vw)] lg:max-w-none lg:overflow-visible lg:rounded-none lg:bg-transparent lg:p-0"
             >
               {/* Giant number. Drawn with CSS content so it isn't read out. */}
               <span
@@ -173,14 +194,14 @@ export function ServicesScroll() {
                 aria-hidden
                 data-n={i + 1}
                 style={{ color: numberColors[i] }}
-                className="font-condensed pointer-events-none absolute -top-6 -right-2 text-[11rem] leading-none select-none before:content-[attr(data-n)] md:top-1/2 md:right-auto md:left-[34%] md:-translate-y-1/2 md:text-[clamp(26rem,calc(100dvh-14rem),38rem)] md:leading-[0.78]"
+                className="font-condensed pointer-events-none absolute -top-5 -right-2 text-[9.5rem] leading-none select-none before:content-[attr(data-n)] lg:top-1/2 lg:right-auto lg:left-[34%] lg:-translate-y-1/2 lg:text-[clamp(26rem,calc(100dvh-14rem),38rem)] lg:leading-[0.78]"
               />
 
-              <div className="relative z-20 md:absolute md:top-0 md:left-0 md:w-[62%]">
+              <div className="relative z-20 lg:absolute lg:top-0 lg:left-0 lg:w-[62%]">
                 <p className="text-navy/70 text-[11px] font-semibold tracking-[0.2em] uppercase">
                   Service {pad(i + 1)}
                 </p>
-                <h3 className="font-condensed text-navy mt-2 text-[3.25rem] leading-[0.9] uppercase md:text-[clamp(3.5rem,6.2vw,6.5rem)] md:leading-[0.86]">
+                <h3 className="font-condensed text-navy mt-2 pr-16 text-[2.6rem] leading-[0.9] uppercase lg:text-[clamp(3.5rem,6.2vw,6.5rem)] lg:leading-[0.86]">
                   {s.title}
                 </h3>
               </div>
@@ -188,17 +209,17 @@ export function ServicesScroll() {
               <ImageSlot
                 src={s.image}
                 alt={s.title}
-                sizes="(min-width: 768px) 40vw, 86vw"
+                sizes="(min-width: 1024px) 40vw, 86vw"
                 hint={`service ${s.slug}`}
                 imageClassName="scale-[1.15]"
-                className="relative z-10 mt-5 aspect-[16/10] rounded-2xl shadow-[0_30px_60px_-30px_rgb(10_20_69/0.6)] md:absolute md:bottom-[6%] md:left-[10%] md:mt-0 md:w-[50%]"
+                className="relative z-10 mt-4 aspect-[16/9] rounded-2xl shadow-[0_30px_60px_-30px_rgb(10_20_69/0.6)] lg:absolute lg:bottom-[6%] lg:left-[10%] lg:mt-0 lg:aspect-[16/10] lg:w-[50%]"
               >
                 <div data-pic className="absolute -inset-x-16 inset-y-0" style={{ background: artColors[i] }}>
                   <div className="pixel-grid-dark absolute inset-0" />
                 </div>
                 <div className="absolute inset-0 grid place-items-center">
-                  <span className="grid size-20 place-items-center rounded-3xl bg-white/10 text-white ring-1 ring-white/15 backdrop-blur-sm transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-8deg] md:size-24">
-                    <Icon className="size-10 md:size-12" />
+                  <span className="grid size-20 place-items-center rounded-3xl bg-white/10 text-white ring-1 ring-white/15 backdrop-blur-sm transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-8deg] lg:size-24">
+                    <Icon className="size-10 lg:size-12" />
                   </span>
                 </div>
                 <div className="absolute bottom-4 left-4 flex gap-1">
@@ -208,8 +229,8 @@ export function ServicesScroll() {
                 </div>
               </ImageSlot>
 
-              <div className="relative z-20 mt-6 flex flex-col md:absolute md:top-0 md:right-0 md:mt-0 md:h-full md:w-[28%] md:pl-6">
-                <div className="hidden items-start gap-3 md:flex">
+              <div className="relative z-20 mt-5 flex flex-1 flex-col lg:absolute lg:top-0 lg:right-0 lg:mt-0 lg:h-full lg:w-[28%] lg:pl-6">
+                <div className="hidden items-start gap-3 lg:flex">
                   <span
                     className="text-navy/60 text-[10px] font-semibold tracking-[0.25em] uppercase [writing-mode:vertical-rl]"
                     aria-hidden
@@ -218,8 +239,8 @@ export function ServicesScroll() {
                   </span>
                   <p className="text-navy text-sm leading-relaxed font-medium">{s.summary}</p>
                 </div>
-                <p className="text-muted text-sm md:hidden">{s.summary}</p>
-                <ul className="mt-5 space-y-2 text-sm">
+                <p className="text-muted text-sm lg:hidden">{s.summary}</p>
+                <ul className="mt-4 mb-5 space-y-1.5 text-sm lg:mt-5 lg:space-y-2">
                   {s.included.map((item) => (
                     <li key={item} className="flex gap-2">
                       <Check className="mt-0.5 size-4 shrink-0 text-teal-700" />
@@ -227,7 +248,7 @@ export function ServicesScroll() {
                     </li>
                   ))}
                 </ul>
-                <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+                <ul className="mt-5 hidden flex-wrap gap-1.5 lg:flex" aria-label="Technologies">
                   {s.tech.map((t) => (
                     <li
                       key={t}
@@ -239,7 +260,7 @@ export function ServicesScroll() {
                 </ul>
                 <a
                   href="#contact"
-                  className="group/cta text-navy hover:bg-navy mt-6 inline-flex w-fit items-center gap-3 bg-white px-5 py-3 text-xs font-bold tracking-[0.18em] uppercase shadow-[0_10px_30px_-12px_rgb(10_20_69/0.35)] transition-colors hover:text-white md:mt-auto"
+                  className="group/cta text-navy hover:bg-navy mt-auto inline-flex w-full items-center justify-between gap-3 bg-white px-5 py-3.5 text-xs font-bold tracking-[0.18em] uppercase shadow-[0_10px_30px_-12px_rgb(10_20_69/0.35)] transition-colors hover:text-white lg:mt-auto lg:w-fit lg:justify-start"
                 >
                   Get a quote
                   <ArrowRight
@@ -251,6 +272,27 @@ export function ServicesScroll() {
             </article>
           );
         })}
+      </div>
+
+      {/* Phones: which card you're on; tap a dot to jump to it */}
+      <div className="relative mt-2 flex justify-center lg:hidden">
+        {services.map((s, i) => (
+          <button
+            key={s.slug}
+            type="button"
+            aria-label={`Show ${s.title}`}
+            aria-current={i === shown}
+            onClick={() => showCard(i)}
+            className="grid size-9 place-items-center"
+          >
+            <span
+              className={`block h-2 rounded-full transition-[width,background-color] duration-300 ${
+                i === shown ? "w-6" : "bg-navy/20 w-2"
+              }`}
+              style={i === shown ? { background: numberColors[i] } : undefined}
+            />
+          </button>
+        ))}
       </div>
     </section>
   );

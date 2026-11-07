@@ -37,6 +37,11 @@ export function ContactDrawer() {
   const [visible, setVisible] = useState(false);
   const [openCount, setOpenCount] = useState(0);
   const [desktop, setDesktop] = useState(false);
+  // The launcher steps aside where the page already offers a way to get in touch
+  // (elements marked data-hide-launcher), and on phones it shrinks to an icon while
+  // scrolling down so it covers less of the page.
+  const [tucked, setTucked] = useState(false);
+  const [compact, setCompact] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
@@ -75,6 +80,27 @@ export function ContactDrawer() {
       window.removeEventListener(OPEN_CONTACT, onQuick);
     };
   }, [openDrawer]);
+
+  useEffect(() => {
+    const seen = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
+      setTucked(seen.size > 0);
+    });
+    document.querySelectorAll("[data-hide-launcher]").forEach((el) => io.observe(el));
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) < 8) return;
+      setCompact(y > last && y > 400);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -117,11 +143,13 @@ export function ContactDrawer() {
         onClick={openDrawer}
         aria-haspopup="dialog"
         aria-expanded={open}
-        inert={open}
+        inert={open || tucked}
         initial={{ x: 120, opacity: 0 }}
-        animate={open ? { x: 120, opacity: 0 } : { x: 0, opacity: 1 }}
+        animate={open || tucked ? { x: 120, opacity: 0 } : { x: 0, opacity: 1 }}
         transition={{ delay: open ? 0 : 1.2, type: "spring", stiffness: 220, damping: 22 }}
-        className="group bg-navy shadow-navy/30 hover:bg-brand fixed right-4 bottom-4 z-40 flex items-center gap-2.5 rounded-full px-5 py-3.5 text-sm font-semibold text-white shadow-xl transition-colors md:top-1/2 md:right-0 md:bottom-auto md:-translate-y-1/2 md:flex-col md:gap-3 md:rounded-l-2xl md:rounded-r-none md:px-3.5 md:py-5 md:hover:pr-5"
+        className={`group bg-navy shadow-navy/30 hover:bg-brand fixed right-4 bottom-4 z-40 flex items-center gap-2.5 rounded-full px-5 py-3.5 text-sm font-semibold text-white shadow-xl transition-[background-color,padding] md:top-1/2 md:right-0 md:bottom-auto md:-translate-y-1/2 md:flex-col md:gap-3 md:rounded-l-2xl md:rounded-r-none md:px-3.5 md:py-5 md:hover:pr-5 ${
+          compact ? "max-md:gap-0 max-md:px-4" : ""
+        }`}
       >
         <span className="nudge relative grid size-5 grid-cols-2 gap-[3px]" aria-hidden>
           <span className="bg-brand rounded-[2px] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -130,7 +158,9 @@ export function ContactDrawer() {
           <span className="bg-sun rounded-[2px] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
           <span className="bg-teal absolute -top-1 -right-1 size-2 animate-ping rounded-full" />
         </span>
-        <span className="md:rotate-180 md:[writing-mode:vertical-rl]">Let&apos;s talk</span>
+        <span className={`md:rotate-180 md:[writing-mode:vertical-rl] ${compact ? "max-md:sr-only" : ""}`}>
+          Let&apos;s talk
+        </span>
       </motion.button>
 
       {mounted ? (

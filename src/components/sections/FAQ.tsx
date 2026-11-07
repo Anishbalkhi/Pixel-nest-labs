@@ -17,7 +17,7 @@ export function FAQ() {
       <div className="lg:sticky lg:top-28 lg:self-start">
         <SectionHeading eyebrow="FAQ" title="Questions we hear often." />
         {/* Whiteboard-style speech bubble that draws itself */}
-        <InView className="relative mt-8 max-w-sm">
+        <InView className="relative mt-8 hidden max-w-sm lg:block">
           <svg viewBox="0 0 320 190" className="doodle h-auto w-full overflow-visible" fill="none" aria-hidden>
             <path
               d="M40 20 C 120 6, 240 8, 292 26 C 318 36, 316 112, 290 128 C 250 150, 150 150, 92 144 L 52 178 L 62 140 C 24 132, 8 104, 10 70 C 12 40, 22 26, 40 20 Z"
@@ -34,7 +34,7 @@ export function FAQ() {
             </p>
             <a
               href="#contact"
-              className="text-brand mt-2 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+              className="text-brand mt-1 inline-flex items-center gap-1.5 py-2 text-sm font-semibold hover:underline"
             >
               Ask us directly →
             </a>
@@ -116,6 +116,16 @@ export function FAQ() {
           );
         })}
       </InView>
+      {/* Phones and tablets: the "ask us" note goes after the questions */}
+      <a
+        href="#contact"
+        className="border-brand/40 flex items-center justify-between gap-4 rounded-2xl border-2 border-dashed bg-white px-5 py-4 lg:hidden"
+      >
+        <span className="font-hand text-navy text-2xl leading-tight font-bold">Still wondering about something?</span>
+        <span className="bg-navy grid size-11 shrink-0 place-items-center rounded-full text-white" aria-hidden>
+          →
+        </span>
+      </a>
     </section>
   );
 }

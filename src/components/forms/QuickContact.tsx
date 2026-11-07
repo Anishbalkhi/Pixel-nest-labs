@@ -30,11 +30,11 @@ export function QuickContact() {
           required
           autoComplete="email"
           placeholder="Your email*"
-          className="text-navy placeholder:text-muted min-w-0 flex-1 bg-transparent px-3 text-sm outline-none"
+          className="text-navy placeholder:text-muted min-h-11 min-w-0 flex-1 bg-transparent px-3 text-base outline-none sm:text-sm"
         />
         <button
           type="submit"
-          className="group bg-navy hover:bg-brand inline-flex items-center gap-2 rounded px-4 py-2.5 text-[11px] font-bold tracking-[0.18em] text-white uppercase transition-colors"
+          className="group bg-navy hover:bg-brand inline-flex items-center gap-2 rounded px-4 py-3 text-[11px] font-bold tracking-[0.18em] text-white uppercase transition-colors"
         >
           Start <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
         </button>

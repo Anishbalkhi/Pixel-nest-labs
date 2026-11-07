@@ -22,13 +22,14 @@ export function LabShowcase() {
           title="Demo and concept projects."
           text="We're a new studio, so instead of client logos here are things we've built to show how we work. Each one is labelled Demo or Concept."
         />
-        <p className="border-line text-muted flex max-w-xs items-start gap-2 rounded-2xl border bg-white px-4 py-3 text-xs">
+        <p className="border-line text-muted hidden max-w-xs items-start gap-2 rounded-2xl border bg-white px-4 py-3 text-xs sm:flex">
           <FlaskConical className="text-brand mt-0.5 size-4 shrink-0" />
           Built by us to explore an idea or a stack. Not client work.
         </p>
       </div>
 
-      <div className="mt-10 grid gap-4 lg:grid-cols-3">
+      {/* Phones and tablets: a swipeable row. Desktop: the bento grid. */}
+      <div className="-mx-2 mt-8 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-2 pb-2 sm:-mx-4 sm:px-4 lg:mx-0 lg:mt-10 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0 lg:pb-0">
         {labProjects.map((p, i) => {
           const wide = WIDE[i % WIDE.length];
           return (
@@ -36,7 +37,7 @@ export function LabShowcase() {
               key={p.title}
               data-lab-card
               style={{ ["--i" as string]: i % 2 }}
-              className={`group border-line hover:border-brand/40 relative flex flex-col overflow-hidden rounded-3xl border bg-white transition-[border-color,box-shadow] duration-300 hover:shadow-[0_30px_60px_-30px_rgb(11_87_194/0.45)] ${
+              className={`group border-line hover:border-brand/40 relative flex w-[84vw] max-w-[420px] shrink-0 snap-center flex-col overflow-hidden rounded-3xl border bg-white transition-[border-color,box-shadow] duration-300 hover:shadow-[0_30px_60px_-30px_rgb(11_87_194/0.45)] lg:w-auto lg:max-w-none ${
                 wide ? "lg:col-span-2 lg:flex-row" : ""
               }`}
             >
@@ -52,7 +53,7 @@ export function LabShowcase() {
 
               <div
                 aria-hidden
-                className={`bg-navy relative flex min-h-56 items-center justify-center overflow-hidden px-5 py-8 ${
+                className={`bg-navy relative flex min-h-48 items-center justify-center overflow-hidden px-5 py-8 sm:min-h-56 ${
                   wide ? "lg:w-[58%] lg:shrink-0" : ""
                 }`}
               >

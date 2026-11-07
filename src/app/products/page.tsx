@@ -65,11 +65,11 @@ export default function ProductsPage() {
               className="relative grid overflow-hidden rounded-[2rem] bg-[#efece6] lg:grid-cols-2"
             >
               <div className="grain absolute inset-0" aria-hidden />
-              <div className={`relative flex flex-col p-6 sm:p-10 ${flip ? "lg:order-2" : ""}`}>
+              <div className={`relative flex flex-col p-6 sm:p-10 ${flip ? "lg:order-2" : "lg:order-1"}`}>
                 <div className="flex items-start justify-between gap-4">
                   <p
                     data-reveal
-                    className="font-display text-6xl leading-none font-extrabold sm:text-7xl"
+                    className="font-display text-5xl leading-none font-extrabold sm:text-7xl"
                     style={{ color: tone }}
                   >
                     {i + 1}.
@@ -80,7 +80,7 @@ export default function ProductsPage() {
                 </div>
                 <h2
                   data-reveal
-                  className="font-display mt-6 text-5xl leading-[0.92] font-extrabold tracking-tight lowercase sm:text-6xl xl:text-7xl"
+                  className="font-display mt-4 text-[2.6rem] leading-[0.92] font-extrabold tracking-tight lowercase sm:mt-6 sm:text-6xl xl:text-7xl"
                   style={{ color: tone }}
                 >
                   {p.name}
@@ -107,7 +107,9 @@ export default function ProductsPage() {
                 </div>
               </div>
 
-              <div className={`relative min-h-[320px] lg:min-h-[520px] ${flip ? "lg:order-1" : ""}`}>
+              <div
+                className={`relative order-first min-h-[220px] sm:min-h-[320px] lg:min-h-[520px] ${flip ? "lg:order-1" : "lg:order-2"}`}
+              >
                 <ImageSlot
                   src={p.image}
                   alt=""
@@ -141,7 +143,7 @@ export default function ProductsPage() {
                   id={`badge-${p.slug}`}
                   text="In development • Join the waitlist • "
                   color={tone}
-                  className={`absolute bottom-6 rounded-full bg-[#efece6] ${flip ? "right-6 lg:-right-8" : "left-6 lg:-left-8"} z-10`}
+                  className={`absolute bottom-6 rounded-full bg-[#efece6] max-sm:hidden ${flip ? "right-6 lg:-right-8" : "left-6 lg:-left-8"} z-10`}
                 />
               </div>
             </ScrollReveal>

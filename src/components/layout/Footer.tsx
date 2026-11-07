@@ -18,7 +18,7 @@ const socialIcons = {
 
 export function Footer() {
   return (
-    <footer className="bg-navy relative overflow-hidden text-white">
+    <footer data-hide-launcher className="bg-navy relative overflow-hidden text-white">
       <div className="pixel-grid-dark absolute inset-0 opacity-60" aria-hidden />
       <div className="relative mx-auto grid max-w-[1400px] gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div className="space-y-4">
@@ -34,7 +34,7 @@ export function Footer() {
           <ul className="space-y-1 text-sm text-white/75">
             {nav.map((n) => (
               <li key={n.href}>
-                <Link href={n.href} className="inline-block py-1.5 hover:text-white">
+                <Link href={n.href} className="inline-block py-2 hover:text-white">
                   {n.label}
                 </Link>
               </li>
@@ -47,7 +47,7 @@ export function Footer() {
           <ul className="space-y-1 text-sm text-white/75">
             {services.map((s) => (
               <li key={s.slug}>
-                <Link href="/#services" className="inline-block py-1.5 hover:text-white">
+                <Link href="/#services" className="inline-block py-2 hover:text-white">
                   {s.title}
                 </Link>
               </li>
@@ -68,17 +68,14 @@ export function Footer() {
             ) : null}
             {contact.phone ? (
               <li>
-                <a
-                  href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                  className="inline-block py-1.5 hover:text-white"
-                >
+                <a href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`} className="inline-block py-2 hover:text-white">
                   {contact.phone}
                 </a>
               </li>
             ) : null}
             {contact.location ? <li className="py-1.5">{contact.location}</li> : null}
             <li>
-              <a href="#contact" className="hover:text-teal inline-block py-1.5 font-semibold text-white">
+              <a href="#contact" className="hover:text-teal inline-block py-2 font-semibold text-white">
                 Send us a message →
               </a>
             </li>

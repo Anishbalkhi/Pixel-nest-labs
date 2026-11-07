@@ -57,7 +57,7 @@ export function Navbar() {
           <Wordmark className="text-lg" />
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {nav.map((item) => {
             const active = item.href === pathname;
             return (
@@ -92,7 +92,7 @@ export function Navbar() {
           </Magnetic>
           <button
             type="button"
-            className="border-line grid size-10 place-items-center rounded-full border bg-white md:hidden"
+            className="border-line grid size-10 place-items-center rounded-full border bg-white lg:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -127,7 +127,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden md:hidden"
+            className="overflow-hidden lg:hidden"
           >
             <ul className="space-y-1 px-4 pt-2 pb-5">
               {nav.map((item, i) => (

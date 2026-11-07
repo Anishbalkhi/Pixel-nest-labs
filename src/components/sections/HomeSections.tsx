@@ -42,7 +42,7 @@ export function WhyUs() {
         />
       </ScrollReveal>
 
-      <InView className="notes relative mx-auto mt-12 flex max-w-5xl flex-col gap-12 lg:block lg:h-[800px]">
+      <InView className="notes relative mx-auto mt-10 flex max-w-5xl flex-col gap-9 sm:mt-12 sm:gap-12 lg:block lg:h-[800px]">
         {/* Dashed lines from one note to the next (desktop layout only) */}
         <svg
           viewBox="0 0 1000 800"
@@ -90,7 +90,10 @@ export function WhyUs() {
             >
               <span className="pin absolute -top-4 left-1/2 z-10 -translate-x-1/2" aria-hidden />
               <div className="rounded-[28px] bg-white p-3 shadow-[0_30px_50px_-28px_rgb(10_20_69/0.45),0_2px_6px_rgb(10_20_69/0.06)]">
-                <div className="rounded-[20px] border border-white/80 px-6 pt-7 pb-8" style={{ background: n.tint }}>
+                <div
+                  className="rounded-[20px] border border-white/80 px-5 pt-6 pb-7 sm:px-6 sm:pt-7 sm:pb-8"
+                  style={{ background: n.tint }}
+                >
                   <p className="font-hand text-4xl leading-none font-bold" style={{ color: n.ink }}>
                     0{i + 1}
                   </p>
@@ -199,7 +202,7 @@ export function About() {
           alt="The Pixel Nest Labs founders"
           sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 92vw"
           hint="the two founders together"
-          className="bg-navy min-h-[420px] rounded-3xl lg:row-span-2"
+          className="bg-navy min-h-[260px] rounded-3xl sm:min-h-[420px] lg:row-span-2"
           imageClassName="grayscale"
         >
           <div className="pixel-grid-dark absolute inset-0" />
@@ -306,7 +309,7 @@ function PixelRainLite() {
     <div className="absolute inset-0 grid place-items-center">
       <div className="text-center text-white">
         <PixelMark className="mx-auto h-16 w-auto" />
-        <p className="font-condensed mt-4 text-5xl leading-[0.9] uppercase">
+        <p className="font-condensed mt-4 text-4xl leading-[0.9] uppercase sm:text-5xl">
           Two founders.
           <br />
           <span className="text-teal">One small lab.</span>
@@ -326,7 +329,10 @@ export function CTASection({
   text?: string;
 }) {
   return (
-    <section className="border-line relative mt-6 overflow-hidden rounded-[2rem] border bg-white py-14 sm:py-20">
+    <section
+      data-hide-launcher
+      className="border-line relative mt-6 overflow-hidden rounded-[2rem] border bg-white py-14 sm:py-20"
+    >
       <ScrollReveal className="relative px-6 text-center sm:px-10">
         <p data-reveal className="text-navy text-[11px] font-semibold tracking-[0.25em] uppercase">
           {eyebrow}

@@ -41,7 +41,7 @@ export function ProductsCarousel() {
       onKeyDown={onKey}
     >
       <div
-        className="relative h-[460px] touch-pan-y select-none sm:h-[480px]"
+        className="relative h-[430px] touch-pan-y select-none sm:h-[480px]"
         onPointerDown={onDown}
         onPointerUp={onUp}
         onPointerCancel={() => (swipe.current = null)}
@@ -113,7 +113,7 @@ export function ProductsCarousel() {
         >
           <ArrowLeft className="size-4" />
         </button>
-        <div className="flex gap-2">
+        <div className="flex">
           {products.map((p, i) => (
             <button
               key={p.slug}
@@ -121,10 +121,14 @@ export function ProductsCarousel() {
               onClick={() => setActive(i)}
               aria-label={`Show ${p.name}`}
               aria-current={i === active}
-              className={`h-2 rounded-full transition-[width,background-color] duration-300 ${
-                i === active ? "bg-navy w-7" : "bg-navy/20 hover:bg-navy/40 w-2"
-              }`}
-            />
+              className="group/dot grid h-11 w-6 place-items-center"
+            >
+              <span
+                className={`block h-2 rounded-full transition-[width,background-color] duration-300 ${
+                  i === active ? "bg-navy w-5" : "bg-navy/20 group-hover/dot:bg-navy/40 w-2"
+                }`}
+              />
+            </button>
           ))}
         </div>
         <button
