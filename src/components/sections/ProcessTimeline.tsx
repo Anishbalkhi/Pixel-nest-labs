@@ -1,261 +1,231 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CodeXml, LifeBuoy, PenTool, Rocket, Search } from "lucide-react";
-import { useRef, type CSSProperties } from "react";
+import { ArrowLeft, ArrowRight, CodeXml, LifeBuoy, PenTool, Rocket, Search } from "lucide-react";
+import { useId, useState, type CSSProperties } from "react";
 import { ImageSlot } from "@/components/media/ImageSlot";
+import { InView } from "@/components/motion/InView";
 import { process } from "@/content/site";
 import { SectionHeading } from "./SectionHeading";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
-
 const icons = [Search, PenTool, CodeXml, Rocket, LifeBuoy];
-const tones = ["#f7a21b", "#1fb89a", "#f7a21b", "#0b57c2", "#1fb89a"];
-const shapes = ["sunburst", "petals", "star", "rays", "petals"] as const;
+/** Colour block for each step, and the text colour that reads on it. */
+const tones = [
+  { bg: "#0b57c2", fg: "#ffffff" },
+  { bg: "#1fb89a", fg: "#0a0f2c" },
+  { bg: "#f7a21b", fg: "#0a0f2c" },
+  { bg: "#0e76a6", fg: "#ffffff" },
+  { bg: "#0a0f2c", fg: "#ffffff" },
+];
+const pad = (n: number) => String(n).padStart(2, "0");
 
-/** Circles sit on alternating sides, as a percentage of the width. */
-const X = process.map((_, i) => (i % 2 ? 72 : 28));
-const ROW = 100; // height of one step in SVG units (the SVG stretches to fit)
-
-/**
- * The winding line through every step. Between two circles it swings out past
- * each one before crossing over, so it reads as a loose hand-drawn ribbon.
- */
-function windingPath() {
-  const pts = X.map((x, i) => [x * 10, i * ROW + ROW / 2] as const);
-  let d = `M 500 0 C 500 ${ROW * 0.25}, ${pts[0][0]} ${ROW * 0.1}, ${pts[0][0]} ${pts[0][1]}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const [x1, y1] = pts[i];
-    const [x2, y2] = pts[i + 1];
-    const dir = Math.sign(x2 - x1);
-    d += ` C ${x1 - dir * 230} ${y1 + ROW * 0.55}, ${x2 + dir * 230} ${y2 - ROW * 0.55}, ${x2} ${y2}`;
-  }
-  const [lx, ly] = pts[pts.length - 1];
-  d += ` C ${lx} ${ly + ROW * 0.4}, 500 ${ly + ROW * 0.3}, 500 ${pts.length * ROW}`;
-  return d;
-}
-const PATH = windingPath();
-
-/** Decorative shapes behind each circle (sunburst, petals, star, half rays). */
-function Burst({ shape, color }: { shape: (typeof shapes)[number]; color: string }) {
-  const common = "absolute inset-0 size-full";
-  if (shape === "sunburst")
-    return (
-      <svg viewBox="-100 -100 200 200" className={common}>
-        {Array.from({ length: 28 }, (_, k) => (
-          <rect
-            key={k}
-            x="-3"
-            y="-98"
-            width="6"
-            height="34"
-            rx="2"
-            fill={color}
-            transform={`rotate(${(k * 360) / 28})`}
-          />
-        ))}
-      </svg>
-    );
-  if (shape === "rays")
-    return (
-      <svg viewBox="-100 -100 200 200" className={common}>
-        {Array.from({ length: 13 }, (_, k) => (
-          <rect
-            key={k}
-            x="-4"
-            y="-98"
-            width="8"
-            height="30"
-            rx="2"
-            fill={color}
-            transform={`rotate(${-90 + (k * 180) / 12})`}
-          />
-        ))}
-      </svg>
-    );
-  if (shape === "star")
-    return (
-      <svg viewBox="-100 -100 200 200" className={common}>
-        <path
-          fill={color}
-          d={
-            Array.from({ length: 16 }, (_, k) => {
-              const r = k % 2 ? 58 : 98;
-              const a = (k * Math.PI) / 8 - Math.PI / 2;
-              return `${k ? "L" : "M"} ${(Math.cos(a) * r).toFixed(1)} ${(Math.sin(a) * r).toFixed(1)}`;
-            }).join(" ") + " Z"
-          }
-        />
-      </svg>
-    );
-  // petals: four rounded blocks around the circle
+function StepPhoto({ i, className }: { i: number; className: string }) {
+  const Icon = icons[i % icons.length];
+  const step = process[i];
   return (
-    <svg viewBox="-100 -100 200 200" className={common}>
-      {[0, 90, 180, 270].map((r) => (
-        <rect key={r} x="-30" y="-98" width="60" height="44" rx="16" fill={color} transform={`rotate(${r + 45})`} />
-      ))}
-    </svg>
-  );
-}
-
-/** Four-point sparkle accent. */
-function Sparkle({ className, color }: { className: string; color: string }) {
-  return (
-    <svg viewBox="-10 -10 20 20" className={className} aria-hidden>
-      <path fill={color} d="M0 -10 C1 -2 2 -1 10 0 C2 1 1 2 0 10 C-1 2 -2 1 -10 0 C-2 -1 -1 -2 0 -10 Z" />
-    </svg>
+    <ImageSlot
+      src={step.image}
+      alt=""
+      sizes="200px"
+      hint={`process ${step.title.toLowerCase()}`}
+      className={`border-2 border-current ${className}`}
+      imageClassName="grayscale"
+    >
+      <div className="absolute inset-0 bg-white/10">
+        <div className="pixel-grid-dark absolute inset-0" />
+      </div>
+      <span className="absolute inset-0 grid place-items-center">
+        <Icon className="size-10" />
+      </span>
+    </ImageSlot>
   );
 }
 
 /**
- * "How we work": a thick blue line winds down the page and draws itself as you
- * scroll. Each step is a circle (a photo once you add one, in black and white)
- * with a burst of colour behind it and its name curving around the edge.
+ * "How we work". Desktop: five giant numbers side by side; the open step
+ * widens into a colour block with its text and what you get at the end.
+ * Hover, click, or use the arrows. Phones and tablets: the steps step down
+ * the page like a staircase, all open.
  */
 export function ProcessTimeline() {
-  const root = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo(
-          "[data-draw]",
-          { clipPath: "inset(0% 0% 100% 0%)" },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            ease: "none",
-            scrollTrigger: { trigger: "[data-steps]", start: "top 70%", end: "bottom 70%", scrub: 0.6 },
-          },
-        );
-        gsap.utils.toArray<HTMLElement>("[data-step]").forEach((step) => {
-          ScrollTrigger.create({
-            trigger: step,
-            start: "center 72%",
-            toggleClass: { targets: step, className: "is-active" },
-          });
-        });
-      });
-      mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set("[data-draw]", { clipPath: "none" });
-        gsap.utils.toArray<HTMLElement>("[data-step]").forEach((s) => s.classList.add("is-active"));
-      });
-    },
-    { scope: root },
-  );
+  const [open, setOpen] = useState(0);
+  const uid = useId();
+  const go = (d: number) => setOpen((o) => (o + d + process.length) % process.length);
 
   return (
     <section
       id="process"
-      ref={root}
-      className="border-navy/15 relative mt-6 overflow-hidden border bg-white px-3 py-14 sm:px-10 sm:py-16"
+      className="border-navy/15 relative mt-6 overflow-hidden border bg-white px-5 py-14 sm:px-10 sm:py-16"
     >
-      <div className="grain absolute inset-0" aria-hidden />
-      <div className="relative">
+      <div className="relative flex flex-wrap items-end justify-between gap-6">
         <SectionHeading
-          center
           eyebrow="How we work"
           title="A simple process, with no surprises."
           text="Five steps from first call to long-term support. You see progress every week."
         />
+        {/* Number rail + arrows (desktop) */}
+        <div className="hidden items-center gap-4 lg:flex" aria-hidden>
+          <ol className="flex items-center">
+            {process.map((s, i) => (
+              <li key={s.title} className="flex items-center">
+                {i > 0 ? (
+                  <span className={`h-0.5 w-6 transition-colors ${i <= open ? "bg-navy" : "bg-navy/15"}`} />
+                ) : null}
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setOpen(i)}
+                  className={`font-condensed grid size-9 place-items-center border text-sm transition-colors ${
+                    i === open
+                      ? "border-navy bg-navy text-white"
+                      : i < open
+                        ? "border-navy text-navy"
+                        : "border-navy/20 text-navy/40"
+                  }`}
+                >
+                  {pad(i + 1)}
+                </button>
+              </li>
+            ))}
+          </ol>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              tabIndex={-1}
+              onClick={() => go(-1)}
+              className="border-navy text-navy hover:bg-navy grid size-11 place-items-center border transition-colors hover:text-white"
+            >
+              <ArrowLeft className="size-4" />
+            </button>
+            <button
+              type="button"
+              tabIndex={-1}
+              onClick={() => go(1)}
+              className="bg-navy hover:bg-brand grid size-11 place-items-center text-white transition-colors"
+            >
+              <ArrowRight className="size-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      <ol data-steps className="relative mx-auto mt-8 grid max-w-5xl auto-rows-[290px] sm:mt-12 md:auto-rows-[270px]">
-        {/* Faint full line, then the solid line on top, revealed from the top down as you scroll */}
-        {[false, true].map((solid) => (
-          <svg
-            key={String(solid)}
-            data-draw={solid ? "" : undefined}
-            viewBox={`0 0 1000 ${process.length * ROW}`}
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-0 size-full overflow-visible"
-            aria-hidden
-          >
-            <path d={PATH} fill="none" stroke="#0b57c2" strokeOpacity={solid ? 1 : 0.12} className="winding" />
-          </svg>
-        ))}
-
+      {/* Desktop: number accordion */}
+      <ol className="relative mt-10 hidden h-[480px] gap-2 lg:flex">
         {process.map((step, i) => {
-          const Icon = icons[i % icons.length];
-          const left = i % 2 === 0;
-          const tone = tones[i];
+          const on = i === open;
+          const t = tones[i % tones.length];
           return (
             <li
               key={step.title}
-              data-step
-              style={{ ["--x" as string]: `${X[i]}%`, ["--tone" as string]: tone } as CSSProperties}
-              className="group relative"
+              onMouseEnter={() => setOpen(i)}
+              style={
+                {
+                  flexGrow: on ? 6 : 1,
+                  background: on ? t.bg : undefined,
+                  color: on ? t.fg : undefined,
+                } as CSSProperties
+              }
+              className={`relative min-w-0 basis-0 overflow-hidden border transition-[flex-grow,background-color,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                on ? "border-navy" : "border-navy/15 text-navy hover:bg-mist bg-white"
+              }`}
             >
-              {/* Circle, centred on the line */}
-              <div className="step-circle absolute top-1/2 left-[var(--x)] size-[108px] -translate-x-1/2 -translate-y-1/2 sm:size-[150px]">
-                {/* Pushed away from the curved label so the two don't overlap */}
-                <div
-                  className={`absolute -inset-[34%] ${
-                    left
-                      ? "translate-x-[10%] -translate-y-[8%] sm:translate-x-[16%]"
-                      : "-translate-x-[10%] translate-y-[8%] sm:-translate-x-[16%]"
-                  }`}
-                  aria-hidden
+              <h3>
+                <button
+                  type="button"
+                  id={`${uid}-h${i}`}
+                  aria-expanded={on}
+                  aria-controls={`${uid}-p${i}`}
+                  onClick={() => setOpen(i)}
+                  onFocus={() => setOpen(i)}
+                  className="absolute inset-0 z-10 cursor-pointer text-left outline-offset-[-4px]"
                 >
-                  <div className="step-burst size-full">
-                    <Burst shape={shapes[i]} color={tone} />
-                  </div>
-                </div>
-                <Sparkle
-                  color={i % 2 ? "#0b57c2" : "#1fb89a"}
-                  className={`step-sparkle absolute size-8 sm:size-10 ${left ? "-top-4 -right-3" : "-bottom-3 -left-4"}`}
-                />
-                <ImageSlot
-                  src={step.image}
-                  alt=""
-                  sizes="150px"
-                  hint={`process ${step.title.toLowerCase()}`}
-                  className="absolute inset-0 rounded-full shadow-[0_18px_40px_-18px_rgb(10_20_69/0.55)] ring-4 ring-white"
-                  imageClassName="grayscale"
-                >
-                  <div className="bg-navy absolute inset-0">
-                    <div className="pixel-grid-dark absolute inset-0" />
-                  </div>
-                  <span className="absolute inset-0 grid place-items-center text-white">
-                    <Icon className="size-9 sm:size-12" />
+                  <span className="sr-only">
+                    Step {i + 1}: {step.title}
                   </span>
-                </ImageSlot>
-                {/* Step name curving around the outside of the circle */}
-                <svg viewBox="-100 -100 200 200" className="absolute -inset-[30%] overflow-visible" aria-hidden>
-                  <defs>
-                    <path
-                      id={`arc-${i}`}
-                      d={
-                        left
-                          ? "M -59 59 A 84 84 0 1 1 59 -59 A 84 84 0 1 1 -59 59"
-                          : "M 42 -73 A 84 84 0 1 1 -42 73 A 84 84 0 1 1 42 -73"
-                      }
-                    />
-                  </defs>
-                  <text className="font-display fill-brand text-[15px] font-extrabold tracking-[0.12em] uppercase">
-                    <textPath href={`#arc-${i}`}>{step.title} •</textPath>
-                  </text>
-                </svg>
-              </div>
+                </button>
+              </h3>
 
-              {/* Number, title and text on the other side of the line */}
-              <div
-                className={`step-text absolute top-1/2 z-10 w-[52%] -translate-y-1/2 rounded-2xl bg-white/90 p-3 sm:w-[40%] sm:bg-transparent sm:p-0 ${
-                  left ? "left-[47%]" : "right-[47%] text-right"
+              {/* Giant number, always visible */}
+              <span
+                aria-hidden
+                className={`font-condensed pointer-events-none absolute bottom-[-0.08em] left-3 text-[11rem] leading-none transition-colors duration-500 ${
+                  on ? "" : "text-navy/15"
                 }`}
               >
-                <p className="font-display text-navy text-4xl leading-none font-extrabold tracking-tight sm:text-6xl">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="font-display text-navy mt-2 text-lg font-bold sm:text-xl">{step.title}</h3>
-                <p className="text-muted mt-1 text-sm italic">{step.text}</p>
+                {i + 1}
+              </span>
+
+              {/* Collapsed: the step name running up the column */}
+              <span
+                aria-hidden
+                className={`pointer-events-none absolute top-5 left-1/2 -translate-x-1/2 text-xs font-bold tracking-[0.25em] whitespace-nowrap uppercase transition-opacity duration-300 [writing-mode:vertical-rl] ${
+                  on ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                {step.title}
+              </span>
+
+              {/* Open: the full step */}
+              <div
+                id={`${uid}-p${i}`}
+                role="region"
+                aria-labelledby={`${uid}-h${i}`}
+                inert={!on}
+                className={`pointer-events-none absolute inset-0 flex flex-col p-7 transition-opacity duration-500 ${
+                  on ? "opacity-100 delay-200" : "opacity-0"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-6">
+                  <div className="max-w-md">
+                    <p className="text-[11px] font-bold tracking-[0.2em] uppercase opacity-80">
+                      Step {pad(i + 1)} of {pad(process.length)}
+                    </p>
+                    <p className="font-condensed mt-3 text-6xl leading-[0.9] uppercase">{step.title}</p>
+                    <p className="mt-4 text-[15px] leading-relaxed opacity-90">{step.text}</p>
+                  </div>
+                  <StepPhoto i={i} className="size-36 shrink-0" />
+                </div>
+                <div className="mt-auto ml-auto w-[min(100%,360px)] border-t-2 border-current pt-3">
+                  <p className="text-[11px] font-bold tracking-[0.2em] uppercase opacity-80">You get</p>
+                  <p className="mt-1 text-lg font-semibold">{step.gets}</p>
+                </div>
               </div>
             </li>
           );
         })}
       </ol>
+
+      {/* Phones and tablets: staircase, every step open */}
+      <InView as="ol" className="stairs relative mt-10 space-y-3 lg:hidden">
+        {process.map((step, i) => {
+          const t = tones[i % tones.length];
+          return (
+            <li
+              key={step.title}
+              style={{ ["--i" as string]: i, background: t.bg, color: t.fg } as CSSProperties}
+              className="stair border-navy relative overflow-hidden border p-5 sm:p-6"
+            >
+              <span
+                aria-hidden
+                className="font-condensed pointer-events-none absolute -right-1 -bottom-[0.12em] text-[8rem] leading-none opacity-20"
+              >
+                {i + 1}
+              </span>
+              <div className="relative flex items-start gap-4">
+                <StepPhoto i={i} className="size-16 shrink-0 sm:size-20" />
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold tracking-[0.2em] uppercase opacity-80">Step {pad(i + 1)}</p>
+                  <h3 className="font-condensed mt-1 text-4xl leading-none uppercase">{step.title}</h3>
+                </div>
+              </div>
+              <p className="relative mt-4 max-w-md text-[15px] leading-relaxed opacity-90">{step.text}</p>
+              <p className="relative mt-4 max-w-md border-t border-current pt-3 text-sm font-semibold">
+                <span className="mr-2 text-[11px] font-bold tracking-[0.2em] uppercase opacity-80">You get</span>
+                {step.gets}
+              </p>
+            </li>
+          );
+        })}
+      </InView>
     </section>
   );
 }

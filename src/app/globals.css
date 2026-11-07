@@ -663,66 +663,26 @@ html.lenis body {
     repeating-linear-gradient(to bottom, transparent 0 51px, rgb(10 20 69 / 0.07) 51px 52px);
 }
 
-/* ---------- Process: winding line ---------- */
+/* ---------- Process: staircase (phones and tablets) ---------- */
 
-.winding {
-  stroke-width: 7px;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
+/* Each step sits a little further in than the one before, like stairs. */
+.stair {
+  margin-left: calc(var(--i, 0) * 0.6rem);
 }
 @media (min-width: 640px) {
-  .winding {
-    stroke-width: 10px;
+  .stair {
+    margin-left: calc(var(--i, 0) * 5%);
   }
 }
-
-/* Each step grows in when the line reaches it; its burst keeps turning slowly. */
-.js [data-step] .step-circle {
-  scale: 0.7;
-  opacity: 0.35;
-  transition:
-    scale 700ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 400ms ease;
-}
-.js [data-step].is-active .step-circle {
-  scale: 1;
-  opacity: 1;
-}
-.step-burst {
-  animation: burst-turn 40s linear infinite;
-}
-@keyframes burst-turn {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.js [data-step] .step-burst {
-  scale: 0.4;
-  transition: scale 800ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms;
-}
-.js [data-step].is-active .step-burst {
-  scale: 1;
-}
-.step-sparkle {
-  animation: twinkle 3.2s ease-in-out infinite;
-}
-@keyframes twinkle {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    transform: scale(0.7) rotate(45deg);
-  }
-}
-.js [data-step] .step-text {
+.js .stairs .stair {
   opacity: 0;
-  translate: 0 24px;
+  translate: -28px 0;
   transition:
-    opacity 500ms ease 150ms,
-    translate 700ms cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+    opacity 500ms ease,
+    translate 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
 }
-.js [data-step].is-active .step-text {
+.js .stairs.is-in .stair {
   opacity: 1;
   translate: 0 0;
 }
@@ -805,9 +765,7 @@ html.lenis body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js [data-step] .step-circle,
-  .js [data-step] .step-burst,
-  .js [data-step] .step-text,
+  .js .stairs .stair,
   .js .notes .note,
   .js .notes .note-links path,
   .js .notes .note-sign {

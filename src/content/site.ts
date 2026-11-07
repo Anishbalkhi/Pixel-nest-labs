@@ -162,13 +162,39 @@ export const whyUs = [
   },
 ];
 
-// `image`: photo shown in the step's circle (it's shown in black and white). Leave "" for the built-in icon.
+// Steps in "How we work". `gets` is what you have at the end of the step.
+// `image`: optional photo for the step (shown in black and white). Leave "" for the built-in icon.
 export const process = [
-  { title: "Discover", text: "A free call to understand your business, goals and budget.", image: "" },
-  { title: "Design", text: "Wireframes and visual designs you can review before any code.", image: "" },
-  { title: "Build", text: "Short build cycles with a preview link you can try every week.", image: "" },
-  { title: "Launch", text: "Testing, deployment and a walkthrough for your team.", image: "" },
-  { title: "Support", text: "Fixes, improvements and monthly care plans if you need them.", image: "" },
+  {
+    title: "Discover",
+    text: "A free call to understand your business, goals and budget.",
+    gets: "A written scope and a fixed quote",
+    image: "",
+  },
+  {
+    title: "Design",
+    text: "Wireframes and visual designs you can review before any code.",
+    gets: "Designs you can click through and comment on",
+    image: "",
+  },
+  {
+    title: "Build",
+    text: "Short build cycles with a preview link you can try every week.",
+    gets: "A preview link that updates every week",
+    image: "",
+  },
+  {
+    title: "Launch",
+    text: "Testing, deployment and a walkthrough for your team.",
+    gets: "Your project live, plus a walkthrough for your team",
+    image: "",
+  },
+  {
+    title: "Support",
+    text: "Fixes, improvements and monthly care plans if you need them.",
+    gets: "Fixes and improvements, monthly if you like",
+    image: "",
+  },
 ];
 
 export const techStack = [
