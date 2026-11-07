@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { products } from "@/content/site";
+import { LoopVideo } from "@/components/media/LoopVideo";
 import { ProductMock } from "./ProductMocks";
 
 /** Colour block for each product, and the text colour that reads on it. */
@@ -160,15 +161,25 @@ export function ProductShowcase() {
               transition={{ duration: 0.45, ease }}
               className="flex justify-center lg:justify-start"
             >
-              {p.image ? (
-                <div className="border-navy relative aspect-[4/3] w-full max-w-[460px] border-2 shadow-[10px_10px_0_0_#0a0f2c]">
-                  <Image
-                    src={p.image}
-                    alt={`${p.name} screen`}
-                    fill
-                    sizes="(min-width: 1024px) 460px, 90vw"
-                    className="object-cover"
-                  />
+              {p.image || p.video ? (
+                <div className="border-navy relative aspect-[4/3] w-full max-w-[460px] overflow-hidden border-2 bg-white shadow-[10px_10px_0_0_#0a0f2c]">
+                  {p.image ? (
+                    <Image
+                      src={p.image}
+                      alt={`${p.name} screen`}
+                      fill
+                      sizes="(min-width: 1024px) 460px, 90vw"
+                      className="object-cover"
+                    />
+                  ) : (
+                    // No screenshot yet: the mock-up shows until (or instead of) the video.
+                    <div className="bg-mist absolute inset-0 grid place-items-center">
+                      <div className="w-[118%] scale-[0.78]">
+                        <ProductMock slug={p.slug} />
+                      </div>
+                    </div>
+                  )}
+                  <LoopVideo src={p.video} />
                 </div>
               ) : (
                 <ProductMock slug={p.slug} />

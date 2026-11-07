@@ -106,8 +106,8 @@ export function ServicesScroll() {
             { xPercent: -40, ease: "none", scrollTrigger: along },
           );
           // The built-in artwork, or the photo once one is added (it's scaled up a little so it never shows an edge).
-          const pic = panel.querySelector("[data-pic]") ?? panel.querySelector("img");
-          if (pic) gsap.fromTo(pic, { x: 36 }, { x: -36, ease: "none", scrollTrigger: along });
+          const pics = panel.querySelectorAll("[data-pic], img, video");
+          if (pics.length) gsap.fromTo(pics, { x: 36 }, { x: -36, ease: "none", scrollTrigger: along });
         });
 
         return () => {
@@ -209,6 +209,7 @@ export function ServicesScroll() {
 
               <ImageSlot
                 src={s.image}
+                video={s.video}
                 alt={s.title}
                 sizes="(min-width: 1024px) 40vw, 86vw"
                 hint={`service ${s.slug}`}

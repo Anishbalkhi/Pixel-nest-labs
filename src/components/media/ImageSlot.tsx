@@ -1,15 +1,21 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { LoopVideo } from "./LoopVideo";
 
 /**
  * A spot for a photo. With `src` it shows the image, cropped to fill the box.
  * Without one it shows `children` (the built-in artwork), and in development
  * a small tag saying which photo belongs here, so slots are easy to find.
  *
- * Put photos in /public/images/... and set the path in src/content/site.ts.
+ * With `video`, a silent looping clip plays over it on larger screens (see LoopVideo);
+ * the picture stays as the poster and the fallback.
+ *
+ * Put photos in /public/images/... and videos in /public/videos/..., and set the
+ * paths in src/content/site.ts.
  */
 export function ImageSlot({
   src,
+  video,
   alt = "",
   sizes,
   hint,
@@ -18,6 +24,8 @@ export function ImageSlot({
   children,
 }: {
   src?: string;
+  /** Optional looping MP4 shown over the picture, e.g. "/videos/services/ai-data.mp4". */
+  video?: string;
   alt?: string;
   /** How wide the image shows, e.g. "(min-width: 768px) 40vw, 90vw". */
   sizes: string;
@@ -43,6 +51,7 @@ export function ImageSlot({
           ) : null}
         </div>
       )}
+      <LoopVideo src={video} className={imageClassName} />
     </div>
   );
 }

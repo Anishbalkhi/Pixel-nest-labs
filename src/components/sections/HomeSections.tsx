@@ -196,6 +196,7 @@ export function About() {
         {/* Team: tall tile with mission and vision */}
         <ImageSlot
           src={about.teamImage}
+          video={about.teamVideo}
           alt="The Pixel Nest Labs founders"
           sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 92vw"
           hint="the two founders together"

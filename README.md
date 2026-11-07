@@ -56,6 +56,19 @@ Other places:
 - Logo: `public/logo.webp` (original) and `src/components/brand/pixels.ts` (the animated pixel version).
 - Mission and vision lines: `About` in `src/components/sections/HomeSections.tsx`.
 
+## Add your videos
+
+Videos are optional and sit on top of the photo slots. Put MP4 files in `public/videos/` and set the path in `src/content/site.ts`:
+
+| Video                | Field                          | Notes                                                                                  |
+| -------------------- | ------------------------------ | -------------------------------------------------------------------------------------- |
+| Brand reel           | `hero.reel`, `hero.reelPoster` | Adds a "Watch the reel" button to the hero that opens a full-screen player with sound. |
+| Service loops        | `services[].video`             | Silent loop over each service picture.                                                 |
+| About loop           | `about.teamVideo`              | Silent loop over the team tile, shown in black and white.                              |
+| Product walkthroughs | `products[].video`             | Silent screen-recording loop in the home products switcher.                            |
+
+Loops play only while on screen and are skipped on phones, with reduced motion and with data saver on; those visitors see the photo. Keep each loop under about 3 MB. Prompts, sizes and compression commands are in `docs/media-prompts.md`.
+
 ## Where form submissions go
 
 Both forms are checked in `src/app/actions.ts` and then sent by `src/lib/leads.ts` to a small **Google Apps Script** (`google-apps-script/Code.gs`). The script:

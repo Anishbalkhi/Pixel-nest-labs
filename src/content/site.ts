@@ -56,6 +56,10 @@ export const hero = {
   rotating: ["websites", "Shopify stores", "CRMs", "AI tools", "custom software"],
   primaryCta: { label: "Explore services", href: "/#services" },
   secondaryCta: { label: "Talk to us", href: "#contact" },
+  // Brand reel, e.g. "/videos/brand-reel.mp4". When set, a "Watch the reel" button
+  // appears in the hero and plays it in a player. `reelPoster` is its still image.
+  reel: "",
+  reelPoster: "",
 };
 
 export type Service = {
@@ -67,6 +71,8 @@ export type Service = {
   tech: string[];
   /** Photo for the service panel, e.g. "/images/services/digital-presence.jpg". Leave "" for the built-in artwork. */
   image: string;
+  /** Optional silent loop over the photo, e.g. "/videos/services/digital-presence.mp4". */
+  video: string;
 };
 
 export const services: Service[] = [
@@ -84,6 +90,7 @@ export const services: Service[] = [
     ],
     tech: ["Figma", "Next.js", "Canva", "Google Business"],
     image: "",
+    video: "",
   },
   {
     slug: "web-commerce",
@@ -98,6 +105,7 @@ export const services: Service[] = [
     ],
     tech: ["MongoDB", "Express", "React", "Node.js", "Shopify", "Liquid"],
     image: "",
+    video: "",
   },
   {
     slug: "crm-salesforce",
@@ -112,6 +120,7 @@ export const services: Service[] = [
     ],
     tech: ["Salesforce", "Apex", "LWC", "Flows", "REST APIs"],
     image: "",
+    video: "",
   },
   {
     slug: "ai-data",
@@ -126,6 +135,7 @@ export const services: Service[] = [
     ],
     tech: ["Python", "Pandas", "scikit-learn", "LLM APIs", "Power BI"],
     image: "",
+    video: "",
   },
   {
     slug: "java-enterprise",
@@ -140,6 +150,7 @@ export const services: Service[] = [
     ],
     tech: ["Java", "Spring Boot", "MySQL", "PostgreSQL", "Docker"],
     image: "",
+    video: "",
   },
 ];
 
@@ -229,6 +240,8 @@ export type Product = {
   features: string[];
   /** Screenshot or photo for the product, e.g. "/images/products/path-lab.jpg". "" shows the built-in artwork. */
   image: string;
+  /** Optional silent screen-recording loop for the home switcher, e.g. "/videos/products/path-lab.mp4". */
+  video: string;
 };
 
 export const products: Product[] = [
@@ -245,6 +258,7 @@ export const products: Product[] = [
       "Billing and daily summaries",
     ],
     image: "",
+    video: "",
   },
   {
     slug: "crm",
@@ -259,6 +273,7 @@ export const products: Product[] = [
       "WhatsApp and email templates",
     ],
     image: "",
+    video: "",
   },
   {
     slug: "restaurant",
@@ -273,6 +288,7 @@ export const products: Product[] = [
       "Daily sales reports",
     ],
     image: "",
+    video: "",
   },
   {
     slug: "admission",
@@ -282,6 +298,7 @@ export const products: Product[] = [
     audience: "Schools, colleges and coaching institutes",
     features: ["Enquiry and application forms", "Document collection", "Admission status tracking", "Fee receipts"],
     image: "",
+    video: "",
   },
 ];
 
@@ -369,6 +386,8 @@ export const about = {
   vision: "[One line on where you want the studio to go.]",
   // Photo of the two of you together for the tall tile, e.g. "/images/about/team.jpg". "" shows the built-in artwork.
   teamImage: "",
+  // Optional silent loop for the same tile, e.g. "/videos/about/team.mp4" (shown in black and white).
+  teamVideo: "",
   // Keep this honest: use real numbers or leave the placeholder.
   experienceStrip: ["2 founders", "[X]+ years combined experience", "5 service areas", "4 products in development"],
   founders: [

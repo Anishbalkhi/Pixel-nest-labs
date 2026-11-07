@@ -5,6 +5,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import Link from "next/link";
 import { useRef } from "react";
 import { HeroPixels } from "@/components/brand/HeroPixels";
+import { ReelButton } from "@/components/media/ReelButton";
 import { hero, labProjects } from "@/content/site";
 import { LabEffects } from "./LabEffects";
 import { LabPreview } from "./LabPreviews";
@@ -160,6 +161,13 @@ export function Hero() {
         <Link href="/#lab" className="hover:text-brand transition-colors">
           See the lab →
         </Link>
+        {hero.reel ? (
+          <ReelButton
+            src={hero.reel}
+            poster={hero.reelPoster}
+            className="hover:text-brand text-[11px] font-bold tracking-[0.2em] uppercase transition-colors"
+          />
+        ) : null}
         <span className="flex items-center gap-2">
           Scroll <ArrowDown className="size-3.5 animate-bounce" />
         </span>
