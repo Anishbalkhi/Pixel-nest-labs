@@ -30,10 +30,7 @@ const notes = [
  */
 export function WhyUs() {
   return (
-    <section
-      id="why-us"
-      className="lined-paper relative mt-6 overflow-hidden rounded-[2rem] px-4 py-14 sm:px-10 sm:py-16"
-    >
+    <section id="why-us" className="lined-paper relative mt-6 overflow-hidden px-4 py-14 sm:px-10 sm:py-16">
       <ScrollReveal className="relative">
         <SectionHeading
           center
@@ -89,9 +86,9 @@ export function WhyUs() {
               }`}
             >
               <span className="pin absolute -top-4 left-1/2 z-10 -translate-x-1/2" aria-hidden />
-              <div className="rounded-[28px] bg-white p-3 shadow-[0_30px_50px_-28px_rgb(10_20_69/0.45),0_2px_6px_rgb(10_20_69/0.06)]">
+              <div className="bg-white p-3 shadow-[0_30px_50px_-28px_rgb(10_20_69/0.45),0_2px_6px_rgb(10_20_69/0.06)]">
                 <div
-                  className="rounded-[20px] border border-white/80 px-5 pt-6 pb-7 sm:px-6 sm:pt-7 sm:pb-8"
+                  className="border border-white/80 px-5 pt-6 pb-7 sm:px-6 sm:pt-7 sm:pb-8"
                   style={{ background: n.tint }}
                 >
                   <p className="font-hand text-4xl leading-none font-bold" style={{ color: n.ink }}>
@@ -131,7 +128,7 @@ export function ProductsPreview() {
     <ScrollReveal
       as="section"
       id="products"
-      className="border-line mt-6 overflow-hidden rounded-[2rem] border bg-white px-6 py-14 sm:px-10"
+      className="border-line mt-6 overflow-hidden border bg-white px-6 py-14 sm:px-10"
     >
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SectionHeading
@@ -142,7 +139,7 @@ export function ProductsPreview() {
         <Link
           data-reveal
           href="/products"
-          className="group bg-navy hover:bg-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+          className="group bg-navy hover:bg-brand inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white"
         >
           See all products <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
@@ -173,7 +170,7 @@ export function About() {
     <ScrollReveal
       as="section"
       id="about"
-      className="border-line relative mt-6 overflow-hidden rounded-[2rem] border bg-[#f6f5f1] px-4 py-14 sm:px-10 sm:py-16"
+      className="border-line relative mt-6 overflow-hidden border bg-white px-4 py-14 sm:px-10 sm:py-16"
     >
       <div className="grain absolute inset-0" aria-hidden />
       <div className="relative">
@@ -188,11 +185,11 @@ export function About() {
 
       <InView className="deal relative mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
         {/* Story */}
-        <div className="rounded-3xl bg-[#e9e2d8] p-6 sm:p-7">
-          <span aria-hidden className="font-display text-brand block text-6xl leading-[0.6] font-extrabold">
+        <div className="bg-sun rounded-3xl p-6 sm:p-7">
+          <span aria-hidden className="font-condensed text-navy block text-7xl leading-[0.6]">
             &ldquo;
           </span>
-          <p className="text-navy/60 mt-4 text-xs font-semibold tracking-[0.2em] uppercase">Our story</p>
+          <p className="text-navy mt-4 text-xs font-bold tracking-[0.2em] uppercase">Our story</p>
           <p className="text-navy mt-2 text-[15px] leading-relaxed">{about.story}</p>
         </div>
 
@@ -202,7 +199,7 @@ export function About() {
           alt="The Pixel Nest Labs founders"
           sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 92vw"
           hint="the two founders together"
-          className="bg-navy min-h-[260px] rounded-3xl sm:min-h-[420px] lg:row-span-2"
+          className="bg-brand min-h-[260px] rounded-3xl sm:min-h-[420px] lg:row-span-2"
           imageClassName="grayscale"
         >
           <div className="pixel-grid-dark absolute inset-0" />
@@ -262,8 +259,8 @@ export function About() {
         ))}
 
         {/* Numbers */}
-        <div className="rounded-3xl bg-[#dfe3f1] p-6 sm:p-7 lg:col-start-3 lg:row-start-2">
-          <p className="text-navy/60 text-xs font-semibold tracking-[0.2em] uppercase">In numbers</p>
+        <div className="bg-teal rounded-3xl p-6 sm:p-7 lg:col-start-3 lg:row-start-2">
+          <p className="text-navy text-xs font-bold tracking-[0.2em] uppercase">In numbers</p>
           <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6">
             {about.experienceStrip.map((item, i) => {
               const stat = splitStat(item);
@@ -271,11 +268,11 @@ export function About() {
                 <li key={i}>
                   {stat ? (
                     <>
-                      <p className="font-display text-navy text-4xl font-extrabold tracking-tight">
+                      <p className="font-condensed text-navy text-5xl">
                         <CountUp value={stat.n} />
                         {stat.plus}
                       </p>
-                      <p className="text-muted mt-1 text-sm">{stat.label}</p>
+                      <p className="text-navy/80 mt-1 text-sm">{stat.label}</p>
                     </>
                   ) : (
                     <p className="text-navy text-sm font-semibold">{item}</p>
@@ -294,7 +291,7 @@ export function About() {
           ["Vision", about.vision],
         ].map(([label, text]) => (
           <div key={label} data-reveal className="flex items-baseline gap-4 rounded-2xl bg-white px-5 py-4">
-            <span className="font-hand text-brand text-2xl font-bold">{label}</span>
+            <span className="font-condensed text-brand text-2xl uppercase">{label}</span>
             <p className="text-navy text-sm">{text}</p>
           </div>
         ))}
@@ -312,7 +309,7 @@ function PixelRainLite() {
         <p className="font-condensed mt-4 text-4xl leading-[0.9] uppercase sm:text-5xl">
           Two founders.
           <br />
-          <span className="text-teal">One small lab.</span>
+          <span className="text-sun">One small lab.</span>
         </p>
       </div>
     </div>
@@ -329,10 +326,7 @@ export function CTASection({
   text?: string;
 }) {
   return (
-    <section
-      data-hide-launcher
-      className="border-line relative mt-6 overflow-hidden rounded-[2rem] border bg-white py-14 sm:py-20"
-    >
+    <section data-hide-launcher className="border-line relative mt-6 overflow-hidden border bg-white py-14 sm:py-20">
       <ScrollReveal className="relative px-6 text-center sm:px-10">
         <p data-reveal className="text-navy text-[11px] font-semibold tracking-[0.25em] uppercase">
           {eyebrow}

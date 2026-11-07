@@ -19,14 +19,16 @@ export const metadata: Metadata = {
     "Path Lab, CRM, Restaurant and Admission management tools from Pixel Nest Labs. In development: join the waitlist.",
 };
 
-const spreadTones = ["#e4572e", "#0b57c2", "#0f7a65", "#a86400"];
+/** Accent per product spread (logo colours). Text uses `ink`, blocks use `block`. */
+const spreadTones = ["#0b57c2", "#0f7a65", "#a86400", "#0e76a6"];
+const spreadBlocks = ["#0b57c2", "#1fb89a", "#f7a21b", "#0e76a6"];
 
 export default function ProductsPage() {
   return (
     <>
       <section
         data-hero
-        className="border-line relative mt-4 grid items-center gap-8 overflow-hidden rounded-[2rem] border bg-white px-6 py-14 sm:px-10 sm:py-20 lg:grid-cols-[1.3fr_1fr]"
+        className="border-line relative mt-4 grid items-center gap-8 overflow-hidden border bg-white px-6 py-14 sm:px-10 sm:py-20 lg:grid-cols-[1.3fr_1fr]"
       >
         <div
           className="pixel-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]"
@@ -41,7 +43,7 @@ export default function ProductsPage() {
           />
           <p
             data-reveal
-            className="bg-sun/15 mt-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-[#9a5c00]"
+            className="bg-sun/15 mt-6 inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-[#9a5c00]"
           >
             <Sparkles className="size-3.5" /> In development: early access opens to the waitlist first
           </p>
@@ -62,16 +64,12 @@ export default function ProductsPage() {
               key={p.slug}
               as="section"
               id={p.slug}
-              className="relative grid overflow-hidden rounded-[2rem] bg-[#efece6] lg:grid-cols-2"
+              className="border-navy/15 relative grid overflow-hidden border bg-white lg:grid-cols-2"
             >
               <div className="grain absolute inset-0" aria-hidden />
               <div className={`relative flex flex-col p-6 sm:p-10 ${flip ? "lg:order-2" : "lg:order-1"}`}>
                 <div className="flex items-start justify-between gap-4">
-                  <p
-                    data-reveal
-                    className="font-display text-5xl leading-none font-extrabold sm:text-7xl"
-                    style={{ color: tone }}
-                  >
+                  <p data-reveal className="font-condensed text-6xl leading-none sm:text-8xl" style={{ color: tone }}>
                     {i + 1}.
                   </p>
                   <span className="text-navy/60 mt-2 text-[11px] font-semibold tracking-[0.2em] uppercase">
@@ -80,7 +78,7 @@ export default function ProductsPage() {
                 </div>
                 <h2
                   data-reveal
-                  className="font-display mt-4 text-[2.6rem] leading-[0.92] font-extrabold tracking-tight lowercase sm:mt-6 sm:text-6xl xl:text-7xl"
+                  className="font-condensed mt-4 text-[3.2rem] leading-[0.9] uppercase sm:mt-6 sm:text-7xl xl:text-8xl"
                   style={{ color: tone }}
                 >
                   {p.name}
@@ -115,17 +113,14 @@ export default function ProductsPage() {
                   alt=""
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   hint={`product ${p.slug}`}
-                  className="absolute inset-0 lg:inset-4 lg:rounded-[1.5rem]"
+                  className="absolute inset-0 lg:inset-4"
                   imageClassName="grayscale"
                 >
-                  <div className="bg-navy absolute inset-0">
+                  <div className="absolute inset-0" style={{ background: spreadBlocks[i % spreadBlocks.length] }}>
                     <div className="pixel-grid-dark absolute inset-0" />
                   </div>
                   <span className="absolute inset-0 grid place-items-center">
-                    <span
-                      className="grid size-28 place-items-center rounded-[2rem] text-white ring-1 ring-white/20"
-                      style={{ background: tone }}
-                    >
+                    <span className="bg-navy grid size-28 place-items-center text-white">
                       <Icon className="size-14" />
                     </span>
                   </span>
@@ -143,7 +138,7 @@ export default function ProductsPage() {
                   id={`badge-${p.slug}`}
                   text="In development • Join the waitlist • "
                   color={tone}
-                  className={`absolute bottom-6 rounded-full bg-[#efece6] max-sm:hidden ${flip ? "right-6 lg:-right-8" : "left-6 lg:-left-8"} z-10`}
+                  className={`absolute bottom-6 rounded-full bg-white max-sm:hidden ${flip ? "right-6 lg:-right-8" : "left-6 lg:-left-8"} z-10`}
                 />
               </div>
             </ScrollReveal>
@@ -153,7 +148,7 @@ export default function ProductsPage() {
 
       <ScrollTextBand words={["Path Lab", "CRM", "Restaurant", "Admission"]} />
 
-      <ScrollReveal as="section" className="border-line mt-6 rounded-[2rem] border bg-white px-6 py-14 sm:px-10">
+      <ScrollReveal as="section" className="border-line mt-6 border bg-white px-6 py-14 sm:px-10">
         <SectionHeading
           eyebrow="Subscription plans"
           title="Simple monthly plans. Pricing coming soon."
@@ -165,7 +160,7 @@ export default function ProductsPage() {
               key={plan.name}
               data-reveal
               className={`group relative rounded-3xl border p-6 transition-transform duration-300 hover:-translate-y-1.5 ${
-                i === 1 ? "border-brand bg-navy overflow-hidden text-white" : "glow-border border-line bg-mist"
+                i === 1 ? "border-brand bg-brand overflow-hidden text-white" : "glow-border border-line bg-white"
               }`}
             >
               {i === 1 ? (
@@ -173,10 +168,10 @@ export default function ProductsPage() {
                   {/* A light that keeps circling the edge: a rotating gradient behind a navy inner panel. */}
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -inset-[60%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_60%,#1fb89a_75%,#0b57c2_85%,transparent_95%)]"
+                    className="pointer-events-none absolute -inset-[60%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_60%,#f7a21b_75%,#ffffff_85%,transparent_95%)]"
                   />
-                  <span aria-hidden className="bg-navy absolute inset-[1.5px] rounded-[calc(1.5rem-1.5px)]" />
-                  <span className="bg-teal text-navy absolute top-5 right-5 rounded-full px-2.5 py-1 text-xs font-bold uppercase">
+                  <span aria-hidden className="bg-brand absolute inset-[1.5px]" />
+                  <span className="bg-teal text-navy absolute top-5 right-5 px-2.5 py-1 text-xs font-bold uppercase">
                     Most flexible
                   </span>
                 </>
@@ -185,12 +180,12 @@ export default function ProductsPage() {
                 <h3 className="font-display text-xl font-bold">{plan.name}</h3>
                 <p className={`mt-1 text-sm ${i === 1 ? "text-white/70" : "text-muted"}`}>{plan.text}</p>
                 <p className="font-display mt-5 text-2xl font-extrabold">
-                  <span className={`shimmer-text ${i === 1 ? "text-teal" : "text-brand"}`}>Coming soon</span>
+                  <span className={`shimmer-text ${i === 1 ? "text-sun" : "text-brand"}`}>Coming soon</span>
                 </p>
                 <ul className="mt-5 space-y-2 text-sm">
                   {plan.points.map((pt) => (
                     <li key={pt} className="flex gap-2">
-                      <Check className="text-teal mt-0.5 size-4 shrink-0" />
+                      <Check className={`mt-0.5 size-4 shrink-0 ${i === 1 ? "text-sun" : "text-teal-700"}`} />
                       {pt}
                     </li>
                   ))}
@@ -201,11 +196,7 @@ export default function ProductsPage() {
         </div>
       </ScrollReveal>
 
-      <ScrollReveal
-        as="section"
-        id="waitlist"
-        className="bg-navy relative mt-6 overflow-hidden rounded-[2rem] px-6 py-14 sm:px-10"
-      >
+      <ScrollReveal as="section" id="waitlist" className="bg-brand relative mt-6 overflow-hidden px-6 py-14 sm:px-10">
         <div className="pixel-grid-dark absolute inset-0" aria-hidden />
         <DriftPixels seed={7} />
         <div className="relative grid gap-8 lg:grid-cols-[0.8fr_1fr] [&_.field-error]:text-red-300 [&_label]:text-white/90">

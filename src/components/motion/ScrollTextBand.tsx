@@ -14,14 +14,14 @@ function Line({ words, outline }: { words: string[]; outline?: boolean }) {
   return (
     <p
       data-band
-      className={`font-display flex w-max items-center gap-6 text-5xl font-extrabold tracking-tight whitespace-nowrap sm:text-7xl ${
+      className={`font-condensed flex w-max items-center gap-6 text-6xl whitespace-nowrap uppercase sm:text-8xl ${
         outline ? "text-transparent [-webkit-text-stroke:1.5px_#0b57c2]" : "text-navy"
       }`}
     >
       {items.map((w, i) => (
         <Fragment key={i}>
           <span>{w}</span>
-          <span className={`size-4 shrink-0 rounded-[4px] sm:size-5 ${dots[i % dots.length]}`} />
+          <span className={`size-4 shrink-0 sm:size-5 ${dots[i % dots.length]}`} />
         </Fragment>
       ))}
     </p>

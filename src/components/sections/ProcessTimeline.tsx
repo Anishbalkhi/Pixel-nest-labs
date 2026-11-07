@@ -150,7 +150,7 @@ export function ProcessTimeline() {
     <section
       id="process"
       ref={root}
-      className="relative mt-6 overflow-hidden rounded-[2rem] bg-[#f1f2f4] px-3 py-14 sm:px-10 sm:py-16"
+      className="border-navy/15 relative mt-6 overflow-hidden border bg-white px-3 py-14 sm:px-10 sm:py-16"
     >
       <div className="grain absolute inset-0" aria-hidden />
       <div className="relative">
@@ -242,7 +242,7 @@ export function ProcessTimeline() {
 
               {/* Number, title and text on the other side of the line */}
               <div
-                className={`step-text absolute top-1/2 z-10 w-[52%] -translate-y-1/2 rounded-2xl bg-[#f1f2f4]/90 p-3 sm:w-[40%] sm:bg-transparent sm:p-0 ${
+                className={`step-text absolute top-1/2 z-10 w-[52%] -translate-y-1/2 rounded-2xl bg-white/90 p-3 sm:w-[40%] sm:bg-transparent sm:p-0 ${
                   left ? "left-[47%]" : "right-[47%] text-right"
                 }`}
               >

@@ -42,8 +42,8 @@ export function Navbar() {
       onFocusCapture={() => setHidden(false)}
       className={`sticky top-0 z-40 transition-[background-color,box-shadow,border-color] duration-300 ${
         scrolled || open
-          ? "border-line/80 border-b bg-white/75 shadow-[0_8px_30px_-20px_rgb(10_20_69/0.4)] backdrop-blur-xl"
-          : "bg-mist/85 border-b border-transparent backdrop-blur-md"
+          ? "border-navy/15 border-b bg-white/85 backdrop-blur-xl"
+          : "bg-mist/85 border-navy/10 border-b backdrop-blur-md"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -64,12 +64,12 @@ export function Navbar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`after:bg-teal hover:text-brand relative block rounded-full px-3.5 py-2 text-sm font-medium transition-colors after:absolute after:inset-x-3.5 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`after:bg-brand hover:text-brand relative block px-3.5 py-2 text-[13px] font-semibold tracking-[0.1em] uppercase transition-colors after:absolute after:inset-x-3.5 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     active ? "text-brand" : "text-navy/80"
                   }`}
                 >
                   {active ? (
-                    <motion.span layoutId="nav-active" className="bg-brand/10 absolute inset-0 -z-10 rounded-full" />
+                    <motion.span layoutId="nav-active" className="bg-sun absolute inset-x-3.5 bottom-1 -z-10 h-1" />
                   ) : null}
                   {item.label}
                 </Link>
@@ -84,7 +84,7 @@ export function Navbar() {
               href={bookHref}
               target={contact.bookingUrl ? "_blank" : undefined}
               rel={contact.bookingUrl ? "noreferrer" : undefined}
-              className="group bg-navy hover:bg-brand inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors"
+              className="group bg-navy hover:bg-brand inline-flex items-center gap-1.5 px-4 py-2.5 text-[13px] font-semibold tracking-[0.08em] text-white uppercase transition-colors"
             >
               Book a call
               <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

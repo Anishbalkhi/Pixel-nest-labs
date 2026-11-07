@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
-/* Brand tokens, taken from the Pixel Nest Labs logo. */
+/*
+ * Theme: the logo's blue, teal and yellow on a bright editorial layout.
+ * White and warm-grey paper, near-black ink, square corners, colour blocks.
+ * ("navy" is kept as the name of the ink colour so existing classes still work.)
+ */
 @theme {
-  --color-navy: #0a1445;
-  --color-navy-800: #111c57;
-  --color-navy-700: #1a276b;
+  --color-navy: #0a0f2c;
+  --color-navy-800: #151b3d;
+  --color-navy-700: #222a52;
   --color-brand: #0b57c2;
   --color-brand-600: #0a4aa6;
   --color-sky: #0e76a6;
@@ -13,12 +17,23 @@
   /* Darker teal for small text on white (meets 4.5:1 contrast). */
   --color-teal-700: #0f7a65;
   --color-sun: #f7a21b;
-  --color-mist: #f4f7fb;
-  --color-line: #e2e8f2;
-  --color-muted: #55607f;
+  --color-mist: #f4f4f2;
+  --color-paper: #f4f4f2;
+  --color-line: #d9d9d3;
+  --color-muted: #4f5466;
+
+  /* Square corners everywhere; round things (dots, pins, avatars) use rounded-full. */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-condensed: var(--font-anton), "Arial Narrow", Impact, sans-serif;
   --font-hand: var(--font-caveat), "Segoe Print", cursive;
 

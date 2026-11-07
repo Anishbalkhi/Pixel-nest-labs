@@ -1,195 +1,169 @@
 "use client";
 
-import { Doodle } from "@/components/brand/Doodle";
-import { ArrowRight, MessageCircle } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { ArrowDown, ArrowRight } from "lucide-react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useRef } from "react";
 import { HeroPixels } from "@/components/brand/HeroPixels";
-import { seeded } from "@/components/brand/pixels";
-import { Magnetic } from "@/components/motion/effects";
-import { hero } from "@/content/site";
+import { hero, labProjects } from "@/content/site";
+import { LabEffects } from "./LabEffects";
+import { LabPreview } from "./LabPreviews";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+/** Background of each card in the work strip. */
+const stripColors = ["#0b57c2", "#1fb89a", "#0a0f2c", "#f7a21b"];
 
+/** The three headline lines; `tone` paints a word as a colour block. */
+const lines: { text: string; tone?: "blue" | "sun" | "teal" }[][] = [
+  [{ text: "We" }, { text: "build" }],
+  [{ text: "digital" }, { text: "products," }],
+  [
+    { text: "pixel", tone: "blue" },
+    { text: "by", tone: "sun" },
+    { text: "pixel.", tone: "teal" },
+  ],
+];
+const toneClass = {
+  blue: "text-brand",
+  sun: "bg-sun px-[0.12em]",
+  teal: "bg-teal px-[0.12em]",
+};
+
+/**
+ * Hero: the headline set huge across the page, the pixel logo assembling
+ * beside it, a yellow ticker of what we make, and a strip of demo work that
+ * slides past underneath. Thin ink rules frame each band.
+ */
 export function Hero() {
-  const words = hero.title.split(" ");
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-
-  // Scroll parallax: the mark sinks and turns, the copy lifts and fades.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const markY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 140]);
-  const markRotate = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -10]);
-  const markScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.82]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -70]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.8], [1, reduce ? 1 : 0.15]);
-
-  // Soft light that follows the cursor across the hero.
-  const onPointerMove = (e: PointerEvent<HTMLElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-  };
+  const markRotate = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -12]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -60]);
+  let wordIndex = 0;
 
   return (
-    <section
-      ref={ref}
-      data-hero
-      onPointerMove={onPointerMove}
-      className="bg-navy relative mt-4 overflow-hidden rounded-[2rem] px-6 pt-12 pb-10 text-white sm:px-10 sm:pt-16 lg:flex lg:min-h-[min(calc(100dvh-6rem),860px)] lg:items-center lg:px-14"
-    >
-      <div className="pixel-grid-dark absolute inset-0" aria-hidden />
+    <section ref={ref} data-hero className="border-navy/15 relative mt-4 overflow-hidden border bg-white">
       <div
+        className="pixel-grid absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_65%)] opacity-70"
         aria-hidden
-        className="pointer-events-none absolute inset-0 hidden md:block"
-        style={{
-          background:
-            "radial-gradient(520px circle at var(--mx, 70%) var(--my, 40%), rgb(31 184 154 / 0.16), transparent 60%)",
-        }}
       />
-      <div className="bg-brand/40 absolute -top-40 -right-32 size-[30rem] rounded-full blur-[120px]" aria-hidden />
-      <div className="bg-teal/25 absolute -bottom-40 -left-24 size-[26rem] rounded-full blur-[120px]" aria-hidden />
-      {Array.from({ length: 14 }, (_, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="animate-drift absolute rounded-[3px] opacity-60"
-          style={{
-            left: `${(4 + seeded(i + 3) * 92).toFixed(1)}%`,
-            top: `${(6 + seeded(i + 21) * 86).toFixed(1)}%`,
-            width: 6 + Math.round(seeded(i + 9) * 10),
-            height: 6 + Math.round(seeded(i + 9) * 10),
-            background: ["#1fb89a", "#0b57c2", "#f7a21b"][i % 3],
-            animationDelay: `${(-seeded(i) * 9).toFixed(1)}s`,
-            animationDuration: `${(7 + seeded(i + 60) * 6).toFixed(1)}s`,
-          }}
-        />
-      ))}
 
-      <div className="relative grid w-full items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
-        <motion.div style={{ y: copyY, opacity: copyOpacity }}>
-          {/* Eyebrow and buttons fade up with CSS so they're in the page before JavaScript runs. */}
-          <p className="fade-up text-teal inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wider uppercase">
-            <span className="bg-sun size-1.5 animate-pulse rounded-[2px]" /> {hero.eyebrow}
-          </p>
-
-          <h1 className="font-display mt-5 text-[2.5rem] leading-[1.05] font-extrabold tracking-tight sm:text-6xl xl:text-7xl">
-            {words.map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden pb-1 align-bottom">
-                {/* CSS animation, so the headline shows before JavaScript loads */}
-                <span
-                  className={`word-rise inline-block ${word.startsWith("pixel") ? "text-teal" : ""}`}
-                  style={{ ["--d" as string]: `${100 + i * 60}ms` }}
-                >
-                  {word}
-                </span>
-                {i < words.length - 1 ? " " : null}
-              </span>
-            ))}
-          </h1>
-
-          <RotatingLine />
-
-          <p className="mt-5 max-w-xl text-base text-white/70 sm:text-lg">{hero.subtitle}</p>
-
-          <div className="fade-up mt-8 flex flex-wrap gap-3" style={{ ["--d" as string]: "650ms" }}>
-            <Magnetic>
-              <Link
-                href={hero.primaryCta.href}
-                className="group bg-teal text-navy inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:bg-white"
-              >
-                {hero.primaryCta.label}
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href={hero.secondaryCta.href}
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/10"
-              >
-                <MessageCircle className="size-4" /> {hero.secondaryCta.label}
-              </a>
-            </Magnetic>
-          </div>
-        </motion.div>
-
-        <motion.div
-          style={{ y: markY, rotate: markRotate, scale: markScale }}
-          className="relative mx-auto w-full max-w-[500px]"
-        >
-          <HeroPixels className="w-full overflow-visible drop-shadow-[0_20px_40px_rgb(0_0_0/0.35)]" />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.2 }}
-            className="mt-4 hidden text-center text-xs text-white/40 md:block"
-            aria-hidden
-          >
-            Move your cursor over the pixels
-          </motion.p>
-        </motion.div>
+      {/* Top rule: what we do, and that we're taking work */}
+      <div className="border-navy/15 text-navy relative flex items-center justify-between gap-4 border-b px-5 py-3 text-[11px] font-bold tracking-[0.2em] uppercase sm:px-8">
+        <span>{hero.eyebrow}</span>
+        <span className="flex items-center gap-2">
+          <span className="relative flex size-2">
+            <span className="bg-teal absolute inline-flex size-full animate-ping rounded-full opacity-70" />
+            <span className="bg-teal relative inline-flex size-2 rounded-full" />
+          </span>
+          <span className="hidden sm:inline">Taking new projects</span>
+          <span className="sm:hidden">Open</span>
+        </span>
       </div>
 
-      <motion.div
-        aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-semibold tracking-[0.2em] text-white/40 uppercase lg:flex"
-      >
-        Scroll
-        <span className="flex h-9 w-5 justify-center rounded-full border border-white/25 pt-1.5">
-          <motion.span
-            className="bg-teal size-1.5 rounded-[2px]"
-            animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </span>
-      </motion.div>
-    </section>
-  );
-}
+      <div className="relative grid gap-8 px-5 pt-8 pb-8 sm:px-8 lg:grid-cols-[1fr_300px] lg:items-end lg:gap-12 lg:pt-12 lg:pb-10">
+        <motion.h1
+          style={{ y: titleY }}
+          className="font-condensed text-navy text-[11vw] leading-[0.9] uppercase sm:text-[10vw] lg:text-[8vw] xl:text-[min(8.6vw,7.8rem)]"
+          aria-label={hero.title}
+        >
+          {lines.map((line, li) => (
+            <span key={li} className="block overflow-hidden pt-[0.04em]" aria-hidden>
+              {line.map((w, wi) => {
+                const i = wordIndex++;
+                return (
+                  <span key={wi}>
+                    {/* CSS animation, so the headline shows before JavaScript loads */}
+                    <span
+                      className={`word-rise inline-block ${w.tone ? toneClass[w.tone] : ""}`}
+                      style={{ ["--d" as string]: `${80 + i * 70}ms` }}
+                    >
+                      {w.text}
+                    </span>
+                    {wi < line.length - 1 ? " " : null}
+                  </span>
+                );
+              })}
+            </span>
+          ))}
+        </motion.h1>
 
-/** "We make: Websites / Shopify stores / ..." with the last word flipping every couple of seconds. */
-function RotatingLine() {
-  const [i, setI] = useState(0);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (reduce) return;
-    const t = window.setInterval(() => setI((n) => (n + 1) % hero.rotating.length), 2200);
-    return () => window.clearInterval(t);
-  }, [reduce]);
-
-  return (
-    <p className="font-display mt-4 flex items-center gap-2 text-lg font-bold text-white/60 sm:text-xl">
-      We make
-      <span className="relative inline-flex">
-        <span className="text-sun relative inline-flex h-[1.4em] min-w-[10ch] overflow-hidden">
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.span
-              key={hero.rotating[i]}
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "-100%", opacity: 0 }}
-              transition={{ duration: 0.45, ease }}
-              className="whitespace-nowrap"
+        <div className="fade-up flex flex-col gap-6" style={{ ["--d" as string]: "500ms" }}>
+          <motion.div style={{ rotate: markRotate }} className="w-40 sm:w-52 lg:w-full lg:max-w-[300px] lg:self-end">
+            <HeroPixels className="w-full overflow-visible" />
+          </motion.div>
+          <p className="text-navy/80 text-base sm:text-lg">{hero.subtitle}</p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href="#contact"
+              className="group bg-navy hover:bg-brand inline-flex items-center gap-2 px-6 py-3.5 text-[13px] font-semibold tracking-[0.08em] text-white uppercase transition-colors"
             >
-              {hero.rotating[i]}
-            </motion.span>
-          </AnimatePresence>
+              Start a project
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            <Link
+              href={hero.primaryCta.href}
+              className="border-navy text-navy hover:bg-navy inline-flex items-center gap-2 border px-6 py-3.5 text-[13px] font-semibold tracking-[0.08em] uppercase transition-colors hover:text-white"
+            >
+              {hero.primaryCta.label}
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Yellow ticker of what we make */}
+      <div className="border-navy bg-sun relative overflow-hidden border-y py-3" aria-hidden>
+        <ul className="animate-marquee flex w-max motion-reduce:animate-none">
+          {[0, 1].flatMap((copy) =>
+            [...hero.rotating, ...hero.rotating].map((item, i) => (
+              <li
+                key={`${copy}-${i}`}
+                className="font-condensed text-navy flex items-center gap-6 pr-6 text-2xl whitespace-nowrap uppercase sm:text-3xl"
+              >
+                {item}
+                <span className={`size-3 ${["bg-brand", "bg-navy", "bg-teal"][i % 3]}`} />
+              </li>
+            )),
+          )}
+        </ul>
+      </div>
+      <p className="sr-only">We make {hero.rotating.join(", ")}.</p>
+
+      {/* Strip of demo work sliding past. Paused off screen (LabEffects) and on hover. */}
+      <div id="hero-work" data-lab className="group/strip relative overflow-hidden py-6" aria-hidden>
+        <LabEffects sectionId="hero-work" />
+        <ul className="flex w-max animate-[marquee_70s_linear_infinite] gap-4 pl-4 group-hover/strip:[animation-play-state:paused] motion-reduce:animate-none">
+          {[...labProjects, ...labProjects, ...labProjects, ...labProjects].map((p, i) => (
+            <li key={i} className="w-[280px] shrink-0 sm:w-[340px]">
+              <div
+                className="relative flex aspect-[4/3] items-center justify-center overflow-hidden px-4"
+                style={{ background: stripColors[i % stripColors.length] }}
+              >
+                <div className="pixel-grid-dark absolute inset-0" />
+                <div className="relative w-full scale-[0.86]">
+                  <LabPreview kind={p.preview} />
+                </div>
+              </div>
+              <div className="border-navy/15 flex items-baseline justify-between gap-3 border-b py-2.5">
+                <span className="text-navy truncate text-sm font-semibold">{p.title}</span>
+                <span className="text-navy/60 shrink-0 text-[10px] font-bold tracking-[0.18em] uppercase">
+                  {p.label}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Bottom rule */}
+      <div className="border-navy/15 text-navy relative flex items-center justify-between gap-4 border-t px-5 py-3 text-[11px] font-bold tracking-[0.2em] uppercase sm:px-8">
+        <Link href="/#lab" className="hover:text-brand transition-colors">
+          See the lab →
+        </Link>
+        <span className="flex items-center gap-2">
+          Scroll <ArrowDown className="size-3.5 animate-bounce" />
         </span>
-        {/* Marker swash under the word, redrawn each time it changes */}
-        <Doodle
-          key={i}
-          kind="underline"
-          drawn
-          color="#1fb89a"
-          width={6}
-          className="absolute -bottom-2.5 left-0 h-3 w-[9ch]"
-        />
-      </span>
-    </p>
+      </div>
+    </section>
   );
 }

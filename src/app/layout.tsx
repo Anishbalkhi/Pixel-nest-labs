@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Caveat, Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Anton, Caveat, Inter } from "next/font/google";
 import { ContactDrawer } from "@/components/layout/ContactDrawer";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -10,12 +10,6 @@ import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  display: "swap",
-});
 // Tall condensed type for the big service headlines, and a handwritten face for small notes.
 const anton = Anton({ variable: "--font-anton", subsets: ["latin"], weight: "400", display: "swap" });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500", "700"], display: "swap" });
@@ -30,14 +24,14 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-export const viewport: Viewport = { themeColor: "#0a1445" };
+export const viewport: Viewport = { themeColor: "#f4f4f2" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // suppressHydrationWarning: the inline script below adds a "js" class before React loads.
     <html
       lang="en"
-      className={`${inter.variable} ${jakarta.variable} ${anton.variable} ${caveat.variable} antialiased`}
+      className={`${inter.variable} ${anton.variable} ${caveat.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>

@@ -147,15 +147,15 @@ export function ContactDrawer() {
         initial={{ x: 120, opacity: 0 }}
         animate={open || tucked ? { x: 120, opacity: 0 } : { x: 0, opacity: 1 }}
         transition={{ delay: open ? 0 : 1.2, type: "spring", stiffness: 220, damping: 22 }}
-        className={`group bg-navy shadow-navy/30 hover:bg-brand fixed right-4 bottom-4 z-40 flex items-center gap-2.5 rounded-full px-5 py-3.5 text-sm font-semibold text-white shadow-xl transition-[background-color,padding] md:top-1/2 md:right-0 md:bottom-auto md:-translate-y-1/2 md:flex-col md:gap-3 md:rounded-l-2xl md:rounded-r-none md:px-3.5 md:py-5 md:hover:pr-5 ${
+        className={`group bg-navy shadow-navy/30 hover:bg-brand fixed right-4 bottom-4 z-40 flex items-center gap-2.5 px-5 py-3.5 text-sm font-semibold text-white shadow-xl transition-[background-color,padding] md:top-1/2 md:right-0 md:bottom-auto md:-translate-y-1/2 md:flex-col md:gap-3 md:rounded-l-2xl md:rounded-r-none md:px-3.5 md:py-5 md:hover:pr-5 ${
           compact ? "max-md:gap-0 max-md:px-4" : ""
         }`}
       >
         <span className="nudge relative grid size-5 grid-cols-2 gap-[3px]" aria-hidden>
-          <span className="bg-brand rounded-[2px] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5" />
-          <span className="bg-teal rounded-[2px] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          <span className="bg-teal rounded-[2px] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
-          <span className="bg-sun rounded-[2px] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+          <span className="bg-brand transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5" />
+          <span className="bg-teal transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <span className="bg-teal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
+          <span className="bg-sun transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
           <span className="bg-teal absolute -top-1 -right-1 size-2 animate-ping rounded-full" />
         </span>
         <span className={`md:rotate-180 md:[writing-mode:vertical-rl] ${compact ? "max-md:sr-only" : ""}`}>
@@ -207,7 +207,7 @@ export function ContactDrawer() {
                 {STRIP.map((c, i) => (
                   <motion.span
                     key={i}
-                    className="size-3 rounded-[3px]"
+                    className="size-3"
                     style={{ background: c }}
                     initial={{ scale: 0, rotate: -90, opacity: 0 }}
                     animate={{ scale: 1, rotate: 0, opacity: 1 }}

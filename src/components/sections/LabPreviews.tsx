@@ -45,7 +45,7 @@ function Storefront() {
   return (
     <Window
       title="beanandbrew.myshopify.com"
-      overlay={<span className="lab-fly bg-sun absolute size-2 rounded-[2px] opacity-0" aria-hidden />}
+      overlay={<span className="lab-fly bg-sun absolute size-2 opacity-0" aria-hidden />}
       action={
         <span className="relative inline-flex text-white/60">
           <ShoppingBag className="size-3.5" />
@@ -59,7 +59,7 @@ function Storefront() {
         <div className="relative grid place-items-center rounded-lg bg-white/[0.04] py-4">
           <div className="absolute top-1.5 left-1/2 flex -translate-x-1/2 gap-1.5" aria-hidden>
             {[0, 400, 800].map((delay) => (
-              <span key={delay} className="lab-anim lab-steam size-1.5 rounded-[2px] bg-white/70" style={d(delay)} />
+              <span key={delay} className="lab-anim lab-steam size-1.5 bg-white/70" style={d(delay)} />
             ))}
           </div>
           <div className="mt-3 grid grid-cols-6 gap-[3px]">
@@ -69,7 +69,7 @@ function Storefront() {
                 .map((v, c) => (
                   <span
                     key={`${r}-${c}`}
-                    className="size-2.5 rounded-[2px]"
+                    className="size-2.5"
                     style={{ background: v === "2" ? "#f7a21b" : v === "1" ? "#1fb89a" : "transparent" }}
                   />
                 )),
@@ -108,7 +108,7 @@ function Calendar() {
               .map((v, c) => (
                 <span
                   key={`${r}-${c}`}
-                  className={`lab-anim lab-slot h-4 rounded-[3px] ${v === "1" ? "bg-brand" : "bg-white/10"}`}
+                  className={`lab-anim lab-slot h-4 ${v === "1" ? "bg-brand" : "bg-white/10"}`}
                   style={d((r + c) * 110)}
                 />
               )),
@@ -117,7 +117,7 @@ function Calendar() {
         <div className="flex w-20 flex-col gap-1.5">
           {["bg-teal", "bg-sun", "bg-sky"].map((color, i) => (
             <div key={color} className="flex items-center gap-1.5 rounded-md bg-white/[0.06] p-1">
-              <span className={`size-3 shrink-0 rounded-[3px] ${color}`} />
+              <span className={`size-3 shrink-0 ${color}`} />
               <span className="flex flex-1 flex-col gap-0.5">
                 <span className="h-1 w-full rounded-full bg-white/30" />
                 <span className="h-1 rounded-full bg-white/15" style={{ width: `${70 - i * 15}%` }} />
@@ -182,7 +182,7 @@ function Flow() {
       <div className="relative px-1 pt-2 pb-1">
         <div className="absolute top-[22px] right-6 left-6 h-px bg-white/15" aria-hidden />
         <span
-          className="lab-anim lab-packet bg-sun absolute top-[19px] left-6 size-2 rounded-[2px] shadow-[0_0_10px_#f7a21b]"
+          className="lab-anim lab-packet bg-sun absolute top-[19px] left-6 size-2 shadow-[0_0_10px_#f7a21b]"
           aria-hidden
         />
         <div className="relative flex justify-between">
@@ -192,7 +192,7 @@ function Flow() {
                 className="lab-anim lab-node grid size-7 place-items-center rounded-lg border border-white/15 bg-white/[0.08]"
                 style={{ ...d(i * 750), ["--c" as string]: STEP_COLORS[i] }}
               >
-                <span className="size-2.5 rounded-[3px]" style={{ background: STEP_COLORS[i] }} />
+                <span className="size-2.5" style={{ background: STEP_COLORS[i] }} />
               </span>
               <span className="text-[9px] font-medium text-white/60">{step}</span>
             </div>

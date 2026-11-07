@@ -14,7 +14,7 @@ export function PixelRain({ count = 22, seed = 1 }: { count?: number; seed?: num
         return (
           <span
             key={i}
-            className="absolute top-0 rounded-[2px]"
+            className="absolute top-0"
             style={v({
               left: `${(seeded(s) * 100).toFixed(1)}%`,
               width: size,
@@ -40,7 +40,7 @@ export function DriftPixels({ count = 12, seed = 1 }: { count?: number; seed?: n
         return (
           <span
             key={i}
-            className="animate-drift absolute rounded-[3px] opacity-50"
+            className="animate-drift absolute opacity-50"
             style={{
               left: `${(4 + seeded(s + 3) * 92).toFixed(1)}%`,
               top: `${(6 + seeded(s + 21) * 86).toFixed(1)}%`,
@@ -76,7 +76,7 @@ export function PixelAvatar({ seed, className = "" }: { seed: number; className?
       {cells.map((cell, i) => (
         <span
           key={i}
-          className={cell.on ? "avatar-px rounded-[2px]" : ""}
+          className={cell.on ? "avatar-px" : ""}
           style={
             cell.on
               ? v({

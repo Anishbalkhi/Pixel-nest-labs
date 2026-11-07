@@ -19,6 +19,12 @@ const socialIcons = {
 export function Footer() {
   return (
     <footer data-hide-launcher className="bg-navy relative overflow-hidden text-white">
+      {/* Logo colours as a stripe across the top */}
+      <div className="relative grid h-2 grid-cols-3" aria-hidden>
+        <span className="bg-brand" />
+        <span className="bg-teal" />
+        <span className="bg-sun" />
+      </div>
       <div className="pixel-grid-dark absolute inset-0 opacity-60" aria-hidden />
       <div className="relative mx-auto grid max-w-[1400px] gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div className="space-y-4">

@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 /** Colour of each panel's giant number. Light enough that navy text stays readable on top. */
 const numberColors = ["#f7a21b", "#1fb89a", "#7ea6e6", "#6fb7dd", "#ffc861"];
 /** Colour of the built-in artwork behind each service's picture. */
-const artColors = ["#0b57c2", "#0a1445", "#0e76a6", "#1a276b", "#0b57c2"];
+const artColors = ["#0b57c2", "#0a0f2c", "#1fb89a", "#0e76a6", "#0a0f2c"];
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -141,11 +141,12 @@ export function ServicesScroll() {
     <section
       id="services"
       ref={section}
-      className="border-line relative mt-6 flex flex-col justify-center overflow-hidden rounded-[2rem] border bg-white py-10 lg:min-h-[min(calc(100dvh-6rem),860px)] lg:py-10"
+      className="border-line relative mt-6 flex flex-col justify-center overflow-hidden border bg-white py-10 lg:min-h-[min(calc(100dvh-6rem),860px)] lg:py-10"
     >
       <div className="grain absolute inset-0" aria-hidden />
       <div className="relative flex flex-wrap items-end justify-between gap-4 px-6 sm:px-10">
         <SectionHeading
+          size="md"
           eyebrow="What we do"
           title="Five ways we help your business grow."
           text="Pick one service or combine them. Every project starts with a free call."
@@ -186,7 +187,7 @@ export function ServicesScroll() {
               key={s.slug}
               data-panel
               id={s.slug}
-              className="group bg-mist relative flex w-[84vw] max-w-[420px] shrink-0 snap-center flex-col overflow-hidden rounded-3xl p-5 sm:p-6 lg:block lg:h-[clamp(420px,calc(100dvh-19rem),560px)] lg:w-[min(1040px,80vw)] lg:max-w-none lg:overflow-visible lg:rounded-none lg:bg-transparent lg:p-0"
+              className="group bg-mist relative flex w-[84vw] max-w-[420px] shrink-0 snap-center flex-col overflow-hidden rounded-3xl p-5 sm:p-6 lg:block lg:h-[clamp(400px,calc(100dvh-22rem),560px)] lg:w-[min(1040px,80vw)] lg:max-w-none lg:overflow-visible lg:rounded-none lg:bg-transparent lg:p-0"
             >
               {/* Giant number. Drawn with CSS content so it isn't read out. */}
               <span
@@ -224,7 +225,7 @@ export function ServicesScroll() {
                 </div>
                 <div className="absolute bottom-4 left-4 flex gap-1">
                   {numberColors.slice(0, 4).map((c, k) => (
-                    <span key={k} className="size-2 rounded-[2px]" style={{ background: c }} />
+                    <span key={k} className="size-2" style={{ background: c }} />
                   ))}
                 </div>
               </ImageSlot>

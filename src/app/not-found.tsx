@@ -15,7 +15,7 @@ const COLORS = ["#0b57c2", "#0e76a6", "#1fb89a", "#1fb89a", "#0b57c2"];
 export default function NotFound() {
   let n = 0;
   return (
-    <section className="bg-navy relative mt-4 flex min-h-[70dvh] flex-col items-center justify-center overflow-hidden rounded-[2rem] px-6 py-16 text-center text-white">
+    <section className="bg-brand relative mt-4 flex min-h-[70dvh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center text-white">
       <div className="pixel-grid-dark absolute inset-0" aria-hidden />
 
       <div className="relative flex gap-4 sm:gap-6" role="img" aria-label="404">
@@ -27,7 +27,7 @@ export default function NotFound() {
                 return (
                   <span
                     key={`${r}-${c}`}
-                    className={`size-5 rounded-[4px] sm:size-8 sm:rounded-md ${on === "1" ? "pixel-glitch" : ""}`}
+                    className={`size-5 sm:size-8 sm:rounded-md ${on === "1" ? "pixel-glitch" : ""}`}
                     style={
                       on === "1"
                         ? {
@@ -54,13 +54,13 @@ export default function NotFound() {
       <div className="relative mt-8 flex flex-wrap justify-center gap-3">
         <Link
           href="/"
-          className="bg-teal text-navy inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold hover:bg-white"
+          className="bg-teal text-navy inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold hover:bg-white"
         >
           <ArrowLeft className="size-4" /> Back to home
         </Link>
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:bg-white/10"
+          className="inline-flex items-center gap-2 border border-white/25 px-6 py-3 text-sm font-semibold hover:bg-white/10"
         >
           <MessageCircle className="size-4" /> Contact us
         </a>

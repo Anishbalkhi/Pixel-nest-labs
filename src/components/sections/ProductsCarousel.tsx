@@ -72,7 +72,7 @@ export function ProductsCarousel() {
               <Link
                 href={`/products#${p.slug}`}
                 tabIndex={isActive ? 0 : -1}
-                className="group block overflow-hidden rounded-[1.75rem] bg-white shadow-[0_40px_70px_-40px_rgb(10_20_69/0.55)]"
+                className="group block overflow-hidden bg-white shadow-[0_40px_70px_-40px_rgb(10_20_69/0.55)]"
                 draggable={false}
               >
                 <ImageSlot src={p.image} alt="" sizes="340px" hint={`product ${p.slug}`} className="aspect-[4/3]">
@@ -88,7 +88,7 @@ export function ProductsCarousel() {
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-display text-navy text-xl font-bold">{p.name}</h3>
-                    <span className="bg-sun/15 shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold text-[#9a5c00]">
+                    <span className="bg-sun/15 shrink-0 px-2.5 py-1 text-[11px] font-semibold text-[#9a5c00]">
                       In development
                     </span>
                   </div>

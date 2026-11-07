@@ -12,6 +12,9 @@ const WIDE = [true, false, false, true];
  * animated preview. Rendered on the server; LabEffects adds the scroll reveal,
  * the cursor light, and pauses the previews while the section is off screen.
  */
+/** Colour block behind each project preview, in the logo colours. */
+const labColors = ["#0b57c2", "#1fb89a", "#0a0f2c", "#f7a21b"];
+
 export function LabShowcase() {
   return (
     <section id="lab" data-lab className="mt-6 px-2 py-14 sm:px-4">
@@ -53,13 +56,13 @@ export function LabShowcase() {
 
               <div
                 aria-hidden
-                className={`bg-navy relative flex min-h-48 items-center justify-center overflow-hidden px-5 py-8 sm:min-h-56 ${
+                style={{ background: labColors[i % labColors.length] }}
+                className={`relative flex min-h-48 items-center justify-center overflow-hidden px-5 py-8 sm:min-h-56 ${
                   wide ? "lg:w-[58%] lg:shrink-0" : ""
                 }`}
               >
                 <div className="pixel-grid-dark absolute inset-0" />
-                <div className="bg-brand/30 absolute -top-16 -right-16 size-48 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-125" />
-                <div className="bg-teal/20 absolute -bottom-20 -left-10 size-48 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-125" />
+
                 {/* Wide cards get a bigger preview so it fills the larger panel. */}
                 <div className={`relative flex w-full justify-center ${wide ? "lg:scale-110 xl:scale-125" : ""}`}>
                   <LabPreview kind={p.preview} />
@@ -69,7 +72,7 @@ export function LabShowcase() {
               <div className={`relative flex flex-1 flex-col p-6 sm:p-7 ${wide ? "lg:justify-center lg:p-10" : ""}`}>
                 <div className="flex items-center gap-2">
                   <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-bold tracking-wide uppercase ${
+                    className={`px-2.5 py-1 text-xs font-bold tracking-wide uppercase ${
                       p.label === "Demo" ? "bg-teal/15 text-teal-700" : "bg-sun/20 text-[#8a5300]"
                     }`}
                   >
