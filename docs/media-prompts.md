@@ -2,44 +2,59 @@
 
 One place for every picture and video the site needs: which tool to use, the exact size to make each one, where to save it, and a ready-to-paste prompt or shoot brief.
 
-- **Part A:** which tools to use
+- **Part A:** free tools to use
 - **Part B:** images (25 slots; the site already supports them)
 - **Part C:** videos (11 clips; see C1 for where each one goes)
 - **Part D:** checklist
 
 ---
 
-## Part A. Which tools to use
+## Part A. Free tools to use
 
-AI tools change fast. These picks were checked in November 2026, so confirm current plans, prices and licences on each tool's site before paying.
+Everything here can be made with **free** tools. On free plans, watch for two things:
+
+- **Watermarks:** some tools stamp free images or videos.
+- **Commercial use:** some free plans only allow personal use, and this is a business website.
+
+The picks below avoid both as far as could be checked in November 2026. Free plans change often, so read each tool's terms page before publishing.
 
 ### Images
 
-| Pick                      | Tool                                     | Why it suits this site                                                                                                                                                                     |
-| ------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Best for this site**    | **Recraft**                              | Lets you lock an exact colour palette (our five hex colours) and a style, then reuse it for every image, so all the illustrations look like one set. Paid plans include commercial rights. |
-| Best at following prompts | **ChatGPT image generation (GPT Image)** | Follows long, detailed prompts closely. Generating everything in one chat keeps the set consistent.                                                                                        |
-| Most beautiful            | **Midjourney**                           | The strongest look and art direction. Use your best image as a style reference to keep the set consistent. Paid only.                                                                      |
-| Free option               | **Google Gemini (Nano Banana)**          | Good quality for free, and good at "same style as this image" edits.                                                                                                                       |
-| Safest for commercial use | **Adobe Firefly**                        | Trained on licensed images. Choose it if commercial safety matters most to you.                                                                                                            |
+| Use for                       | Tool                                        | Notes                                                                                                                                                                                                                                                      |
+| ----------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Most images (main pick)**   | **Google Gemini** (Nano Banana image model) | Best quality available for free, with a generous allowance. Good at "same style as this image", which keeps the set consistent. Check each image for a small Gemini mark in a corner. Keep subjects away from the corners in case you need to crop it out. |
+| Backup and more variations    | **Ideogram** (free plan)                    | Free plan allows commercial use. Free images are public on Ideogram, which is fine for these illustrations.                                                                                                                                                |
+| The 2–3 most important images | **Adobe Firefly** (free credits)            | Built for commercial use and trained on licensed images, but only about 25 credits a month. Save it for key images such as the first service pictures.                                                                                                     |
 
-**Recommendation:** make the illustrations in **Recraft**, or in ChatGPT if you already pay for it. Shoot the founder and team photos with a phone or camera, not AI.
+**Don't use on free plans:**
+
+- **Recraft:** free images aren't licensed for commercial use, and Recraft keeps ownership.
+- **Bing Image Creator / Microsoft Designer:** it's unclear whether business use is allowed.
 
 ### Videos
 
-| Pick             | Tool                                          | Why it suits this site                                                                                                                   |
-| ---------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Best overall** | **Google Veo 3.1** (in Gemini or Google Flow) | Follows prompts best and makes clean, realistic motion. It can start and end on images you upload, which is how you make seamless loops. |
-| Best control     | **Runway (Gen-4.5)**                          | Strong camera and motion controls and good editing tools. Clips are short (around 10 s), which is fine for loops.                        |
-| Best value       | **Kling 3.0**                                 | Low cost, smooth motion, and supports start and end frames.                                                                              |
-| Don't use        | Sora                                          | OpenAI has closed the Sora app and is shutting down its API in 2026.                                                                     |
+| Use for                                            | Tool                                            | Notes                                                                                                                                                                          |
+| -------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Brand reel shots and service loops (main pick)** | **Google Flow** (uses Google's Veo video model) | One review says Flow gives about 50 free credits a day without a subscription. It can start from an image you upload. Check Flow's terms for commercial use before publishing. |
+| Service loops, no AI needed                        | **CapCut** or **Canva** (free)                  | Load each service image and add a slow zoom-in plus a gentle float. You get a clean, silent loop with no AI terms to worry about (see C5).                                     |
+| A few short AI clips                               | **Adobe Firefly** video (free credits)          | Built for commercial use and adds no watermark. It shares the same small monthly credits as Firefly images.                                                                    |
+| About loop                                         | **Your phone camera**                           | Real footage, phone held still on a tripod or propped up.                                                                                                                      |
+| Product walkthroughs                               | **OBS Studio**                                  | Free screen recorder with no watermark.                                                                                                                                        |
 
-**Recommended workflow:** make the still image first (Part B), then turn it into a video with **image-to-video** in Veo, Runway or Kling, using the same image as both the **first and last frame**. The video then matches the site's illustrations and loops without a jump.
+**Don't use on free plans:** Kling, Hailuo, Pika, Luma and Runway. Their free videos are watermarked, personal-use only, or both. Sora has shut down.
 
-**Editing and compressing:**
+### Editing and shrinking files (all free)
 
-- **CapCut** or **DaVinci Resolve** (both free): join shots and add the real logo.
-- **HandBrake** (free) or `ffmpeg`: shrink files for the web (see C2).
+- **Photopea** (photopea.com): a Photoshop-like editor in the browser. Use it to crop images to the exact sizes in Part B.
+- **Squoosh** (squoosh.app): shrinks images to under 400 KB.
+- **CapCut** or **DaVinci Resolve:** join the reel's shots and add your real logo. Resolve never adds a watermark; in CapCut, avoid "Pro" templates and effects.
+- **ffmpeg** (already installed on this computer) or **HandBrake:** shrink videos for the web (see C2).
+
+**Suggested free setup:**
+
+- **Images:** Gemini for most of them, Firefly for the two or three that matter most.
+- **Videos:** CapCut zoom loops for the services, Flow for the brand reel.
+- **Real footage:** your phone for the About loop, OBS for product screen recordings.
 
 ---
 
@@ -71,10 +86,9 @@ For the same reason, don't generate anything that looks like client work, client
 
 **Tool tips:**
 
-- **Recraft:** create a custom style with the five hex colours above, then generate every slot with that style.
-- **ChatGPT (GPT Image):** paste the shared style and the slot prompt as one message and ask for the size in the table. Make the rest in the same chat and add "same style as the previous image".
-- **Midjourney:** add `--ar 16:10 --style raw` (change the ratio for each slot) and `--no text, letters, logo, people`. Use your best image as a style reference (`--sref`) for the rest.
-- **Gemini (Nano Banana):** upload your best image and ask for "the same style" for each new slot.
+- **Gemini:** paste the shared style and the slot prompt as one message and ask for the size in the table (or the closest shape it offers, then crop in Photopea). Keep making the rest in the same chat, uploading your best image and asking for "the same style".
+- **Ideogram:** paste the shared style and slot prompt, pick the aspect ratio, and put the negative prompt in its negative-prompt box. Reuse the same style reference image for every slot.
+- **Firefly:** use "Style reference" with your best Gemini image so the Firefly images match the rest.
 
 ### B3. Services (5 images)
 
@@ -274,14 +288,14 @@ ffmpeg -i output.mp4 -frames:v 1 -q:v 3 output-poster.jpg
 
 **Making a loop that doesn't jump:**
 
-1. Upload the matching still from Part B as the **first frame** and, if the tool allows it, the **same image as the last frame**. Veo 3.1 and Kling support start and end frames; in Runway, use keyframes.
+1. Upload the matching still from Part B as the **first frame** (Google Flow and Firefly both take a starting image) and, if the tool allows it, the **same image as the last frame**.
 2. Ask for 6–8 seconds.
 3. If the end still jumps, play the clip forward then backward in your editor ("boomerang"). Slow, gentle motion hides the turn.
 
 ### C4. V1: brand reel (`/videos/brand-reel.mp4`)
 
 - **Size:** 1920 × 1080 (16:9), 20–30 s total. Music is optional.
-- **How to make it:** AI tools make 8–10 s clips, so generate the **five shots below separately** (5–6 s each) and join them in CapCut or DaVinci Resolve.
+- **How to make it:** free AI tools make short clips, so generate the **five shots below separately** in Google Flow (5–6 s each) and join them in CapCut or DaVinci Resolve.
 - **The logo:** add the **real Pixel Nest Labs logo** in the editor. AI tools can't reproduce a logo exactly, and a near-miss looks off-brand.
 - **Ending:** the last 3 seconds show the real logo and the line "pixel by pixel".
 
@@ -320,6 +334,15 @@ ffmpeg -i output.mp4 -frames:v 1 -q:v 3 output-poster.jpg
 | CRM & Salesforce       | `/videos/services/crm-salesforce.mp4`   | `crm-salesforce.jpg`   |
 | AI / ML & Data Science | `/videos/services/ai-data.mp4`          | `ai-data.jpg`          |
 | Java & Enterprise      | `/videos/services/java-enterprise.mp4`  | `java-enterprise.jpg`  |
+
+**Free option without AI (CapCut or Canva):** for each service image, make a new 16:10 project at 1280 × 800. Then:
+
+1. Place the image to fill the frame.
+2. Add a slow zoom from 100% to 106% over 4 seconds, then back from 106% to 100% over the next 4, so the last frame matches the first.
+3. Optionally add a 2–3 px up-and-down "float" on the same timing.
+4. Export at 24 fps with no audio, then compress with C2.
+
+This gives a calm 8-second loop. Use the AI prompts below if you want things inside the picture to move.
 
 **Digital Presence**
 
