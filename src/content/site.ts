@@ -65,6 +65,8 @@ export type Service = {
   summary: string;
   included: string[];
   tech: string[];
+  /** Photo for the service panel, e.g. "/images/services/digital-presence.jpg". Leave "" for the built-in artwork. */
+  image: string;
 };
 
 export const services: Service[] = [
@@ -81,6 +83,7 @@ export const services: Service[] = [
       "Basic SEO and Google Business profile",
     ],
     tech: ["Figma", "Next.js", "Canva", "Google Business"],
+    image: "",
   },
   {
     slug: "web-commerce",
@@ -94,6 +97,7 @@ export const services: Service[] = [
       "Performance and accessibility checks",
     ],
     tech: ["MongoDB", "Express", "React", "Node.js", "Shopify", "Liquid"],
+    image: "",
   },
   {
     slug: "crm-salesforce",
@@ -107,6 +111,7 @@ export const services: Service[] = [
       "Custom CRM for smaller teams",
     ],
     tech: ["Salesforce", "Apex", "LWC", "Flows", "REST APIs"],
+    image: "",
   },
   {
     slug: "ai-data",
@@ -120,6 +125,7 @@ export const services: Service[] = [
       "AI chat assistants on your own documents",
     ],
     tech: ["Python", "Pandas", "scikit-learn", "LLM APIs", "Power BI"],
+    image: "",
   },
   {
     slug: "java-enterprise",
@@ -133,6 +139,7 @@ export const services: Service[] = [
       "Code reviews and modernisation",
     ],
     tech: ["Java", "Spring Boot", "MySQL", "PostgreSQL", "Docker"],
+    image: "",
   },
 ];
 
@@ -155,12 +162,13 @@ export const whyUs = [
   },
 ];
 
+// `image`: photo shown in the step's circle (it's shown in black and white). Leave "" for the built-in icon.
 export const process = [
-  { title: "Discover", text: "A free call to understand your business, goals and budget." },
-  { title: "Design", text: "Wireframes and visual designs you can review before any code." },
-  { title: "Build", text: "Short build cycles with a preview link you can try every week." },
-  { title: "Launch", text: "Testing, deployment and a walkthrough for your team." },
-  { title: "Support", text: "Fixes, improvements and monthly care plans if you need them." },
+  { title: "Discover", text: "A free call to understand your business, goals and budget.", image: "" },
+  { title: "Design", text: "Wireframes and visual designs you can review before any code.", image: "" },
+  { title: "Build", text: "Short build cycles with a preview link you can try every week.", image: "" },
+  { title: "Launch", text: "Testing, deployment and a walkthrough for your team.", image: "" },
+  { title: "Support", text: "Fixes, improvements and monthly care plans if you need them.", image: "" },
 ];
 
 export const techStack = [
@@ -193,6 +201,8 @@ export type Product = {
   summary: string;
   audience: string;
   features: string[];
+  /** Screenshot or photo for the product, e.g. "/images/products/path-lab.jpg". "" shows the built-in artwork. */
+  image: string;
 };
 
 export const products: Product[] = [
@@ -208,6 +218,7 @@ export const products: Product[] = [
       "Report templates and PDF delivery",
       "Billing and daily summaries",
     ],
+    image: "",
   },
   {
     slug: "crm",
@@ -221,6 +232,7 @@ export const products: Product[] = [
       "Customer notes and history",
       "WhatsApp and email templates",
     ],
+    image: "",
   },
   {
     slug: "restaurant",
@@ -234,6 +246,7 @@ export const products: Product[] = [
       "Menu and pricing management",
       "Daily sales reports",
     ],
+    image: "",
   },
   {
     slug: "admission",
@@ -242,6 +255,7 @@ export const products: Product[] = [
     summary: "Enquiries, applications, documents and fee tracking for schools and institutes.",
     audience: "Schools, colleges and coaching institutes",
     features: ["Enquiry and application forms", "Document collection", "Admission status tracking", "Fee receipts"],
+    image: "",
   },
 ];
 
@@ -325,6 +339,10 @@ export const about = {
   title: "Two founders, one small lab.",
   story:
     "[Write your story here: how the two of you met, why you started Pixel Nest Labs, and the kind of businesses you want to help.]",
+  mission: "[One line on what you do for your clients.]",
+  vision: "[One line on where you want the studio to go.]",
+  // Photo of the two of you together for the tall tile, e.g. "/images/about/team.jpg". "" shows the built-in artwork.
+  teamImage: "",
   // Keep this honest: use real numbers or leave the placeholder.
   experienceStrip: ["2 founders", "[X]+ years combined experience", "5 service areas", "4 products in development"],
   founders: [
@@ -334,6 +352,8 @@ export const about = {
       bio: "[Short bio: what you work on and what you enjoy building.]",
       skills: ["[Skill]", "[Skill]", "[Skill]"],
       linkedin: "",
+      // Portrait, e.g. "/images/about/founder-1.jpg". Shown in black and white with a colour block.
+      image: "",
     },
     {
       name: "[Founder name]",
@@ -341,9 +361,27 @@ export const about = {
       bio: "[Short bio: what you work on and what you enjoy building.]",
       skills: ["[Skill]", "[Skill]", "[Skill]"],
       linkedin: "",
+      // Portrait, e.g. "/images/about/founder-1.jpg". Shown in black and white with a colour block.
+      image: "",
     },
   ],
 };
+
+/**
+ * Cards in the curved strip of the closing "Let's build it" section.
+ * Each card shows `image` when you add one (e.g. "/images/gallery/shop.jpg");
+ * until then it shows `label` on a brand-coloured tile.
+ */
+export const ctaGallery = [
+  { label: "Websites", image: "", alt: "" },
+  { label: "Shopify stores", image: "", alt: "" },
+  { label: "CRMs", image: "", alt: "" },
+  { label: "AI tools", image: "", alt: "" },
+  { label: "Dashboards", image: "", alt: "" },
+  { label: "Catalogues", image: "", alt: "" },
+  { label: "Instagram grids", image: "", alt: "" },
+  { label: "Custom software", image: "", alt: "" },
+];
 
 export const faqs = [
   {

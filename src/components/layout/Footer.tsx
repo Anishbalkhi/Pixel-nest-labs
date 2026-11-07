@@ -106,7 +106,7 @@ export function Footer() {
         <InView
           as="p"
           margin="0px"
-          className="rise-letters font-display flex justify-center pb-2 text-[13.5vw] leading-[0.85] font-extrabold tracking-tighter whitespace-nowrap text-white/[0.07] select-none xl:text-[11.5rem]"
+          className="rise-letters font-condensed footer-word flex justify-center pb-2 text-[19vw] leading-[0.9] whitespace-nowrap uppercase select-none xl:text-[16rem]"
         >
           {"PIXEL NEST".split("").map((ch, i) => (
             <span key={i} style={{ ["--i" as string]: i }}>

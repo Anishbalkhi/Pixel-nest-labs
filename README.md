@@ -37,6 +37,19 @@ Almost all text lives in **`src/content/site.ts`**. Edit it there; you don't nee
 
 Anything in `[square brackets]` is a placeholder. Please keep the copy honest: only real numbers in the experience strip, and no testimonials or client logos until you have real ones.
 
+## Add your photos
+
+Every picture on the site is a slot that shows built-in artwork until you give it a photo. Put the files in `public/images/` and set the path (for example `"/images/about/team.jpg"`) in `src/content/site.ts`. In `npm run dev` each empty slot shows a small black "photo: …" tag so you can see which one is which; the tag never appears on the live site.
+
+| Slot                                       | Field in `site.ts`              | Notes                                                                 |
+| ------------------------------------------ | ------------------------------- | --------------------------------------------------------------------- |
+| Service panels                             | `services[].image`              | Wide (16:10).                                                         |
+| Process circles                            | `process[].image`               | Square; shown in black and white.                                     |
+| Curved strip in "Let's build it"           | `ctaGallery[].image` and `.alt` | Portrait (5:6). Without a photo the card shows `label`.               |
+| About: team tile                           | `about.teamImage`               | Tall; shown in black and white.                                       |
+| About: founder portraits                   | `about.founders[].image`        | 16:10; black and white with a colour block on top.                    |
+| Products (home carousel and products page) | `products[].image`              | Screenshots work well; shown in black and white on the products page. |
+
 Other places:
 
 - Brand colours and fonts: `src/app/globals.css` (`@theme`) and `src/app/layout.tsx`.

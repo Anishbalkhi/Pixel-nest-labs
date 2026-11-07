@@ -19,6 +19,8 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-condensed: var(--font-anton), "Arial Narrow", Impact, sans-serif;
+  --font-hand: var(--font-caveat), "Segoe Print", cursive;
 
   --animate-marquee: marquee 40s linear infinite;
   --animate-marquee-reverse: marquee 46s linear infinite reverse;
@@ -625,4 +627,237 @@ html.lenis body {
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
   }
+}
+
+/* ---------- Paper textures ---------- */
+
+/* Fine film grain over pale sections. */
+.grain {
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.08 0 0 0 0 0.27 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Lined notebook paper (Why us). */
+.lined-paper {
+  background-color: #f5f6f8;
+  background-image:
+    radial-gradient(60% 40% at 20% 10%, rgb(255 255 255 / 0.9), transparent 70%),
+    radial-gradient(50% 40% at 85% 75%, rgb(255 255 255 / 0.8), transparent 70%),
+    repeating-linear-gradient(to bottom, transparent 0 51px, rgb(10 20 69 / 0.07) 51px 52px);
+}
+
+/* ---------- Process: winding line ---------- */
+
+.winding {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+@media (min-width: 640px) {
+  .winding {
+    stroke-width: 10px;
+  }
+}
+
+/* Each step grows in when the line reaches it; its burst keeps turning slowly. */
+.js [data-step] .step-circle {
+  scale: 0.7;
+  opacity: 0.35;
+  transition:
+    scale 700ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 400ms ease;
+}
+.js [data-step].is-active .step-circle {
+  scale: 1;
+  opacity: 1;
+}
+.step-burst {
+  animation: burst-turn 40s linear infinite;
+}
+@keyframes burst-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.js [data-step] .step-burst {
+  scale: 0.4;
+  transition: scale 800ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms;
+}
+.js [data-step].is-active .step-burst {
+  scale: 1;
+}
+.step-sparkle {
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.7) rotate(45deg);
+  }
+}
+.js [data-step] .step-text {
+  opacity: 0;
+  translate: 0 24px;
+  transition:
+    opacity 500ms ease 150ms,
+    translate 700ms cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+}
+.js [data-step].is-active .step-text {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ---------- Why us: pinned notes ---------- */
+
+.note {
+  rotate: var(--r, 0deg);
+  transform-origin: 50% 0;
+}
+.note:hover {
+  animation: note-swing 1.4s cubic-bezier(0.36, 0, 0.2, 1);
+}
+@keyframes note-swing {
+  0% {
+    rotate: var(--r);
+  }
+  25% {
+    rotate: calc(var(--r) + 3deg);
+  }
+  55% {
+    rotate: calc(var(--r) - 2deg);
+  }
+  80% {
+    rotate: calc(var(--r) + 0.8deg);
+  }
+  100% {
+    rotate: var(--r);
+  }
+}
+/* Glossy push-pin with a coloured glow. */
+.pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 30%, rgb(255 255 255 / 0.85) 0 10%, transparent 28%),
+    radial-gradient(circle at 50% 55%, var(--pin) 0 52%, color-mix(in srgb, var(--pin), #000 28%) 100%);
+  box-shadow:
+    0 10px 18px -4px color-mix(in srgb, var(--pin) 65%, transparent),
+    inset 0 -3px 5px rgb(0 0 0 / 0.18);
+}
+.pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  width: 14px;
+  height: 6px;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.18);
+  filter: blur(2px);
+  z-index: -1;
+}
+/* Notes drop in from above and settle on their pin, one after another. */
+.js .notes .note {
+  opacity: 0;
+  translate: 0 -70px;
+  rotate: calc(var(--r) + 10deg);
+  transition:
+    opacity 400ms ease,
+    translate 900ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    rotate 1100ms cubic-bezier(0.34, 1.8, 0.64, 1);
+  transition-delay: calc(var(--i, 0) * 160ms);
+}
+.js .notes.is-in .note {
+  opacity: 1;
+  translate: 0 0;
+  rotate: var(--r);
+}
+.js .notes .note-links path,
+.js .notes .note-sign {
+  opacity: 0;
+  transition: opacity 600ms ease 900ms;
+}
+.js .notes.is-in .note-links path,
+.js .notes.is-in .note-sign {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-step] .step-circle,
+  .js [data-step] .step-burst,
+  .js [data-step] .step-text,
+  .js .notes .note,
+  .js .notes .note-links path,
+  .js .notes .note-sign {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+    rotate: var(--r, 0deg);
+  }
+  .note:hover {
+    animation: none;
+  }
+}
+
+@keyframes badge-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Hand-drawn doodles ---------- */
+.doodle path {
+  stroke-dasharray: 1 1;
+}
+.js .doodle path {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1100ms cubic-bezier(0.65, 0, 0.35, 1) 250ms;
+}
+.js .is-in .doodle path,
+.js .is-in.doodle path {
+  stroke-dashoffset: 0;
+}
+.js .doodle-now path {
+  animation: doodle-draw 700ms cubic-bezier(0.65, 0, 0.35, 1) 150ms both;
+}
+@keyframes doodle-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .doodle path {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Footer wordmark: outlined letters that fill with colour on hover. */
+.footer-word span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.18);
+  transition:
+    color 400ms ease,
+    -webkit-text-stroke-color 400ms ease;
+}
+.footer-word span:nth-child(3n + 1):hover {
+  color: #1fb89a;
+}
+.footer-word span:nth-child(3n + 2):hover {
+  color: #f7a21b;
+}
+.footer-word span:nth-child(3n):hover {
+  color: #0b57c2;
+}
+.footer-word span:hover {
+  -webkit-text-stroke-color: transparent;
 }

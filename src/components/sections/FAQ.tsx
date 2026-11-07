@@ -3,6 +3,7 @@
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
+import { Doodle } from "@/components/brand/Doodle";
 import { InView } from "@/components/motion/InView";
 import { faqs } from "@/content/site";
 import { SectionHeading } from "./SectionHeading";
@@ -13,11 +14,39 @@ export function FAQ() {
 
   return (
     <section id="faq" className="mt-6 grid gap-8 px-2 py-14 sm:px-4 lg:grid-cols-[0.8fr_1fr]">
-      <SectionHeading
-        eyebrow="FAQ"
-        title="Questions we hear often."
-        text="Can't find yours? Tap “Let's talk” and ask us."
-      />
+      <div className="lg:sticky lg:top-28 lg:self-start">
+        <SectionHeading eyebrow="FAQ" title="Questions we hear often." />
+        {/* Whiteboard-style speech bubble that draws itself */}
+        <InView className="relative mt-8 max-w-sm">
+          <svg viewBox="0 0 320 190" className="doodle h-auto w-full overflow-visible" fill="none" aria-hidden>
+            <path
+              d="M40 20 C 120 6, 240 8, 292 26 C 318 36, 316 112, 290 128 C 250 150, 150 150, 92 144 L 52 178 L 62 140 C 24 132, 8 104, 10 70 C 12 40, 22 26, 40 20 Z"
+              stroke="#0b57c2"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              pathLength={1}
+            />
+          </svg>
+          <div className="absolute inset-x-8 top-6 sm:top-8">
+            <p className="font-hand text-navy text-[1.7rem] leading-tight font-bold sm:text-3xl">
+              Still wondering about something?
+            </p>
+            <a
+              href="#contact"
+              className="text-brand mt-2 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+            >
+              Ask us directly →
+            </a>
+          </div>
+          <Doodle
+            kind="arrow"
+            color="#f7a21b"
+            width={4}
+            className="absolute -right-2 -bottom-4 h-14 w-16 rotate-[200deg]"
+          />
+        </InView>
+      </div>
       <InView className="deal space-y-3">
         {faqs.map((f, i) => {
           const isOpen = open === i;
@@ -48,8 +77,8 @@ export function FAQ() {
                 >
                   <span
                     aria-hidden
-                    className={`grid size-8 shrink-0 place-items-center rounded-lg text-xs font-extrabold transition-colors duration-300 ${
-                      isOpen ? "bg-navy text-teal" : "bg-mist text-muted group-hover:text-brand"
+                    className={`font-condensed w-8 shrink-0 text-3xl leading-none transition-colors duration-300 ${
+                      isOpen ? "text-brand" : "text-navy/25 group-hover:text-brand/60"
                     }`}
                   >
                     0{i + 1}
@@ -76,7 +105,7 @@ export function FAQ() {
                       initial={{ y: -8 }}
                       animate={{ y: 0 }}
                       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="text-muted pr-5 pb-5 pl-[4.25rem] text-sm"
+                      className="text-muted pr-5 pb-5 pl-[4.25rem] text-[15px] leading-relaxed"
                     >
                       {f.a}
                     </motion.p>

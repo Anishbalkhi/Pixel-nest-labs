@@ -1,5 +1,6 @@
 "use client";
 
+import { Doodle } from "@/components/brand/Doodle";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
@@ -164,19 +165,30 @@ function RotatingLine() {
   return (
     <p className="font-display mt-4 flex items-center gap-2 text-lg font-bold text-white/60 sm:text-xl">
       We make
-      <span className="text-sun relative inline-flex h-[1.4em] min-w-[10ch] overflow-hidden">
-        <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span
-            key={hero.rotating[i]}
-            initial={{ y: "100%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "-100%", opacity: 0 }}
-            transition={{ duration: 0.45, ease }}
-            className="whitespace-nowrap"
-          >
-            {hero.rotating[i]}
-          </motion.span>
-        </AnimatePresence>
+      <span className="relative inline-flex">
+        <span className="text-sun relative inline-flex h-[1.4em] min-w-[10ch] overflow-hidden">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span
+              key={hero.rotating[i]}
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-100%", opacity: 0 }}
+              transition={{ duration: 0.45, ease }}
+              className="whitespace-nowrap"
+            >
+              {hero.rotating[i]}
+            </motion.span>
+          </AnimatePresence>
+        </span>
+        {/* Marker swash under the word, redrawn each time it changes */}
+        <Doodle
+          key={i}
+          kind="underline"
+          drawn
+          color="#1fb89a"
+          width={6}
+          className="absolute -bottom-2.5 left-0 h-3 w-[9ch]"
+        />
       </span>
     </p>
   );

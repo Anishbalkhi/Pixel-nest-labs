@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { JoinWaitlistButton } from "@/components/forms/JoinWaitlistButton";
 import { WaitlistForm } from "@/components/forms/WaitlistForm";
 import { HeroPixels } from "@/components/brand/HeroPixels";
+import { SpinBadge } from "@/components/brand/SpinBadge";
+import { ImageSlot } from "@/components/media/ImageSlot";
 import { DevStatus, DriftPixels } from "@/components/motion/decor";
-import { Tilt } from "@/components/motion/effects";
 import { ScrollTextBand } from "@/components/motion/ScrollTextBand";
-import { PixelDissolve } from "@/components/motion/PixelDissolve";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { CTASection } from "@/components/sections/HomeSections";
 import { productIcons } from "@/components/sections/icons";
@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description:
     "Path Lab, CRM, Restaurant and Admission management tools from Pixel Nest Labs. In development: join the waitlist.",
 };
+
+const spreadTones = ["#e4572e", "#0b57c2", "#0f7a65", "#a86400"];
 
 export default function ProductsPage() {
   return (
@@ -49,54 +51,103 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <ScrollReveal as="section" className="mt-6 grid gap-4 md:grid-cols-2">
-        {products.map((p) => {
+      {/* One magazine-style spread per product, alternating sides. */}
+      <div className="mt-6 space-y-6">
+        {products.map((p, i) => {
           const Icon = productIcons[p.icon];
+          const tone = spreadTones[i % spreadTones.length];
+          const flip = i % 2 === 1;
           return (
-            <div key={p.slug} id={p.slug} data-reveal>
-              <Tilt className="h-full" max={5}>
-                <article className="group border-line relative flex h-full flex-col overflow-hidden rounded-3xl border bg-white p-6 sm:p-7">
-                  <PixelDissolve />
-                  <div className="relative flex flex-1 flex-col">
-                    <div className="flex items-start justify-between gap-3">
-                      <span className="bg-navy text-teal grid size-12 place-items-center rounded-2xl">
-                        <Icon className="size-6" />
-                      </span>
-                      <span className="bg-sun/15 group-hover:bg-sun group-focus-visible:bg-sun group-hover:text-navy group-focus-visible:text-navy rounded-full px-2.5 py-1 text-xs font-semibold text-[#9a5c00] transition-colors delay-150">
-                        Coming soon
-                      </span>
-                    </div>
-                    <h2 className="font-display mt-5 text-2xl font-bold tracking-tight transition-colors delay-150 group-hover:text-white group-focus-visible:text-white">
-                      {p.name}
-                    </h2>
-                    <p className="text-brand group-hover:text-teal group-focus-visible:text-teal mt-1 text-xs font-semibold tracking-wider uppercase transition-colors delay-150">
-                      For {p.audience.toLowerCase()}
-                    </p>
-                    <p className="text-muted mt-3 text-sm transition-colors delay-150 group-hover:text-white/75 group-focus-visible:text-white/75">
-                      {p.summary}
-                    </p>
-                    <ul className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
-                      {p.features.map((f) => (
-                        <li
-                          key={f}
-                          className="flex gap-2 transition-colors delay-150 group-hover:text-white group-focus-visible:text-white"
-                        >
-                          <Check className="text-teal mt-0.5 size-4 shrink-0" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                    <DevStatus />
-                    <div className="mt-auto pt-6">
-                      <JoinWaitlistButton product={p.name} />
-                    </div>
+            <ScrollReveal
+              key={p.slug}
+              as="section"
+              id={p.slug}
+              className="relative grid overflow-hidden rounded-[2rem] bg-[#efece6] lg:grid-cols-2"
+            >
+              <div className="grain absolute inset-0" aria-hidden />
+              <div className={`relative flex flex-col p-6 sm:p-10 ${flip ? "lg:order-2" : ""}`}>
+                <div className="flex items-start justify-between gap-4">
+                  <p
+                    data-reveal
+                    className="font-display text-6xl leading-none font-extrabold sm:text-7xl"
+                    style={{ color: tone }}
+                  >
+                    {i + 1}.
+                  </p>
+                  <span className="text-navy/60 mt-2 text-[11px] font-semibold tracking-[0.2em] uppercase">
+                    For {p.audience.toLowerCase()}
+                  </span>
+                </div>
+                <h2
+                  data-reveal
+                  className="font-display mt-6 text-5xl leading-[0.92] font-extrabold tracking-tight lowercase sm:text-6xl xl:text-7xl"
+                  style={{ color: tone }}
+                >
+                  {p.name}
+                </h2>
+                <p data-reveal className="text-navy/75 mt-5 max-w-md">
+                  {p.summary}
+                </p>
+                <ul
+                  data-reveal
+                  className="border-navy/15 mt-6 grid gap-x-6 gap-y-2 border-t pt-5 text-sm sm:grid-cols-2"
+                >
+                  {p.features.map((f) => (
+                    <li key={f} className="text-navy flex gap-2">
+                      <Check className="mt-0.5 size-4 shrink-0" style={{ color: tone }} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-8">
+                  <DevStatus />
+                  <div className="mt-6">
+                    <JoinWaitlistButton product={p.name} />
                   </div>
-                </article>
-              </Tilt>
-            </div>
+                </div>
+              </div>
+
+              <div className={`relative min-h-[320px] lg:min-h-[520px] ${flip ? "lg:order-1" : ""}`}>
+                <ImageSlot
+                  src={p.image}
+                  alt=""
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  hint={`product ${p.slug}`}
+                  className="absolute inset-0 lg:inset-4 lg:rounded-[1.5rem]"
+                  imageClassName="grayscale"
+                >
+                  <div className="bg-navy absolute inset-0">
+                    <div className="pixel-grid-dark absolute inset-0" />
+                  </div>
+                  <span className="absolute inset-0 grid place-items-center">
+                    <span
+                      className="grid size-28 place-items-center rounded-[2rem] text-white ring-1 ring-white/20"
+                      style={{ background: tone }}
+                    >
+                      <Icon className="size-14" />
+                    </span>
+                  </span>
+                </ImageSlot>
+                {/* Vertical name along the outer edge, like a book spine */}
+                <span
+                  aria-hidden
+                  className={`font-display absolute top-8 hidden text-sm font-extrabold tracking-[0.3em] text-white/80 uppercase [writing-mode:vertical-rl] lg:block ${
+                    flip ? "left-10 rotate-180" : "right-10"
+                  }`}
+                >
+                  {p.name}
+                </span>
+                <SpinBadge
+                  id={`badge-${p.slug}`}
+                  text="In development • Join the waitlist • "
+                  color={tone}
+                  className={`absolute bottom-6 rounded-full bg-[#efece6] ${flip ? "right-6 lg:-right-8" : "left-6 lg:-left-8"} z-10`}
+                />
+              </div>
+            </ScrollReveal>
           );
         })}
-      </ScrollReveal>
+      </div>
 
       <ScrollTextBand words={["Path Lab", "CRM", "Restaurant", "Admission"]} />
 

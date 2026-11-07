@@ -1,63 +1,123 @@
-import { ArrowRight, ArrowUpRight, Clock, Layers, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import type { CSSProperties } from "react";
 import Link from "next/link";
+import { WordReveal } from "@/components/motion/effects";
+import { PixelAvatar } from "@/components/motion/decor";
+import { CountUp } from "@/components/motion/CountUp";
+import { ImageSlot } from "@/components/media/ImageSlot";
 import { PixelMark } from "@/components/brand/PixelMark";
-import { PixelDissolve } from "@/components/motion/PixelDissolve";
-import { Magnetic, Tilt, WordReveal } from "@/components/motion/effects";
-import { DevStatus, PixelAvatar, PixelRain } from "@/components/motion/decor";
+import { Doodle } from "@/components/brand/Doodle";
+import { QuickContact } from "@/components/forms/QuickContact";
 import { InView } from "@/components/motion/InView";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { about, contact, products, whyUs } from "@/content/site";
-import { productIcons } from "./icons";
+import { about, contact, ctaGallery, whyUs } from "@/content/site";
+import { CurvedGallery } from "./CurvedGallery";
+import { ProductsCarousel } from "./ProductsCarousel";
 import { SectionHeading } from "./SectionHeading";
 
-const whyIcons = [Users, ShieldCheck, Layers, Clock];
+/** Pin colour, note tint and number colour for each "Why us" note. */
+const notes = [
+  { pin: "#ff7a3d", tint: "linear-gradient(180deg,#ffe8db,#fff5ee)", ink: "#e8622a", r: -4 },
+  { pin: "#2f6bff", tint: "linear-gradient(180deg,#e2e9ff,#f0f4ff)", ink: "#2f6bff", r: 5 },
+  { pin: "#8b5cf6", tint: "linear-gradient(180deg,#efe3ff,#f8f2ff)", ink: "#7c3aed", r: -3 },
+  { pin: "#1fb89a", tint: "linear-gradient(180deg,#d9f4ec,#eefaf6)", ink: "#0f7a65", r: 4 },
+];
 
+/**
+ * Why us: four notes pinned to lined paper, zig-zagging down the page with
+ * dashed lines between them. They drop in and settle when scrolled into view,
+ * and swing a little from their pin on hover.
+ */
 export function WhyUs() {
   return (
-    <section id="why-us" className="mt-6 px-2 py-14 sm:px-4">
-      <ScrollReveal>
-        <SectionHeading eyebrow="Why Pixel Nest Labs" title="A small team that treats your project like its own." />
+    <section
+      id="why-us"
+      className="lined-paper relative mt-6 overflow-hidden rounded-[2rem] px-4 py-14 sm:px-10 sm:py-16"
+    >
+      <ScrollReveal className="relative">
+        <SectionHeading
+          center
+          eyebrow="Why Pixel Nest Labs"
+          title="A small team that treats your project like its own."
+        />
       </ScrollReveal>
-      {/* Cards deal in, tilted alternately, then straighten. */}
-      <InView className="deal mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+      <InView className="notes relative mx-auto mt-12 flex max-w-5xl flex-col gap-12 lg:block lg:h-[800px]">
+        {/* Dashed lines from one note to the next (desktop layout only) */}
+        <svg
+          viewBox="0 0 1000 800"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-0 hidden size-full lg:block"
+          aria-hidden
+        >
+          <g
+            fill="none"
+            stroke="#0a1445"
+            strokeOpacity="0.28"
+            strokeWidth="1.5"
+            strokeDasharray="6 7"
+            className="note-links"
+          >
+            <path d="M 410 120 C 480 120, 520 190, 590 230" />
+            <path d="M 590 340 C 480 330, 330 320, 270 352" />
+            <path d="M 450 480 C 510 490, 540 560, 590 590" />
+          </g>
+          <path
+            d="M 590 700 C 530 690, 470 715, 405 708"
+            fill="none"
+            stroke="#0a1445"
+            strokeOpacity="0.3"
+            strokeWidth="1.5"
+          />
+        </svg>
+
         {whyUs.map((w, i) => {
-          const Icon = whyIcons[i % whyIcons.length];
+          const n = notes[i % notes.length];
           return (
             <div
               key={w.title}
-              style={{ ["--r" as string]: `${i % 2 ? 3 : -3}deg` }}
-              className="group glow-border border-line relative overflow-hidden rounded-3xl border bg-white p-6 transition-shadow duration-300 hover:shadow-[0_24px_50px_-28px_rgb(10_20_69/0.55)]"
+              style={
+                { ["--r" as string]: `${n.r}deg`, ["--pin" as string]: n.pin, ["--i" as string]: i } as CSSProperties
+              }
+              className={`note group relative w-[92%] max-w-sm sm:w-[78%] lg:absolute lg:w-[36%] lg:max-w-none ${
+                [
+                  "self-start lg:top-0 lg:left-[5%]",
+                  "self-end lg:top-[140px] lg:left-[59%]",
+                  "self-start lg:top-[340px] lg:left-[9%]",
+                  "self-end lg:top-[500px] lg:left-[59%]",
+                ][i % 4]
+              }`}
             >
-              <PixelDissolve />
-              <span
-                aria-hidden
-                data-num={`0${i + 1}`}
-                className="font-display text-navy/[0.06] absolute top-3 right-5 text-6xl font-extrabold transition-colors delay-150 group-hover:text-white/10 before:content-[attr(data-num)]"
-              />
-              <div className="relative">
-                <span className="relative grid size-12 place-items-center">
-                  {[0, 870, 1730].map((delay, k) => (
-                    <span
-                      key={delay}
-                      aria-hidden
-                      className="orbit-px absolute size-1.5 rounded-[2px]"
-                      style={{ ["--d" as string]: `-${delay}ms`, background: ["#1fb89a", "#f7a21b", "#0b57c2"][k] }}
-                    />
-                  ))}
-                  <span className="bg-mist text-brand group-hover:text-teal grid size-12 place-items-center rounded-2xl transition-[background-color,color,transform] delay-150 duration-500 group-hover:rotate-[-8deg] group-hover:bg-white/10">
-                    <Icon className="size-6" />
-                  </span>
-                </span>
-                <h3 className="font-display mt-5 text-lg font-bold transition-colors delay-150 group-hover:text-white">
-                  {w.title}
-                </h3>
-                <p className="text-muted mt-1.5 text-sm transition-colors delay-150 group-hover:text-white/75">
-                  {w.text}
-                </p>
+              <span className="pin absolute -top-4 left-1/2 z-10 -translate-x-1/2" aria-hidden />
+              <div className="rounded-[28px] bg-white p-3 shadow-[0_30px_50px_-28px_rgb(10_20_69/0.45),0_2px_6px_rgb(10_20_69/0.06)]">
+                <div className="rounded-[20px] border border-white/80 px-6 pt-7 pb-8" style={{ background: n.tint }}>
+                  <p className="font-hand text-4xl leading-none font-bold" style={{ color: n.ink }}>
+                    0{i + 1}
+                  </p>
+                  <h3 className="font-display text-navy mt-3 text-xl font-bold">{w.title}</h3>
+                  <p className="text-navy/70 mt-2 text-[15px] leading-relaxed">{w.text}</p>
+                </div>
               </div>
             </div>
           );
         })}
+
+        {/* Little sign-off at the end of the chain */}
+        <Link
+          href="/#about"
+          className="note-sign group flex items-center gap-3 self-center lg:absolute lg:top-[660px] lg:left-[18%]"
+        >
+          <span className="flex -space-x-3">
+            <PixelAvatar seed={3} className="size-12! rounded-full! p-2.5! ring-4 ring-white" />
+            <PixelAvatar seed={4} className="size-12! rounded-full! p-2.5! ring-4 ring-white" />
+          </span>
+          <span className="font-hand text-navy text-2xl leading-tight">
+            Two founders, <span className="text-[#e8622a]">one small lab</span>.
+            <span className="text-muted group-hover:text-brand block font-sans text-xs font-semibold not-italic transition-colors">
+              Meet us →
+            </span>
+          </span>
+        </Link>
       </InView>
     </section>
   );
@@ -68,7 +128,7 @@ export function ProductsPreview() {
     <ScrollReveal
       as="section"
       id="products"
-      className="border-line mt-6 rounded-[2rem] border bg-white px-6 py-14 sm:px-10"
+      className="border-line mt-6 overflow-hidden rounded-[2rem] border bg-white px-6 py-14 sm:px-10"
     >
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SectionHeading
@@ -84,93 +144,103 @@ export function ProductsPreview() {
           See all products <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      <InView className="deal mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {products.map((p) => {
-          const Icon = productIcons[p.icon];
-          return (
-            <div key={p.slug}>
-              <Tilt className="h-full">
-                <Link
-                  href={`/products#${p.slug}`}
-                  className="group border-line bg-mist relative flex h-full flex-col overflow-hidden rounded-3xl border p-6"
-                >
-                  <PixelDissolve />
-                  <div className="relative flex flex-1 flex-col">
-                    <div className="flex items-start justify-between">
-                      <span className="text-brand grid size-11 place-items-center rounded-xl bg-white shadow-sm transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-8deg]">
-                        <Icon className="size-5" />
-                      </span>
-                      <span className="bg-sun/15 group-hover:bg-sun group-focus-visible:bg-sun group-hover:text-navy group-focus-visible:text-navy rounded-full px-2.5 py-1 text-xs font-semibold text-[#9a5c00] transition-colors delay-150">
-                        In development
-                      </span>
-                    </div>
-                    <h3 className="font-display mt-4 text-lg font-bold transition-colors delay-150 group-hover:text-white group-focus-visible:text-white">
-                      {p.name}
-                    </h3>
-                    <p className="text-muted mt-1 text-sm transition-colors delay-150 group-hover:text-white/75 group-focus-visible:text-white/75">
-                      {p.summary}
-                    </p>
-                    <p className="text-brand group-hover:text-teal group-focus-visible:text-teal mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors delay-150">
-                      Join waitlist{" "}
-                      <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </p>
-                    <div className="mt-auto">
-                      <DevStatus />
-                    </div>
-                  </div>
-                </Link>
-              </Tilt>
-            </div>
-          );
-        })}
-      </InView>
+      <ProductsCarousel />
     </ScrollReveal>
   );
 }
 
+/** Splits "4 products in development" into 4 and the label, so the number can count up. */
+function splitStat(item: string) {
+  const m = item.match(/^(\d+)(\+?)\s+(.*)$/);
+  return m ? { n: Number(m[1]), plus: m[2], label: m[3] } : null;
+}
+
+const founderBlocks = [
+  { block: "#1fb89a", place: "right-[12%] top-[18%] h-[58%] w-[34%]" },
+  { block: "#f7a21b", place: "left-[10%] bottom-[14%] h-[46%] w-[40%]" },
+];
+
+/**
+ * About: a bento grid. A paper-coloured story tile, a tall team tile with the
+ * mission and vision, a portrait tile per founder (black and white with a
+ * colour block over it), and a stats tile whose numbers count up.
+ */
 export function About() {
   return (
     <ScrollReveal
       as="section"
       id="about"
-      className="border-line mt-6 rounded-[2rem] border bg-white px-6 py-14 sm:px-10"
+      className="border-line relative mt-6 overflow-hidden rounded-[2rem] border bg-[#f6f5f1] px-4 py-14 sm:px-10 sm:py-16"
     >
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
-        <div>
-          <SectionHeading eyebrow="About us" title={about.title} />
-          <p data-reveal className="text-muted mt-4">
-            {about.story}
-          </p>
-          <div data-reveal className="mt-6 grid grid-cols-2 gap-3">
-            <div className="glow-border bg-mist rounded-2xl p-4">
-              <p className="text-brand text-xs font-semibold tracking-wider uppercase">Mission</p>
-              <p className="mt-1 text-sm">[One line on what you do for your clients.]</p>
-            </div>
-            <div className="glow-border bg-mist rounded-2xl p-4">
-              <p className="text-brand text-xs font-semibold tracking-wider uppercase">Vision</p>
-              <p className="mt-1 text-sm">[One line on where you want the studio to go.]</p>
-            </div>
-          </div>
+      <div className="grain absolute inset-0" aria-hidden />
+      <div className="relative">
+        <SectionHeading
+          center
+          eyebrow="About us"
+          title={about.title}
+          text="A small studio by design: you always know who's building your project."
+        />
+        <div data-reveal className="bg-navy/15 mx-auto mt-8 h-px w-48" aria-hidden />
+      </div>
+
+      <InView className="deal relative mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
+        {/* Story */}
+        <div className="rounded-3xl bg-[#e9e2d8] p-6 sm:p-7">
+          <span aria-hidden className="font-display text-brand block text-6xl leading-[0.6] font-extrabold">
+            &ldquo;
+          </span>
+          <p className="text-navy/60 mt-4 text-xs font-semibold tracking-[0.2em] uppercase">Our story</p>
+          <p className="text-navy mt-2 text-[15px] leading-relaxed">{about.story}</p>
         </div>
-        <InView className="deal grid gap-4 sm:grid-cols-2">
-          {about.founders.map((f, i) => (
-            <div
-              key={i}
-              style={{ ["--r" as string]: `${i % 2 ? 2 : -2}deg` }}
-              className="group glow-border border-line bg-mist rounded-3xl border p-5 transition-transform duration-300 hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-3">
-                <PixelAvatar seed={i + 3} />
-                <div>
-                  <p className="font-display font-bold">{f.name}</p>
-                  <p className="text-muted text-xs">{f.role}</p>
+
+        {/* Team: tall tile with mission and vision */}
+        <ImageSlot
+          src={about.teamImage}
+          alt="The Pixel Nest Labs founders"
+          sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 92vw"
+          hint="the two founders together"
+          className="bg-navy min-h-[420px] rounded-3xl lg:row-span-2"
+          imageClassName="grayscale"
+        >
+          <div className="pixel-grid-dark absolute inset-0" />
+          <PixelRainLite />
+        </ImageSlot>
+
+        {about.founders.map((f, i) => (
+          <article
+            key={i}
+            className={`group overflow-hidden rounded-3xl bg-white ${i === 0 ? "lg:col-start-3 lg:row-start-1" : "lg:col-start-1 lg:row-start-2"}`}
+          >
+            <div className="relative aspect-[16/10]">
+              <ImageSlot
+                src={f.image}
+                alt={f.name}
+                sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 92vw"
+                hint={`founder ${i + 1} portrait`}
+                className="absolute inset-0"
+                imageClassName="grayscale contrast-110"
+              >
+                <div className="absolute inset-0 bg-[#d9dbe1]" />
+                <div className="absolute inset-0 grid place-items-center">
+                  <PixelAvatar seed={i + 3} className="size-24! rounded-3xl! p-3!" />
                 </div>
-              </div>
-              <p className="text-muted mt-4 text-sm">{f.bio}</p>
+              </ImageSlot>
+              {/* Colour block over the portrait, like a printed overlay */}
+              <span
+                aria-hidden
+                className={`absolute mix-blend-multiply transition-transform duration-700 group-hover:translate-y-[-6%] ${founderBlocks[i % 2].place}`}
+                style={{ background: founderBlocks[i % 2].block }}
+              />
+              <span aria-hidden className="bg-navy/40 absolute top-0 bottom-0 left-6 w-px" />
+            </div>
+            <div className="p-6">
+              <h3 className="font-condensed text-navy text-3xl leading-none uppercase">{f.name}</h3>
+              <p className="text-muted mt-1 text-xs font-semibold tracking-wider uppercase">{f.role}</p>
+              <p className="text-muted mt-3 text-sm">{f.bio}</p>
               <ul className="mt-4 flex flex-wrap gap-1.5">
-                {f.skills.map((s, j) => (
-                  <li key={j} className="rounded-md bg-white px-2 py-1 text-xs font-medium">
-                    {s}
+                {f.skills.map((sk, j) => (
+                  <li key={j} className="bg-mist rounded-md px-2 py-1 text-xs font-medium">
+                    {sk}
                   </li>
                 ))}
               </ul>
@@ -185,80 +255,110 @@ export function About() {
                 </a>
               ) : null}
             </div>
-          ))}
-        </InView>
-      </div>
-      <div className="bg-navy relative mt-10 overflow-hidden rounded-2xl">
-        <div className="pixel-grid-dark absolute inset-0" aria-hidden />
-        <InView
-          as="ul"
-          className="pop relative flex flex-wrap justify-center gap-x-3 gap-y-2 px-5 py-4 text-sm font-semibold text-white"
-        >
-          {about.experienceStrip.map((item, i) => (
-            <li key={i} style={{ ["--i" as string]: i }} className="flex items-center gap-3">
-              {i > 0 ? (
-                <span className="bg-teal size-1.5 animate-[spin_4s_linear_infinite] rounded-[2px]" aria-hidden />
-              ) : null}
-              {item}
-            </li>
-          ))}
-        </InView>
+          </article>
+        ))}
+
+        {/* Numbers */}
+        <div className="rounded-3xl bg-[#dfe3f1] p-6 sm:p-7 lg:col-start-3 lg:row-start-2">
+          <p className="text-navy/60 text-xs font-semibold tracking-[0.2em] uppercase">In numbers</p>
+          <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6">
+            {about.experienceStrip.map((item, i) => {
+              const stat = splitStat(item);
+              return (
+                <li key={i}>
+                  {stat ? (
+                    <>
+                      <p className="font-display text-navy text-4xl font-extrabold tracking-tight">
+                        <CountUp value={stat.n} />
+                        {stat.plus}
+                      </p>
+                      <p className="text-muted mt-1 text-sm">{stat.label}</p>
+                    </>
+                  ) : (
+                    <p className="text-navy text-sm font-semibold">{item}</p>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </InView>
+
+      {/* Mission and vision sit over the team tile on large screens; below it they read as a strip. */}
+      <div className="relative mt-4 grid gap-4 sm:grid-cols-2">
+        {[
+          ["Mission", about.mission],
+          ["Vision", about.vision],
+        ].map(([label, text]) => (
+          <div key={label} data-reveal className="flex items-baseline gap-4 rounded-2xl bg-white px-5 py-4">
+            <span className="font-hand text-brand text-2xl font-bold">{label}</span>
+            <p className="text-navy text-sm">{text}</p>
+          </div>
+        ))}
       </div>
     </ScrollReveal>
   );
 }
 
+/** A few slow pixels for the team tile until a photo is added. */
+function PixelRainLite() {
+  return (
+    <div className="absolute inset-0 grid place-items-center">
+      <div className="text-center text-white">
+        <PixelMark className="mx-auto h-16 w-auto" />
+        <p className="font-condensed mt-4 text-5xl leading-[0.9] uppercase">
+          Two founders.
+          <br />
+          <span className="text-teal">One small lab.</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function CTASection({
-  title = "Have an idea? Let's build it, pixel by pixel.",
-  text = "Tell us about your project in the form, or book a free 20-minute call.",
+  eyebrow = "Start a project",
+  title = "Let's build it, pixel by pixel.",
+  text = "Tell us about your idea and we'll reply within one working day. Or book a free 20-minute call.",
 }: {
+  eyebrow?: string;
   title?: string;
   text?: string;
 }) {
   return (
-    <ScrollReveal
-      as="section"
-      className="bg-navy relative mt-6 overflow-hidden rounded-[2rem] px-6 py-14 text-white sm:px-10"
-    >
-      <div className="pixel-grid-dark absolute inset-0" aria-hidden />
-      <PixelRain seed={4} />
-      <div className="bg-teal/30 absolute -right-24 -bottom-24 size-80 rounded-full blur-[100px]" aria-hidden />
-      <PixelMark className="absolute -right-6 -bottom-8 h-48 w-auto animate-[spin_40s_linear_infinite] opacity-15 sm:h-60" />
-      <div className="relative max-w-xl">
-        <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+    <section className="border-line relative mt-6 overflow-hidden rounded-[2rem] border bg-white py-14 sm:py-20">
+      <ScrollReveal className="relative px-6 text-center sm:px-10">
+        <p data-reveal className="text-navy text-[11px] font-semibold tracking-[0.25em] uppercase">
+          {eyebrow}
+        </p>
+        <h2 className="font-display text-navy mx-auto mt-4 max-w-3xl text-4xl leading-[1.02] font-extrabold tracking-tight sm:text-6xl">
           <WordReveal text={title} />
         </h2>
-        <p data-reveal className="mt-3 text-white/70">
+        <InView className="mx-auto -mt-1 w-56 sm:w-80" aria-hidden>
+          <Doodle kind="swash" color="#1fb89a" width={5} className="h-auto w-full" />
+        </InView>
+        <p data-reveal className="text-muted mx-auto mt-3 max-w-xl">
           {text}
         </p>
-        <div data-reveal className="mt-7 flex flex-wrap gap-3">
-          <Magnetic className="relative inline-block">
-            {/* Soft ping ring to draw the eye to the main button */}
-            <span
-              aria-hidden
-              className="ping-soft border-teal pointer-events-none absolute inset-0 rounded-full border-2"
-            />
+      </ScrollReveal>
+
+      <CurvedGallery items={ctaGallery} />
+
+      <div className="relative mt-8 px-6 sm:px-10">
+        <QuickContact />
+        {contact.bookingUrl ? (
+          <p className="mt-4 text-center text-sm">
             <a
-              href="#contact"
-              className="group bg-teal text-navy relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold hover:bg-white"
+              href={contact.bookingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-brand inline-flex items-center gap-1 font-semibold hover:underline"
             >
-              Send a message <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              Or book a call <ArrowUpRight className="size-4" />
             </a>
-          </Magnetic>
-          {contact.bookingUrl ? (
-            <Magnetic>
-              <a
-                href={contact.bookingUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:bg-white/10"
-              >
-                Book a call <ArrowUpRight className="size-4" />
-              </a>
-            </Magnetic>
-          ) : null}
-        </div>
+          </p>
+        ) : null}
       </div>
-    </ScrollReveal>
+    </section>
   );
 }

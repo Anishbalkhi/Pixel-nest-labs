@@ -4,6 +4,7 @@ import { Mail, MessageCircle, Phone, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { OPEN_CONTACT } from "@/components/forms/QuickContact";
 import { getLenis } from "@/components/motion/SmoothScroll";
 import { contact } from "@/content/site";
 
@@ -39,6 +40,8 @@ export function ContactDrawer() {
   const nameRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
+  // Email typed into a quick-contact box elsewhere on the page, to copy into the form.
+  const pendingEmail = useRef("");
 
   const openDrawer = useCallback(() => {
     setDesktop(window.matchMedia(DESKTOP).matches);
@@ -61,8 +64,16 @@ export function ContactDrawer() {
       e.preventDefault();
       openDrawer();
     };
+    const onQuick = (e: Event) => {
+      pendingEmail.current = (e as CustomEvent<{ email?: string }>).detail?.email ?? "";
+      openDrawer();
+    };
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    window.addEventListener(OPEN_CONTACT, onQuick);
+    return () => {
+      document.removeEventListener("click", onClick);
+      window.removeEventListener(OPEN_CONTACT, onQuick);
+    };
   }, [openDrawer]);
 
   useEffect(() => {
@@ -76,6 +87,11 @@ export function ContactDrawer() {
       ...document.querySelectorAll<HTMLElement>("body > header, body > main, body > footer, body > a"),
     ];
     background.forEach((el) => (el.inert = true));
+    if (pendingEmail.current) {
+      const field = dialogRef.current?.querySelector<HTMLInputElement>('input[name="email"]');
+      if (field && !field.value) field.value = pendingEmail.current;
+      pendingEmail.current = "";
+    }
     // Desktop: straight into the Name field. Phones: focus the drawer itself, so the
     // keyboard doesn't pop up over the form before the visitor has seen it.
     const t = window.setTimeout(
