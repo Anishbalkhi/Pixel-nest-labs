@@ -59,7 +59,11 @@ export function SelectField({
 }: Base & ComponentProps<"select"> & { options: string[]; placeholder?: string }) {
   return (
     <Wrap id={id} label={label} error={error} optional={optional}>
+      {/* React resets a form after its action runs. Text fields come back with the
+          submitted values, but a <select> only takes defaultValue when it mounts, so it
+          would snap back to "Choose…". Keying it on the value remounts it with the choice. */}
       <select
+        key={String(props.defaultValue ?? "")}
         id={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
