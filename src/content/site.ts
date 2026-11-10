@@ -384,9 +384,9 @@ export const about = {
     "[Write your story here: how the two of you met, why you started Pixel Nest Labs, and the kind of businesses you want to help.]",
   mission: "[One line on what you do for your clients.]",
   vision: "[One line on where you want the studio to go.]",
-  // Photo of the two of you together for the tall tile, e.g. "/images/about/team.jpg". "" shows the built-in artwork.
+  // Photo of the two of you together (4:3), taped over grid paper, e.g. "/images/about/team.jpg". "" shows the built-in artwork.
   teamImage: "",
-  // Optional silent loop for the same tile, e.g. "/videos/about/team.mp4" (shown in black and white).
+  // Optional silent loop for the same photo, e.g. "/videos/about/team.mp4" (shown in black and white).
   teamVideo: "",
   // Keep this honest: use real numbers or leave the placeholder.
   experienceStrip: ["2 founders", "[X]+ years combined experience", "5 service areas", "4 products in development"],
@@ -397,7 +397,7 @@ export const about = {
       bio: "[Short bio: what you work on and what you enjoy building.]",
       skills: ["[Skill]", "[Skill]", "[Skill]"],
       linkedin: "",
-      // Portrait, e.g. "/images/about/founder-1.jpg". Shown in black and white with a colour block.
+      // Portrait (4:5), e.g. "/images/about/founder-1.jpg". Shown in black and white, popping out of a colour card.
       image: "",
     },
     {
@@ -406,7 +406,7 @@ export const about = {
       bio: "[Short bio: what you work on and what you enjoy building.]",
       skills: ["[Skill]", "[Skill]", "[Skill]"],
       linkedin: "",
-      // Portrait, e.g. "/images/about/founder-1.jpg". Shown in black and white with a colour block.
+      // Portrait (4:5), e.g. "/images/about/founder-1.jpg". Shown in black and white, popping out of a colour card.
       image: "",
     },
   ],

@@ -834,3 +834,87 @@ html.lenis body {
 .footer-word span:hover {
   -webkit-text-stroke-color: transparent;
 }
+
+/* ---------- About: sticker-kit collage ---------- */
+
+/* Graph paper patch peeking out behind photos and cards. */
+.grid-paper {
+  background-color: #fff;
+  background-image:
+    linear-gradient(to right, rgb(10 15 44 / 0.55) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgb(10 15 44 / 0.55) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+/* Paper label with torn top and bottom edges. */
+.torn-paper {
+  clip-path: polygon(
+    0% 6%,
+    6% 0%,
+    12% 5%,
+    19% 1%,
+    26% 6%,
+    33% 0%,
+    41% 5%,
+    48% 1%,
+    56% 6%,
+    63% 0%,
+    71% 5%,
+    78% 1%,
+    86% 6%,
+    93% 0%,
+    100% 5%,
+    100% 95%,
+    94% 100%,
+    87% 94%,
+    80% 99%,
+    72% 94%,
+    64% 100%,
+    57% 95%,
+    49% 100%,
+    41% 94%,
+    34% 99%,
+    26% 94%,
+    19% 100%,
+    11% 95%,
+    5% 100%,
+    0% 94%
+  );
+}
+
+/* Stickers give a little wiggle when their card is hovered, and the headline burst floats. */
+.sticker {
+  filter: drop-shadow(0 4px 6px rgb(10 15 44 / 0.18));
+}
+.group:hover .sticker-wobble,
+.sticker-wobble:hover {
+  animation: sticker-wobble 700ms cubic-bezier(0.36, 0, 0.2, 1);
+}
+@keyframes sticker-wobble {
+  25% {
+    translate: 0 -4px;
+    scale: 1.08;
+  }
+  50% {
+    translate: 0 0;
+    scale: 0.97;
+  }
+  75% {
+    scale: 1.03;
+  }
+}
+.sticker-float {
+  animation: drift 7s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker-float,
+  .group:hover .sticker-wobble {
+    animation: none;
+  }
+}
+
+/* Halftone dots over the founder artwork shown until a photo is added. */
+.halftone {
+  background-image: radial-gradient(rgb(10 15 44 / 0.22) 1.2px, transparent 1.6px);
+  background-size: 7px 7px;
+}

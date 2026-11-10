@@ -197,20 +197,18 @@ These should be **real photos of you**. Below is a short brief for a phone or ca
 #### Team photo (`about.teamImage`)
 
 - **Save as:** `/images/about/team.jpg`
-- **Size:** 1200 × 1600 px (3:4, portrait).
-- **How it shows:** in **black and white**. The tile is tall on desktop but wide and short (about 260 px) on phones, so keep both of you in the **middle third** of the frame.
+- **Size:** 1600 × 1200 px (4:3, landscape).
+- **How it shows:** in **black and white**, taped over a grid-paper patch with an orange block behind it. A smiley sticker covers the **bottom-right corner**, so keep both of you in the **centre and left**.
 
-**Shot brief:** Both founders side by side at a shared desk or standing at a whiteboard, in plain dark or white tops. Use bright, even window light from one side and a plain light wall behind. Shoot at eye level or slightly above, and leave lots of empty space above and below you. A few sticky notes or a laptop is fine; avoid logos, brand names and busy backgrounds. Shoot in colour and let the site turn it black and white; good contrast between your clothes and the wall helps.
+**Shot brief:** Both founders side by side at a shared desk or standing at a whiteboard, in plain dark or white tops. Use bright, even window light from one side and a plain light wall behind. Shoot at eye level or slightly above, and leave some empty space around you. A few sticky notes or a laptop is fine; avoid logos, brand names and busy backgrounds. Shoot in colour and let the site turn it black and white; good contrast between your clothes and the wall helps.
 
 #### Founder portraits (`about.founders[].image`)
 
 - **Save as:** `/images/about/founder-1.jpg` and `/images/about/founder-2.jpg`
-- **Size:** 1600 × 1000 px (16:10, landscape).
-- **How it shows:** in **black and white with extra contrast**, with a solid colour block printed over part of it:
-  - **Founder 1:** a teal block covers the **right-centre** (from about 54% to 88% across, 18% to 76% down). Place the **face in the left third**.
-  - **Founder 2:** a yellow block covers the **lower left** (from about 10% to 50% across, 40% to 86% down). Place the **face in the right half, upper part**.
+- **Size:** 1200 × 1500 px (4:5, portrait).
+- **How it shows:** in **black and white with extra contrast**, popping out of the top of a teal (founder 1) or yellow (founder 2) quote card. A torn name label covers the **bottom fifth**, so keep the **head in the upper half**, centred.
 
-**Shot brief:** Head and shoulders against a plain light-grey or white wall, with soft side light from a window. Look at the camera with a relaxed expression, in a plain top with no logos. Keep the same distance and background for both people so the pair matches, and leave space on the side where the colour block sits.
+**Shot brief:** Head and shoulders against a plain light-grey or white wall, with soft side light from a window. Look at the camera with a relaxed expression, in a plain top with no logos. Keep the same distance and background for both people so the pair matches, and stand centred in the frame.
 
 ### B7. Products (4 images)
 
@@ -255,7 +253,7 @@ The site has a slot for every video below. Save the file in `public/videos/...` 
 | ------ | ------------------------ | -------------------------------------------------------- | --------------------------------- | ------------------------- | -------------------- |
 | V1     | Brand reel               | "Watch the reel" button in the hero → full-screen player | `hero.reel` (+ `hero.reelPoster`) | 1920 × 1080, 20–30 s      | AI shots + editor    |
 | V2–V6  | Service loops (5)        | Over the picture in each "What we do" panel              | `services[].video`                | 1280 × 800, 6–8 s loop    | Image-to-video       |
-| V7     | About loop               | Over the tall team tile in About (black and white)       | `about.teamVideo`                 | 1080 × 1440, 6–10 s loop  | **Real footage**     |
+| V7     | About loop               | Over the taped team photo in About (black and white)     | `about.teamVideo`                 | 1440 × 1080, 6–10 s loop  | **Real footage**     |
 | V8–V11 | Product walkthroughs (4) | The home products switcher, in place of the mock-up      | `products[].video`                | 1600 × 1200, 10–15 s loop | **Screen recording** |
 
 ### C2. Video file settings
@@ -366,10 +364,10 @@ This gives a calm 8-second loop. Use the AI prompts below if you want things ins
 
 ### C6. V7: About loop, real footage (`/videos/about/team.mp4`)
 
-- **Size:** 1080 × 1440 (3:4, portrait), 6–10 s, no sound.
+- **Size:** 1440 × 1080 (4:3, landscape), 6–10 s, no sound.
 - **How it shows:** in **black and white**, like the team photo, and falls back to `about.teamImage`.
 
-**Shoot brief:** Use a phone on a tripod, or propped so it can't move, in the same spot and light as the team photo. Film 10–15 seconds of the two of you working together: pointing at a laptop, moving sticky notes on a whiteboard, laughing. Keep the camera completely still. Keep both of you in the middle third, because phones show this tile as a short, wide strip. Make sure no client names, screens with client data, or logos are visible. Trim it to a calm 6–10 s with no cuts.
+**Shoot brief:** Use a phone on a tripod, or propped so it can't move, in the same spot and light as the team photo. Film 10–15 seconds of the two of you working together: pointing at a laptop, moving sticky notes on a whiteboard, laughing. Keep the camera completely still. Keep both of you in the centre and left, since a sticker covers the bottom-right corner. Make sure no client names, screens with client data, or logos are visible. Trim it to a calm 6–10 s with no cuts.
 
 ### C7. V8–V11: product walkthroughs (screen recordings)
 
@@ -401,8 +399,8 @@ This gives a calm 8-second loop. Use the AI prompts below if you want things ins
 - [ ] 5 service images (16:10)
 - [ ] 5 process images (1:1, test them in black and white)
 - [ ] 8 closing-section cards (5:6) with alt text
-- [ ] 1 team photo (3:4, real)
-- [ ] 2 founder portraits (16:10, real, faces on the side away from the colour block)
+- [ ] 1 team photo (4:3, real)
+- [ ] 2 founder portraits (4:5, real, head in the upper half)
 - [ ] 4 product images (4:3), ideally real screenshots
 - [ ] Every path added in `src/content/site.ts`, then checked with `npm run dev` to confirm no "photo: …" tags are left
 

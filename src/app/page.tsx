@@ -1,6 +1,7 @@
 import { FAQ } from "@/components/sections/FAQ";
 import { Hero } from "@/components/sections/Hero";
-import { About, CTASection, ProductsPreview, WhyUs } from "@/components/sections/HomeSections";
+import { About } from "@/components/sections/About";
+import { CTASection, ProductsPreview, WhyUs } from "@/components/sections/HomeSections";
 import { LabShowcase } from "@/components/sections/LabShowcase";
 import { ScrollTextBand } from "@/components/motion/ScrollTextBand";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";

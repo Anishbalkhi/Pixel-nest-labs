@@ -46,15 +46,15 @@ Every picture on the site is a slot that shows built-in artwork until you give i
 | Service panels                             | `services[].image`              | Wide (16:10).                                                                                                                              |
 | Process steps                              | `process[].image`               | Square; shown in black and white. Each step also has `gets` (what you have at the end of it).                                              |
 | Curved strip in "Let's build it"           | `ctaGallery[].image` and `.alt` | Portrait (5:6). Without a photo the card shows `label`.                                                                                    |
-| About: team tile                           | `about.teamImage`               | Tall; shown in black and white.                                                                                                            |
-| About: founder portraits                   | `about.founders[].image`        | 16:10; black and white with a colour block on top.                                                                                         |
+| About: team tile                           | `about.teamImage`               | 4:3; taped over grid paper, shown in black and white.                                                                                      |
+| About: founder portraits                   | `about.founders[].image`        | 4:5 portrait; black and white, popping out of a colour card.                                                                               |
 | Products (home switcher and products page) | `products[].image`              | Screenshots, 4:3. Until set, the home page shows a built-in mock-up of each product; the products page shows the image in black and white. |
 
 Other places:
 
 - Brand colours and fonts: `src/app/globals.css` (`@theme`) and `src/app/layout.tsx`.
 - Logo: `public/logo.webp` (original) and `src/components/brand/pixels.ts` (the animated pixel version).
-- Mission and vision lines: `About` in `src/components/sections/HomeSections.tsx`.
+- Mission and vision lines: `src/components/sections/About.tsx`.
 
 ## Add your videos
 
@@ -64,7 +64,7 @@ Videos are optional and sit on top of the photo slots. Put MP4 files in `public/
 | -------------------- | ------------------------------ | -------------------------------------------------------------------------------------- |
 | Brand reel           | `hero.reel`, `hero.reelPoster` | Adds a "Watch the reel" button to the hero that opens a full-screen player with sound. |
 | Service loops        | `services[].video`             | Silent loop over each service picture.                                                 |
-| About loop           | `about.teamVideo`              | Silent loop over the team tile, shown in black and white.                              |
+| About loop           | `about.teamVideo`              | Silent loop over the taped team photo, shown in black and white.                       |
 | Product walkthroughs | `products[].video`             | Silent screen-recording loop in the home products switcher.                            |
 
 Loops play only while on screen and are skipped on phones, with reduced motion and with data saver on; those visitors see the photo. Keep each loop under about 3 MB. Prompts, sizes and compression commands are in `docs/media-prompts.md`.
@@ -113,7 +113,7 @@ The site builds and deploys as it is, but these need your own details or account
 - [ ] Booking link (`bookingUrl`, e.g. Cal.com or Calendly). Until then, "Book a call" opens the contact form.
 - [ ] Social links (Instagram, LinkedIn, GitHub) and, optionally, a WhatsApp number.
 - [ ] About section: your story, both founders' names, roles, bios, skills and LinkedIn links.
-- [ ] Mission and vision lines (`About` in `src/components/sections/HomeSections.tsx`).
+- [ ] Mission and vision lines (`src/components/sections/About.tsx`).
 - [ ] The experience strip: replace `[X]+ years combined experience` with your real number (or remove it).
 - [ ] Lab projects: add `liveUrl` / `githubUrl` once each demo is online. Keep the Demo/Concept labels.
 - [ ] Optional: founder photos, real screenshots for Lab projects, and your own budget ranges in `budgetOptions` (currently in ₹).
