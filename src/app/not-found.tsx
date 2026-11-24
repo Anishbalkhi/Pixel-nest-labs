@@ -3,7 +3,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { seeded } from "@/components/brand/pixels";
 
-export const metadata: Metadata = { title: "Page not found" };
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 // 3 × 5 pixel digits.
 const DIGITS: Record<string, string[]> = {

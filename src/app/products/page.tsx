@@ -11,12 +11,31 @@ import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { CTASection } from "@/components/sections/HomeSections";
 import { productIcons } from "@/components/sections/icons";
 import { SectionHeading } from "@/components/sections/SectionHeading";
-import { plans, products } from "@/content/site";
+import { ProductsJsonLd } from "@/components/seo/JsonLd";
+import { plans, products, site } from "@/content/site";
+import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Products",
+  title: "Products | Custom Business Management Software & Web Apps",
   description:
-    "Path Lab, CRM, Restaurant and Admission management tools from Pixel Nest Labs. In development: join the waitlist.",
+    "Explore modern, lightweight management software by Pixel Nest Labs: Path Lab Manager, Simple CRM, Restaurant Manager, and Admission Manager. Join the early access waitlist.",
+  alternates: {
+    canonical: "/products",
+  },
+  openGraph: {
+    title: "Products | Custom Business Management Software — Pixel Nest Labs",
+    description:
+      "Modern management software for path labs, sales teams, restaurants, and schools. Fast, simple, and tailored for real business workflows.",
+    url: `${siteUrl}/products`,
+    siteName: site.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Products | Custom Business Management Software — Pixel Nest Labs",
+    description:
+      "Modern management software for path labs, sales teams, restaurants, and schools. Join early access.",
+  },
 };
 
 /** Accent per product spread (logo colours). Text uses `ink`, blocks use `block`. */
@@ -26,6 +45,7 @@ const spreadBlocks = ["#0b57c2", "#1fb89a", "#f7a21b", "#0e76a6"];
 export default function ProductsPage() {
   return (
     <>
+      <ProductsJsonLd />
       <section
         data-hero
         className="border-line relative mt-4 grid items-center gap-8 overflow-hidden border bg-white px-6 py-14 sm:px-10 sm:py-20 lg:grid-cols-[1.3fr_1fr]"
@@ -110,7 +130,7 @@ export default function ProductsPage() {
               >
                 <ImageSlot
                   src={p.image}
-                  alt=""
+                  alt={`${p.name} — custom software interface preview`}
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   hint={`product ${p.slug}`}
                   className="absolute inset-0 lg:inset-4"

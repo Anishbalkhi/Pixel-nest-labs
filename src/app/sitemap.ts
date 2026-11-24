@@ -3,7 +3,17 @@ import { siteUrl } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: `${siteUrl}/`, changeFrequency: "monthly", priority: 1 },
-    { url: `${siteUrl}/products`, changeFrequency: "monthly", priority: 0.8 },
+    {
+      url: `${siteUrl}`,
+      lastModified: new Date("2026-11-24"),
+      changeFrequency: "weekly",
+      priority: 1.0,
+    },
+    {
+      url: `${siteUrl}/products`,
+      lastModified: new Date("2026-11-24"),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
   ];
 }

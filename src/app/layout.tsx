@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { MotionProvider } from "@/components/motion/effects";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/JsonLd";
 import { site } from "@/content/site";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -16,12 +17,63 @@ const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: [
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: `${site.name} | ${site.tagline}`, template: `%s | ${site.name}` },
-  description: site.description,
-  alternates: { canonical: "./" },
-  // The share image comes from src/app/opengraph-image.tsx.
-  openGraph: { title: site.name, description: site.description, siteName: site.name, type: "website" },
-  twitter: { card: "summary_large_image" },
+  title: {
+    default: "Pixel Nest Labs | Custom Software, Web App & Digital Product Studio",
+    template: `%s | ${site.name}`,
+  },
+  description:
+    "Pixel Nest Labs is a digital product studio crafting high-performance websites, custom web applications, CRMs, and AI automation tools for growing businesses.",
+  keywords: [
+    "custom software development",
+    "web application development",
+    "business website development",
+    "Next.js development studio",
+    "custom CRM development",
+    "Shopify store development",
+    "AI automation tools",
+    "digital product studio",
+    "Pixel Nest Labs",
+  ],
+  authors: [{ name: "Pixel Nest Labs", url: siteUrl }],
+  creator: "Pixel Nest Labs",
+  publisher: "Pixel Nest Labs",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: "Pixel Nest Labs | Custom Software, Web App & Digital Product Studio",
+    description:
+      "Pixel Nest Labs crafts high-performance websites, web applications, custom CRMs, and AI automation tools for growing businesses.",
+    url: siteUrl,
+    siteName: site.name,
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pixel Nest Labs | Custom Software, Web App & Digital Product Studio",
+    description:
+      "Design, Development, and AI Solutions for Growing Businesses.",
+  },
+  verification: {
+    google: "lQXJ4JNB12f7BhAVYlWosOFAcoqyF-4lvZmFXeKdXDE",
+  },
 };
 
 export const viewport: Viewport = { themeColor: "#f4f4f2" };
@@ -37,6 +89,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Lets CSS hide reveal-on-scroll text only when JavaScript runs, so it can never stay hidden. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
       </head>
       <body className="min-h-dvh">
         <MotionProvider>
