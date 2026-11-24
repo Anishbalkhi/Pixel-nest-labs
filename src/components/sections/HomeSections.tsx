@@ -107,9 +107,10 @@ export function WhyUs() {
           <span className="flex -space-x-3">
             <PixelAvatar seed={3} className="size-12! rounded-full! p-2.5! ring-4 ring-white" />
             <PixelAvatar seed={4} className="size-12! rounded-full! p-2.5! ring-4 ring-white" />
+            <PixelAvatar seed={5} className="size-12! rounded-full! p-2.5! ring-4 ring-white" />
           </span>
           <span className="font-hand text-navy text-2xl leading-tight">
-            Two founders, <span className="text-[#e8622a]">one small lab</span>.
+            Three founders, <span className="text-[#e8622a]">one small lab</span>.
             <span className="text-muted group-hover:text-brand block font-sans text-xs font-semibold not-italic transition-colors">
               Meet us →
             </span>

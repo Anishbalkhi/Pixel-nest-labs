@@ -1,0 +1,23 @@
+# Pixel Nest Labs
+
+> We build digital products, pixel by pixel.
+
+Pixel Nest Labs is a boutique digital product and software engineering studio. We design, engineer, and launch modern websites, custom web applications, e-commerce stores, bespoke CRMs, and AI automation solutions for growing businesses.
+
+- Website: https://pixelnest-three.vercel.app/
+- Products: https://pixelnest-three.vercel.app/products
+
+## Core Services
+
+- **Web & E-commerce Development:** Modern full-stack web applications using React, Next.js, Node.js, and custom Shopify e-commerce themes.
+- **Custom CRMs & Business Software:** Streamlined lead management, workflow pipelines, and tailored operational platforms without software bloat.
+- **AI Automation & Intelligent Tools:** Custom LLM integrations, document intelligence, intelligent dashboards, and conversational workflows.
+- **Digital Presence & Brand Infrastructure:** High-converting landing pages, interactive catalogues, digital branding, and technical SEO.
+- **Enterprise Integrations:** Reliable back-end services, Spring Boot, REST APIs, and Salesforce integrations.
+
+## In-House Products (In Development)
+
+- **Path Lab Manager:** Diagnostic center and pathology lab workflows, test tracking, barcode generation, and automated report dispatch.
+- **Simple CRM:** Clutter-free pipeline and lead tracking designed for agile sales teams.
+- **Restaurant Manager:** Kitchen order ticketing, table tracking, and real-time menu management.
+- **Admission Manager:** Application workflows, document verification, and fee reconciliation for educational institutions.

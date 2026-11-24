@@ -1,24 +1,26 @@
 import type { CSSProperties } from "react";
-import { PixelAvatar } from "@/components/motion/decor";
+// import { PixelAvatar } from "@/components/motion/decor";
 import { CountUp } from "@/components/motion/CountUp";
 import { InView } from "@/components/motion/InView";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { ImageSlot } from "@/components/media/ImageSlot";
 import { PixelMark } from "@/components/brand/PixelMark";
 import { Doodle } from "@/components/brand/Doodle";
-import { PaperClip, Sticker, type StickerKind } from "@/components/brand/Sticker";
+import { PaperClip, Sticker } from "@/components/brand/Sticker";
 import { about } from "@/content/site";
 
-/** Card colour, halftone tint, sticker and slight tilt for each founder. */
-const founderStyles: {
-  tint: string;
-  deep: string;
-  sticker: [StickerKind, string];
-  r: number;
-}[] = [
-  { tint: "#1fb89a", deep: "#179a80", sticker: ["smile", "#f7a21b"], r: -1 },
-  { tint: "#f7a21b", deep: "#e08e0b", sticker: ["heart", "#e8622a"], r: 1 },
-];
+// Card colour, halftone tint, sticker and slight tilt for each founder.
+// Supports 3 founders consistently:
+// const founderStyles: {
+//   tint: string;
+//   deep: string;
+//   sticker: [StickerKind, string];
+//   r: number;
+// }[] = [
+//   { tint: "#1fb89a", deep: "#179a80", sticker: ["smile", "#f7a21b"], r: -1 },
+//   { tint: "#f7a21b", deep: "#e08e0b", sticker: ["heart", "#e8622a"], r: 1 },
+//   { tint: "#0e76a6", deep: "#0b57c2", sticker: ["burst", "#1fb89a"], r: -1 },
+// ];
 
 /** Splits "4 products in development" into 4 and the label, so the number can count up. */
 function splitStat(item: string) {
@@ -103,7 +105,7 @@ export function About() {
               video={about.teamVideo}
               alt="The Pixel Nest Labs founders"
               sizes="(min-width: 1024px) 34vw, 92vw"
-              hint="the two founders together (4:3)"
+              hint="the three founders together (4:3)"
               className="border-navy bg-brand relative aspect-[4/3] border-2"
               imageClassName="grayscale"
             >
@@ -149,6 +151,7 @@ export function About() {
         </InView>
 
         {/* Right: the founders as quote cards with a cut-out portrait and a torn name label */}
+        {/*
         <InView className="deal relative flex flex-col gap-20 pt-8 lg:col-span-7 lg:gap-24">
           {about.founders.map((f, i) => {
             const s = founderStyles[i % founderStyles.length];
@@ -159,7 +162,7 @@ export function About() {
                 className={`group relative ${flip ? "sm:mr-8" : "sm:ml-8"}`}
                 style={{ ["--r" as string]: `${s.r}deg` } as CSSProperties}
               >
-                {/* Ink dots scattered around the card */}
+                // Ink dots scattered around the card
                 <span aria-hidden className="pointer-events-none absolute inset-0">
                   <span
                     className={`bg-navy absolute -top-5 size-2.5 rounded-full ${flip ? "right-[48%]" : "left-[52%]"}`}
@@ -176,7 +179,7 @@ export function About() {
                   }`}
                   style={{ background: s.tint, rotate: "var(--r)" }}
                 >
-                  {/* Quote: the bio and skills */}
+                  // Quote: the bio and skills
                   <div className={`order-2 p-5 pt-11 pb-6 sm:p-7 ${flip ? "" : "sm:order-1"}`}>
                     <span aria-hidden className="font-condensed block text-6xl leading-[0.55] text-white">
                       &ldquo;
@@ -206,7 +209,7 @@ export function About() {
                     ) : null}
                   </div>
 
-                  {/* Portrait popping out of the top of the card */}
+                  // Portrait popping out of the top of the card
                   <div
                     className={`relative order-1 mx-auto w-[64%] max-w-[240px] pb-2 sm:w-auto sm:max-w-none sm:pb-8 ${
                       flip ? "sm:ml-0 sm:pl-6" : "sm:order-2 sm:mr-0 sm:pr-6"
@@ -227,7 +230,7 @@ export function About() {
                       </div>
                     </ImageSlot>
 
-                    {/* Torn name label, clipped on */}
+                    // Torn name label, clipped on
                     <div
                       className={`torn-paper text-navy absolute bottom-[-18px] z-10 w-[118%] max-w-[260px] bg-[#efe9dc] px-4 pt-2.5 pb-3.5 shadow-[0_8px_18px_-8px_rgb(10_15_44/0.45)] sm:px-5 ${
                         flip ? "left-2 rotate-2" : "right-2 -rotate-2"
@@ -253,6 +256,7 @@ export function About() {
             );
           })}
         </InView>
+        */}
       </div>
 
       {/* ---------- Numbers, mission and vision ---------- */}

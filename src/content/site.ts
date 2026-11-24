@@ -379,17 +379,19 @@ export const labProjects: LabProject[] = [
 ];
 
 export const about = {
-  title: "Two founders, one small lab.",
+  title: "Three founders, one small lab.",
   story:
-    "[Write your story here: how the two of you met, why you started Pixel Nest Labs, and the kind of businesses you want to help.]",
-  mission: "[One line on what you do for your clients.]",
-  vision: "[One line on where you want the studio to go.]",
-  // Photo of the two of you together (4:3), taped over grid paper, e.g. "/images/about/team.jpg". "" shows the built-in artwork.
+    "We met back in college, bonded by big ambitions and the shared grind of navigating a tough job market. Rather than waiting for opportunities, we teamed up to build our own brand from the ground up. Through that journey, we gained deep, hands-on mastery of brand identity, social visibility, and what it really takes to stand out in today's business arena. We asked ourselves: why not use this playbook to help others do the same? That spark became Pixel Nest Labs—where every pixel represents a crafted detail of your digital presence, and the nest is the home where your brand takes shape, grows, and thrives.",
+  mission:
+    "To build thoughtful, robust digital products and AI tools that help ambitious businesses scale with confidence.",
+  vision:
+    "To be the premier boutique digital studio shaping high-impact software experiences, pixel by pixel.",
+  // Photo of the three of you together (4:3), taped over grid paper, e.g. "/images/about/team.jpg". "" shows the built-in artwork.
   teamImage: "",
   // Optional silent loop for the same photo, e.g. "/videos/about/team.mp4" (shown in black and white).
   teamVideo: "",
   // Keep this honest: use real numbers or leave the placeholder.
-  experienceStrip: ["2 founders", "[X]+ years combined experience", "5 service areas", "4 products in development"],
+  experienceStrip: ["3 founders", "3+ years combined experience", "5 service areas", "4 products in development"],
   founders: [
     {
       name: "[Founder name]",
@@ -406,7 +408,16 @@ export const about = {
       bio: "[Short bio: what you work on and what you enjoy building.]",
       skills: ["[Skill]", "[Skill]", "[Skill]"],
       linkedin: "",
-      // Portrait (4:5), e.g. "/images/about/founder-1.jpg". Shown in black and white, popping out of a colour card.
+      // Portrait (4:5), e.g. "/images/about/founder-2.jpg". Shown in black and white, popping out of a colour card.
+      image: "",
+    },
+    {
+      name: "[Founder name]",
+      role: "Co-founder · [Role]",
+      bio: "[Short bio: what you work on and what you enjoy building.]",
+      skills: ["[Skill]", "[Skill]", "[Skill]"],
+      linkedin: "",
+      // Portrait (4:5), e.g. "/images/about/founder-3.jpg". Shown in black and white, popping out of a colour card.
       image: "",
     },
   ],

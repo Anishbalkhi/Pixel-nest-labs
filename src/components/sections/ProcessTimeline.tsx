@@ -24,7 +24,7 @@ function StepPhoto({ i, className }: { i: number; className: string }) {
   return (
     <ImageSlot
       src={step.image}
-      alt=""
+      alt={step.title ? `${step.title} — workflow step` : "Pixel Nest Labs development process step"}
       sizes="200px"
       hint={`process ${step.title.toLowerCase()}`}
       className={`border-2 border-current ${className}`}
