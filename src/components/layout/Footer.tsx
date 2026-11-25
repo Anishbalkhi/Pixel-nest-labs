@@ -2,7 +2,7 @@ import Link from "next/link";
 import { InView } from "@/components/motion/InView";
 import { BackToTop } from "./BackToTop";
 import { PixelMark, Wordmark } from "@/components/brand/PixelMark";
-import { contact, nav, services, site } from "@/content/site";
+import { contact, site } from "@/content/site";
 
 const socialIcons = {
   instagram: (
@@ -36,28 +36,64 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-teal mb-3 text-xs font-semibold tracking-wider uppercase">Explore</h3>
+          <h3 className="text-teal mb-3 text-xs font-semibold tracking-wider uppercase">Industries</h3>
           <ul className="space-y-1 text-sm text-white/75">
-            {nav.map((n) => (
-              <li key={n.href}>
-                <Link href={n.href} className="inline-block py-2 hover:text-white">
-                  {n.label}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link href="/industries/schools-education" className="inline-block py-1 hover:text-white">
+                Schools & Education
+              </Link>
+            </li>
+            <li>
+              <Link href="/industries/hospitals-clinics" className="inline-block py-1 hover:text-white">
+                Hospitals & Clinics
+              </Link>
+            </li>
+            <li>
+              <Link href="/industries/real-estate" className="inline-block py-1 hover:text-white">
+                Real Estate & Builders
+              </Link>
+            </li>
+            <li>
+              <Link href="/industries/hotels-resorts" className="inline-block py-1 hover:text-white">
+                Hotels & Haveli Stays
+              </Link>
+            </li>
+            <li>
+              <Link href="/industries/retail-ecommerce" className="inline-block py-1 hover:text-white">
+                Retail & E-commerce
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
           <h3 className="text-teal mb-3 text-xs font-semibold tracking-wider uppercase">Services</h3>
           <ul className="space-y-1 text-sm text-white/75">
-            {services.map((s) => (
-              <li key={s.slug}>
-                <Link href="/#services" className="inline-block py-2 hover:text-white">
-                  {s.title}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link href="/services/web-development" className="inline-block py-1 hover:text-white">
+                Website Development
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/custom-software" className="inline-block py-1 hover:text-white">
+                Custom Software & CRMs
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/digital-marketing-seo" className="inline-block py-1 hover:text-white">
+                Digital Marketing & SEO
+              </Link>
+            </li>
+            <li>
+              <Link href="/services/ai-automation" className="inline-block py-1 hover:text-white">
+                AI & Business Automation
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" className="inline-block py-1 hover:text-white">
+                Software Products
+              </Link>
+            </li>
           </ul>
         </div>
 

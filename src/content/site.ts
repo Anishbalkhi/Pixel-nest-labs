@@ -41,17 +41,16 @@ export const contact = {
 
 export const nav = [
   { label: "Services", href: "/#services" },
-  { label: "Process", href: "/#process" },
-  { label: "Lab", href: "/#lab" },
-  { label: "About", href: "/#about" },
   { label: "Products", href: "/products" },
+  { label: "Process", href: "/#process" },
+  { label: "About", href: "/#about" },
 ];
 
 export const hero = {
-  eyebrow: "Design · Development · AI",
+  eyebrow: "Custom Software · Web Development · AI Solutions",
   title: "We build digital products, pixel by pixel.",
   subtitle:
-    "From your first Instagram grid to a full CRM, Pixel Nest Labs designs and builds the digital pieces a growing business needs.",
+    "Pixel Nest Labs is a technology and digital solutions company helping businesses worldwide build custom software, web applications, AI automation, and scalable digital products.",
   // Words that rotate after "We make" under the headline.
   rotating: ["websites", "Shopify stores", "CRMs", "AI tools", "custom software"],
   primaryCta: { label: "Explore services", href: "/#services" },
