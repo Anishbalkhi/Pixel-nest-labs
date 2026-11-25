@@ -17,21 +17,24 @@ const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: [
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "Pixel Nest Labs",
   title: {
-    default: "Pixel Nest Labs | Custom Software, Web App & Digital Product Studio",
+    default: "Pixel Nest Labs | Custom Software, Web Development, AI & Digital Solutions",
     template: `%s | ${site.name}`,
   },
   description:
-    "Pixel Nest Labs is a digital product studio crafting high-performance websites, custom web applications, CRMs, and AI automation tools for growing businesses.",
+    "Pixel Nest Labs builds custom software, websites, web applications, AI automation and digital growth solutions for businesses, startups and organizations across industries.",
   keywords: [
     "custom software development",
+    "web development company",
     "web application development",
-    "business website development",
-    "Next.js development studio",
+    "AI automation solutions",
+    "SEO services",
+    "digital growth solutions",
     "custom CRM development",
     "Shopify store development",
-    "AI automation tools",
-    "digital product studio",
+    "business applications",
+    "Next.js development studio",
     "Pixel Nest Labs",
   ],
   authors: [{ name: "Pixel Nest Labs", url: siteUrl }],
@@ -57,22 +60,37 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Pixel Nest Labs | Custom Software, Web App & Digital Product Studio",
+    title: "Pixel Nest Labs | Custom Software, Web Development, AI & Digital Solutions",
     description:
-      "Pixel Nest Labs crafts high-performance websites, web applications, custom CRMs, and AI automation tools for growing businesses.",
+      "Pixel Nest Labs builds custom software, websites, web applications, AI automation and digital growth solutions for businesses, startups and organizations across industries.",
     url: siteUrl,
-    siteName: site.name,
+    siteName: "Pixel Nest Labs",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pixel Nest Labs | Custom Software, Web App & Digital Product Studio",
+    title: "Pixel Nest Labs | Custom Software, Web Development, AI & Digital Solutions",
     description:
-      "Design, Development, and AI Solutions for Growing Businesses.",
+      "Pixel Nest Labs builds custom software, websites, web applications, AI automation and digital growth solutions for businesses, startups and organizations across industries.",
   },
   verification: {
     google: "lQXJ4JNB12f7BhAVYlWosOFAcoqyF-4lvZmFXeKdXDE",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/icon.svg", type: "image/svg+xml", sizes: "any" },
+      { url: "/icon.png", sizes: "96x96", type: "image/png" },
+      { url: "/icon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

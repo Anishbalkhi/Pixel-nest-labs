@@ -10,25 +10,42 @@ export function OrganizationJsonLd() {
     "@type": "ProfessionalService",
     "@id": `${siteUrl}/#organization`,
     name: site.name,
+    alternateName: ["Pixel Nest", "PixelNestLabs"],
     url: siteUrl,
-    logo: `${siteUrl}/icon.svg`,
+    logo: `${siteUrl}/icon.png`,
     image: `${siteUrl}/opengraph-image`,
-    description: site.description,
+    description:
+      "Pixel Nest Labs is a technology and digital solutions company helping businesses worldwide build custom software, web applications, AI automation, and digital growth systems.",
     email: site.email.includes("[") ? undefined : site.email,
     telephone: site.phone.includes("[") ? undefined : site.phone,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Jaipur",
+      addressRegion: "Rajasthan",
+      addressCountry: "IN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "26.9124",
+      longitude: "75.7873",
+    },
+    areaServed: [
+      { "@type": "Country", name: "India" },
+      { "@type": "Place", name: "Worldwide" },
+    ],
     sameAs: [
       site.socials.instagram.includes("[") ? undefined : site.socials.instagram,
       site.socials.linkedin.includes("[") ? undefined : site.socials.linkedin,
       site.socials.github.includes("[") ? undefined : site.socials.github,
     ].filter(Boolean),
     priceRange: "$$",
-    areaServed: "Worldwide",
     serviceType: [
       "Custom Software Development",
       "Web Application Development",
-      "Business Website Development",
-      "CRM Development",
-      "AI Automation & Intelligent Tools",
+      "Website Development & Design",
+      "Digital Marketing & SEO Services",
+      "AI Automation & Intelligent Systems",
+      "Business Management Applications & CRMs",
       "E-commerce & Shopify Development",
     ],
   };
@@ -42,15 +59,16 @@ export function OrganizationJsonLd() {
 }
 
 /**
- * WebSite Schema for Search Engines
+ * WebSite Schema for Search Engines (Powers Google Search Site Name)
  */
 export function WebSiteJsonLd() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
-    url: siteUrl,
-    name: site.name,
+    url: `${siteUrl}/`,
+    name: "Pixel Nest Labs",
+    alternateName: ["Pixel Nest", "PixelNestLabs"],
     description: site.description,
     publisher: {
       "@id": `${siteUrl}/#organization`,

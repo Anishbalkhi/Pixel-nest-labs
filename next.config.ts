@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   experimental: {
+    agentUpgrade: false,
     serverActions: {
       // Room for a 4 MB spreadsheet on the contact form plus the other fields.
       // Keep the file limit in src/lib/attachments.ts at or below 4 MB: Vercel caps requests at 4.5 MB.
